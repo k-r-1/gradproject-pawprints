@@ -12,7 +12,7 @@ import com.swuproject.pawprints.databinding.FragmentHomeBinding
 class HomeFragment : Fragment() {
 
     private var _binding:FragmentHomeBinding? = null
-
+    // test
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
