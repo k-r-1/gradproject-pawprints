@@ -1,4 +1,4 @@
-package com.swuproject.pawprints.ui.home
+package com.swuproject.pawprints.ui.maybeloction
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.swuproject.pawprints.databinding.FragmentHomeBinding
+import com.swuproject.pawprints.databinding.FragmentMaybelocationBinding
 
-class HomeFragment : Fragment() {
 
-    private var _binding:FragmentHomeBinding? = null
+class MaybelocationFragment : Fragment() {
+
+    private var _binding: FragmentMaybelocationBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -22,14 +23,14 @@ class HomeFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-                ViewModelProvider(this).get(HomeViewModel::class.java)
+        val dashboardViewModel =
+                ViewModelProvider(this).get(MaybelocationViewModel::class.java)
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentMaybelocationBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
+        val textView: TextView = binding.textDashboard
+        dashboardViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
         return root

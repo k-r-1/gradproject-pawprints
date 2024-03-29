@@ -6,20 +6,32 @@
     app:startDestination="@+id/navigation_home">
 
     <fragment
+        android:id="@+id/navigation_maybelocation"
+        android:name="com.swuproject.pawprints.ui.maybeloction.MaybelocationFragment"
+        android:label="@string/title_maybelocation"
+        tools:layout="@layout/fragment_maybelocation" />
+
+    <fragment
+        android:id="@+id/navigation_matching"
+        android:name="com.swuproject.pawprints.ui.matching.MatchingFragment"
+        android:label="@string/title_matching"
+        tools:layout="@layout/fragment_matching" />
+
+    <fragment
         android:id="@+id/navigation_home"
         android:name="com.swuproject.pawprints.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.swuproject.pawprints.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_map"
+        android:name="com.swuproject.pawprints.ui.map.MapFragment"
+        android:label="@string/title_map"
+        tools:layout="@layout/fragment_map" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.swuproject.pawprints.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_mypage"
+        android:name="com.swuproject.pawprints.ui.mypage.MypageFragment"
+        android:label="@string/title_mypage"
+        tools:layout="@layout/fragment_mypage" />
 </navigation>

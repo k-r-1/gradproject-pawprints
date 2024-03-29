@@ -1,4 +1,4 @@
-package com.swuproject.pawprints.ui.notifications
+package com.swuproject.pawprints.ui.map
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,28 +7,29 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.swuproject.pawprints.databinding.FragmentNotificationsBinding
+import com.swuproject.pawprints.databinding.FragmentMapBinding
+import com.swuproject.pawprints.ui.map.MapViewModel
 
-class NotificationsFragment : Fragment() {
+class MapFragment : Fragment() {
 
-    private var _binding: FragmentNotificationsBinding? = null
+    private var _binding: FragmentMapBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         val notificationsViewModel =
-                ViewModelProvider(this).get(NotificationsViewModel::class.java)
+            ViewModelProvider(this).get(MapViewModel::class.java)
 
-        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
+        _binding = FragmentMapBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textNotifications
+        val textView: TextView = binding.textMap
         notificationsViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
