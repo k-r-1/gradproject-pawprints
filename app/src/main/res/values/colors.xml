@@ -8,8 +8,11 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="background_color">#FFFCF8</color>
-    <color name="bar_default_color">#FFEAEE</color>
-    <color name="button_dark_color">#E85B5B</color>
-    <color name="button_light_color">#80E85B5B</color>
+    <color name="background_color">#FFFCF8</color> <!-- 배경 -->
+    <color name="bar_default_color">#FFEAEE</color> <!-- 상단바/하단바 -->
+    <color name="button_dark_color">#E85B5B</color> <!-- 진한 버튼 -->
+    <color name="button_light_color">#80E85B5B</color> <!-- 연한 버튼 -->
+
+    <color name="bottom_nav_selected">#000000</color> <!-- 네비 아이콘 선택 -->
+    <color name="bottom_nav_not_selected">#FF888888</color> <!-- 네비 아이콘 미선택 -->
 </resources>
