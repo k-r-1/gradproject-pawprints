@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.swuproject.pawprints.common.Utils
 import com.swuproject.pawprints.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -18,6 +19,12 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // 기본 액션바 숨기기
+        Utils.hideActionBar(this)
+
+        // 상태 표시줄 색상 변경
+        Utils.setStatusBarColor(this, R.color.primary_pink)
 
         val navView: BottomNavigationView = binding.navView
 

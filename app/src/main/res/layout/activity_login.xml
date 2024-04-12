@@ -23,7 +23,7 @@
             android:layout_gravity="center"
             android:text="로그인"
             android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:textSize="17sp" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@color/background_color"
-        android:padding="50dp"
+        android:padding="40dp"
         android:gravity="center_horizontal">
 
         <EditText
@@ -40,6 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="아이디"
+            android:textSize="20sp"
             android:textColorHint="@color/right_pink"
             app:backgroundTint="@color/deep_pink" />
 
@@ -48,6 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="비밀번호"
+            android:textSize="20sp"
             android:textColorHint="@color/right_pink"
             app:backgroundTint="@color/deep_pink" />
 
@@ -56,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="로그인"
-            android:textSize="20sp"
+            android:textSize="23sp"
             android:backgroundTint="@color/deep_pink"
             app:cornerRadius="30dp"
             android:layout_marginTop="30dp" />
@@ -66,7 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="회원가입"
-            android:textSize="20sp"
+            android:textSize="23sp"
             android:textColor="@color/deep_pink"
             android:background="@android:color/transparent"
             android:layout_marginTop="10dp" />
