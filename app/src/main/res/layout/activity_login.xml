@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:hint="아이디"
             android:textSize="20sp"
-            android:textColorHint="@color/right_pink"
+            android:textColorHint="@color/light_pink"
             app:backgroundTint="@color/deep_pink" />
 
         <EditText
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:hint="비밀번호"
             android:textSize="20sp"
-            android:textColorHint="@color/right_pink"
+            android:textColorHint="@color/light_pink"
             app:backgroundTint="@color/deep_pink" />
 
         <Button

@@ -10,9 +10,9 @@
 
     <color name="background_color">#FFFCF8</color> <!-- 배경 -->
     <color name="primary_pink">#FFEAEE</color> <!-- 상단바/하단바 -->
-    <color name="deep_pink">#E85B5B</color> <!-- 진한 버튼 -->
-    <color name="right_pink">#80E85B5B</color> <!-- 연한 버튼 -->
+    <color name="deep_pink">#FA7676</color> <!-- 진한 버튼 -->
+    <color name="light_pink">#80E85B5B</color> <!-- 연한 버튼 -->
 
-    <color name="bottom_nav_selected">#000000</color> <!-- 네비 아이콘 선택 -->
+    <color name="bottom_nav_selected">#FA7676</color> <!-- 네비 아이콘 선택 -->
     <color name="bottom_nav_not_selected">#FF888888</color> <!-- 네비 아이콘 미선택 -->
 </resources>
