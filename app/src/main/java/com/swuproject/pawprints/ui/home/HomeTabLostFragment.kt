@@ -1,10 +1,15 @@
 package com.swuproject.pawprints.ui.home
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.swuproject.pawprints.R
 import com.swuproject.pawprints.databinding.FragmentHomeTabLostBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -27,29 +32,26 @@ class HomeTabLostFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        binding = FragmentHomeTabLostBinding.inflate(inflater, container, false)
+        // Fragment의 레이아웃을 인플레이트합니다.
+        val rootView = inflater.inflate(R.layout.fragment_home_tab_lost, container, false)
 
-        return binding.root
-    }
+        // RecyclerView를 레이아웃에서 찾습니다.
+        val recyclerView = rootView.findViewById<RecyclerView>(R.id.hometab_lostRecyclerview)
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeTabFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeTabLostFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        // LayoutManager를 설정합니다.
+        val layoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = layoutManager
+
+        // RecyclerView에 표시할 데이터를 생성합니다.
+        val list = ArrayList<LostRecyclerData>()
+        list.add(LostRecyclerData("title1", "dog", "w", "nowon", "20240426", "비선아파트", "빨간 목줄", "이슈니")) // Drawable 요소가 null이 됩니다.
+        list.add(LostRecyclerData("title2", "dog", "w", "nowon", "20240426", "비선아파트", "빨간 목줄", "이슈니")) // Drawable 요소가 null이 됩니다.
+        list.add(LostRecyclerData("title3", "dog", "w", "nowon", "20240426", "비선아파트", "빨간 목줄", "이슈니"))
+        list.add(LostRecyclerData("title4", "dog", "w", "nowon", "20240426", "비선아파트", "빨간 목줄", "이슈니"))
+        // 어댑터를 생성하고 RecyclerView에 설정합니다.
+        val adapter = LostRecyclerAdapter(list)
+        recyclerView.adapter = adapter
+
+        return rootView
     }
 }
