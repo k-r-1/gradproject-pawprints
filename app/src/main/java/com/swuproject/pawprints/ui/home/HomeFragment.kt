@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.swuproject.pawprints.common.Utils
+import com.google.android.material.tabs.TabLayoutMediator
 import com.swuproject.pawprints.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -18,6 +16,8 @@ class HomeFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+    private val tabTextList = listOf("실종 신고", "목격 신고")
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -29,6 +29,13 @@ class HomeFragment : Fragment() {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        binding.homeViewpager.adapter = ViewPagerAdapter(requireActivity())
+
+        TabLayoutMediator(binding.homeTabLayout, binding.homeViewpager) { tab, pos ->
+            tab.text = tabTextList[pos]
+        }.attach()
+
 
         return root
     }
