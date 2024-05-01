@@ -12,7 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background_color"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:fillViewport="true"
+        android:gravity="center_horizontal|bottom">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -49,20 +51,18 @@
             android:background="@color/background_color"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:padding="40dp">
+            android:padding="30dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <!-- 텍스트와 중복확인 버튼을 수평으로 배치하는 수평 레이아웃 -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <!-- 아이디 텍스트 -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -72,7 +72,6 @@
                         android:textColor="@color/light_pink"
                         android:textSize="18sp" />
 
-                    <!-- 중복확인 버튼 -->
                     <Button
                         android:id="@+id/btn_check_id"
                         android:layout_width="wrap_content"
@@ -84,12 +83,13 @@
 
                 </LinearLayout>
 
-                <!-- 아이디 입력창 -->
                 <EditText
                     android:id="@+id/edit_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
+                    android:hint="영문, 숫자 포함 6~20자"
+                    android:inputType="textFilter"
+                    android:textSize="18sp"
                     app:backgroundTint="@color/deep_pink" />
 
             </LinearLayout>
@@ -98,9 +98,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="10dp">
+                android:paddingTop="20dp">
 
-                <!-- 비밀번호 텍스트 -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -109,12 +108,13 @@
                     android:textColor="@color/light_pink"
                     android:textSize="18sp" />
 
-                <!-- 비밀번호 입력창 -->
                 <EditText
                     android:id="@+id/edit_pw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
+                    android:hint="특수문자 포함 8자 이상"
+                    android:inputType="textPassword"
+                    android:textSize="18sp"
                     app:backgroundTint="@color/deep_pink" />
 
             </LinearLayout>
@@ -122,16 +122,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingTop="20dp">
 
-                <!-- 텍스트와 중복확인 버튼을 수평으로 배치하는 수평 레이아웃 -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingTop="10dp">
+                    android:orientation="horizontal">
 
-                    <!-- 이밀번호 텍스트 -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -141,7 +139,6 @@
                         android:textColor="@color/light_pink"
                         android:textSize="18sp" />
 
-                    <!-- 중복확인 버튼 -->
                     <Button
                         android:id="@+id/btn_check_email"
                         android:layout_width="wrap_content"
@@ -153,12 +150,13 @@
 
                 </LinearLayout>
 
-                <!-- 이메일 입력창 -->
                 <EditText
                     android:id="@+id/edit_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
+                    android:hint="example@email.com"
+                    android:inputType="textEmailAddress"
+                    android:textSize="18sp"
                     app:backgroundTint="@color/deep_pink" />
 
             </LinearLayout>
@@ -167,9 +165,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="10dp">
+                android:paddingTop="20dp">
 
-                <!-- 이름 텍스트 -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -178,12 +175,13 @@
                     android:textColor="@color/light_pink"
                     android:textSize="18sp" />
 
-                <!-- 이름 입력창 -->
                 <EditText
                     android:id="@+id/edit_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
+                    android:hint="실명을 입력해주세요"
+                    android:inputType="textPersonName"
+                    android:textSize="18sp"
                     app:backgroundTint="@color/deep_pink" />
 
             </LinearLayout>
@@ -192,9 +190,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="10dp">
+                android:paddingTop="20dp">
 
-                <!-- 닉네임 텍스트 -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -203,12 +200,13 @@
                     android:textColor="@color/light_pink"
                     android:textSize="18sp" />
 
-                <!-- 닉네임 입력창 -->
                 <EditText
                     android:id="@+id/edit_nickname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
+                    android:hint="2~10자 이내"
+                    android:inputType="textFilter"
+                    android:textSize="18sp"
                     app:backgroundTint="@color/deep_pink" />
 
             </LinearLayout>
@@ -217,9 +215,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="10dp">
+                android:paddingTop="20dp">
 
-                <!-- 전화번호 텍스트 -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -228,12 +225,13 @@
                     android:textColor="@color/light_pink"
                     android:textSize="18sp" />
 
-                <!-- 전화번호 입력창 -->
                 <EditText
                     android:id="@+id/edit_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
+                    android:hint="010-0000-0000"
+                    android:inputType="phone"
+                    android:textSize="18sp"
                     app:backgroundTint="@color/deep_pink" />
 
             </LinearLayout>
