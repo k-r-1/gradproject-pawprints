@@ -53,6 +53,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textFilter"
                     android:textSize="18sp"
+                    android:hint="변경 불가능"
                     app:backgroundTint="@color/deep_pink"
                     android:enabled="false" />
 
@@ -193,7 +194,7 @@
                     android:id="@+id/edit_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="010-0000-0000"
+                    android:hint="01012345678"
                     android:inputType="phone"
                     android:textSize="18sp"
                     app:backgroundTint="@color/deep_pink" />
