@@ -1,6 +1,7 @@
 package com.swuproject.pawprints.ui.home
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -42,12 +43,15 @@ class HomeTabLostFragment : Fragment() {
         val layoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = layoutManager
 
+        //drawable 폴더의 파일을 Drawable 형식으로 변환
+        val photo1: Drawable? = context?.resources?.getDrawable(R.drawable.icon_profile_pic, null)
+
         // RecyclerView에 표시할 데이터를 생성합니다.
         val list = ArrayList<LostRecyclerData>()
-        list.add(LostRecyclerData("title1", "dog", "w", "nowon", "20240426", "비선아파트", "빨간 목줄", "이슈니")) // Drawable 요소가 null이 됩니다.
-        list.add(LostRecyclerData("title2", "dog", "w", "nowon", "20240426", "비선아파트", "빨간 목줄", "이슈니")) // Drawable 요소가 null이 됩니다.
-        list.add(LostRecyclerData("title3", "dog", "w", "nowon", "20240426", "비선아파트", "빨간 목줄", "이슈니"))
-        list.add(LostRecyclerData("title4", "dog", "w", "nowon", "20240426", "비선아파트", "빨간 목줄", "이슈니"))
+        list.add(LostRecyclerData(photo1, "title1", "dog", "w", "nowon", "20240426", "비선아파트", "빨간 목줄", "이슈니")) // Drawable 요소가 null이 됩니다.
+        list.add(LostRecyclerData(photo1, "title2", "dog", "w", "nowon", "20240426", "비선아파트", "빨간 목줄", "이슈니")) // Drawable 요소가 null이 됩니다.
+        list.add(LostRecyclerData(photo1, "title3", "dog", "w", "nowon", "20240426", "비선아파트", "빨간 목줄", "이슈니"))
+        list.add(LostRecyclerData(photo1, "title4", "dog", "w", "nowon", "20240426", "비선아파트", "빨간 목줄", "이슈니"))
         // 어댑터를 생성하고 RecyclerView에 설정합니다.
         val adapter = LostRecyclerAdapter(list)
         recyclerView.adapter = adapter

@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable
 import java.util.Date
 
 data class LostRecyclerData(
+    var lost_photo: Drawable?,
     var lost_title: String,
     val lost_breed: String,
     val lost_gender: String,

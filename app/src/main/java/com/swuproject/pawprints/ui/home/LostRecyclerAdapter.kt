@@ -35,6 +35,7 @@ class LostRecyclerAdapter(private val items: ArrayList<LostRecyclerData>) : Recy
     // 각 항목에 필요한 기능을 구현
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         private var view: View = v
+        private var photoImageView: ImageView = v.findViewById(R.id.iv_hometab_lostrecycler_photo)
         private var titleTextView: TextView = v.findViewById(R.id.tv_hometab_lostrecycler_title)
         private var breedTextView: TextView = v.findViewById(R.id.tv_hometab_lostrecycler_breed)
         private var genderTextView: TextView = v.findViewById(R.id.tv_hometab_lostrecycler_gender)
@@ -45,6 +46,7 @@ class LostRecyclerAdapter(private val items: ArrayList<LostRecyclerData>) : Recy
         private var contactTextView: TextView = v.findViewById(R.id.tv_hometab_lostrecycler_contact)
 
         fun bind(listener: View.OnClickListener, item: LostRecyclerData) {
+            item.lost_photo?.let { photoImageView.setImageDrawable(it) }
             titleTextView.text = item.lost_title
             breedTextView.text = item.lost_breed
             genderTextView.text = item.lost_gender
