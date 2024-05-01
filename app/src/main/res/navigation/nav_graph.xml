@@ -2,68 +2,31 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    android:id="@+id/nav_graph">
 
     <fragment
-        android:id="@+id/navigation_predictedlocation"
-        android:name="com.swuproject.pawprints.ui.predictedlocation.PredictedlocationFragment"
-        android:label="@string/title_predictedlocation"
-        tools:layout="@layout/fragment_predictedlocation" />
-
-    <fragment
-        android:id="@+id/navigation_matching"
-        android:name="com.swuproject.pawprints.ui.matching.MatchingFragment"
-        android:label="@string/title_matching"
-        tools:layout="@layout/fragment_matching" />
-
-    <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.swuproject.pawprints.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
-
-    <fragment
-        android:id="@+id/navigation_map"
-        android:name="com.swuproject.pawprints.ui.map.MapFragment"
-        android:label="@string/title_map"
-        tools:layout="@layout/fragment_map" />
-
-    <fragment
-        android:id="@+id/navigation_mypage"
+        android:id="@+id/mypageFragment"
         android:name="com.swuproject.pawprints.ui.mypage.MypageFragment"
-        android:label="@string/title_mypage"
+        android:label="fragment_mypage"
         tools:layout="@layout/fragment_mypage">
         <action
             android:id="@+id/action_mypageFragment_to_contactUsFragment"
-            app:destination="@id/contactUsFragment"
-            app:popUpTo="@id/navigation_mypage"
-            app:popUpToInclusive="true"/>
+            app:destination="@id/contactUsFragment"/>
         <action
             android:id="@+id/action_mypageFragment_to_editPetInfoFragment"
-            app:destination="@id/editPetInfoFragment"
-            app:popUpTo="@id/navigation_mypage"
-            app:popUpToInclusive="true"/>
+            app:destination="@id/editPetInfoFragment"/>
         <action
             android:id="@+id/action_mypageFragment_to_editProfileFragment"
-            app:destination="@id/editProfileFragment"
-            app:popUpTo="@id/navigation_mypage"
-            app:popUpToInclusive="true"/>
+            app:destination="@id/editProfileFragment"/>
         <action
             android:id="@+id/action_mypageFragment_to_faqFragment"
-            app:destination="@id/faqFragment"
-            app:popUpTo="@id/navigation_mypage"
-            app:popUpToInclusive="true"/>
+            app:destination="@id/faqFragment"/>
         <action
             android:id="@+id/action_mypageFragment_to_MyMissingReportFragment"
-            app:destination="@id/myMissingReportFragment"
-            app:popUpTo="@id/navigation_mypage"
-            app:popUpToInclusive="true"/>
+            app:destination="@id/myMissingReportFragment"/>
         <action
             android:id="@+id/action_mypageFragment_to_MySightingReportFragment"
-            app:destination="@id/mySightingReportFragment"
-            app:popUpTo="@id/navigation_mypage"
-            app:popUpToInclusive="true"/>
+            app:destination="@id/mySightingReportFragment"/>
     </fragment>
 
     <fragment
@@ -96,5 +59,4 @@
         android:name="com.swuproject.pawprints.ui.mypage.MySightingReportFragment"
         android:label="fragment_my_sighting_report"
         tools:layout="@layout/fragment_my_sighting_report"/>
-
 </navigation>
