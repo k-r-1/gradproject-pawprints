@@ -41,6 +41,12 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home -> "홈"
                 R.id.navigation_map -> "지도"
                 R.id.navigation_mypage -> "내정보"
+                R.id.contactUsFragment -> "문의하기"
+                R.id.editPetInfoFragment -> "반려동물 정보 수정"
+                R.id.editProfileFragment -> "개인정보 수정"
+                R.id.faqFragment -> "자주하는 질문"
+                R.id.myMissingReportFragment -> "나의 실종 신고"
+                R.id.mySightingReportFragment -> "나의 목격 신고"
                 else -> ""
             }
         }

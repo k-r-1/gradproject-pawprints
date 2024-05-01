@@ -4,34 +4,44 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.swuproject.pawprints.R
 import com.swuproject.pawprints.databinding.FragmentMypageBinding
 
 class MypageFragment : Fragment() {
 
     private var _binding: FragmentMypageBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
-        val notificationsViewModel =
-                ViewModelProvider(this).get(MypageViewModel::class.java)
-
         _binding = FragmentMypageBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textNotifications
-        notificationsViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        // 버튼 클릭 이벤트 리스너 설정
+        binding.btnEditProfile.setOnClickListener {
+            findNavController().navigate(R.id.action_mypageFragment_to_editProfileFragment)
         }
+        binding.btnEditPetInfo.setOnClickListener {
+            findNavController().navigate(R.id.action_mypageFragment_to_editPetInfoFragment)
+        }
+        binding.btnMyMissingReport.setOnClickListener {
+            findNavController().navigate(R.id.action_mypageFragment_to_MyMissingReportFragment)
+        }
+        binding.btnMySightingReport.setOnClickListener {
+            findNavController().navigate(R.id.action_mypageFragment_to_MySightingReportFragment)
+        }
+        binding.btnFaq.setOnClickListener {
+            findNavController().navigate(R.id.action_mypageFragment_to_faqFragment)
+        }
+        binding.btnContactUs.setOnClickListener {
+            findNavController().navigate(R.id.action_mypageFragment_to_contactUsFragment)
+        }
+
         return root
     }
 
