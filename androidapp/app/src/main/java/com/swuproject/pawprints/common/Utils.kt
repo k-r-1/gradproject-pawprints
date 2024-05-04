@@ -5,7 +5,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 
 object Utils {
-    // 테스트
+    // 테스트2
 
     // 기본 액션바 숨기기
     fun hideActionBar(activity: AppCompatActivity) {
