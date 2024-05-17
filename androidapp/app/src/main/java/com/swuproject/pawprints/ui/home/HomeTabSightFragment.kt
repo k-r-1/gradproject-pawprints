@@ -1,10 +1,13 @@
 package com.swuproject.pawprints.ui.home
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.swuproject.pawprints.R
 import com.swuproject.pawprints.databinding.FragmentHomeBinding
 import com.swuproject.pawprints.databinding.FragmentHomeTabSightBinding
@@ -30,29 +33,29 @@ class HomeTabSightFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        binding = FragmentHomeTabSightBinding.inflate(inflater, container, false)
+        // Fragment의 레이아웃을 인플레이트합니다.
+        val rootView = inflater.inflate(R.layout.fragment_home_tab_sight, container, false)
 
-        return binding.root
-    }
+        // RecyclerView를 레이아웃에서 찾습니다.
+        val recyclerView = rootView.findViewById<RecyclerView>(R.id.hometab_sightRecyclerview)
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeTabSightFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeTabSightFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        // LayoutManager를 설정합니다.
+        val layoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = layoutManager
+
+        //drawable 폴더의 파일을 Drawable 형식으로 변환
+        val photo1: Drawable? = context?.resources?.getDrawable(R.drawable.icon_profile_pic, null)
+
+        // RecyclerView에 표시할 데이터를 생성합니다.
+        val list = ArrayList<SightRecyclerData>()
+        list.add(SightRecyclerData(photo1, "title1", "dog", "영등포구 여의도동", "2024.04.26 15:30", "한강아파트", "파란 목줄")) // Drawable 요소가 null이 됩니다.
+        list.add(SightRecyclerData(photo1, "title2", "dog", "영등포구 당산동", "2024.04.27 15:31", "현대아파트", "파란 목줄")) // Drawable 요소가 null이 됩니다.
+        list.add(SightRecyclerData(photo1, "title3", "dog", "영등포구 문래동", "2024.04.28 15:32", "진로아파트", "파란 목줄"))
+        list.add(SightRecyclerData(photo1, "title4", "dog", "영등포구 신길동", "2024.04.29 15:33", "신길아파트", "파란 목줄"))
+        // 어댑터를 생성하고 RecyclerView에 설정합니다.
+        val adapter = SightRecyclerAdapter(list)
+        recyclerView.adapter = adapter
+
+        return rootView
     }
 }
