@@ -27,17 +27,156 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_hometab_sightrecycler_title"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="제목 : " />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textView4"
+                <TextView
+                    android:id="@+id/tv_hometab_sightrecycler_title_fix"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="제목" />
+
+                <TextView
+                    android:id="@+id/tv_hometab_sightrecycler_line1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="| " />
+
+                <TextView
+                    android:id="@+id/tv_hometab_sightrecycler_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="푸들을 목격했어요" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_hometab_sightrecycler_breed_fix"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="종" />
+
+                <TextView
+                    android:id="@+id/tv_hometab_sightrecycler_line2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="| " />
+
+                <TextView
+                    android:id="@+id/tv_hometab_sightrecycler_breed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="푸들" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_hometab_sightrecycler_area_fix"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="지역" />
+
+                <TextView
+                    android:id="@+id/tv_hometab_sightrecycler_line3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="| " />
+
+                <TextView
+                    android:id="@+id/tv_hometab_sightrecycler_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="서울시 영등포구 여의도동" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_hometab_sightrecycler_date_fix"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="발견날짜" />
+
+                <TextView
+                    android:id="@+id/tv_hometab_sightrecycler_line4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="| " />
+
+                <TextView
+                    android:id="@+id/tv_hometab_sightrecycler_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="2024-05-17 15:35" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_hometab_sightrecycler_location_fix"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="발견장소" />
+
+                <TextView
+                    android:id="@+id/tv_hometab_sightrecycler_line5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="| " />
+
+                <TextView
+                    android:id="@+id/tv_hometab_sightrecycler_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="여의도 순복음교회 근처" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_hometab_sightrecycler_feature_fix"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="특징" />
+
+                <TextView
+                    android:id="@+id/tv_hometab_sightrecycler_line6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="| " />
+
+                <TextView
+                    android:id="@+id/tv_hometab_sightrecycler_feature"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="파란색 패딩 옷 입고 있음" />
+            </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
