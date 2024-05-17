@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +25,7 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var buttonLogin: Button
     private lateinit var buttonSignUp: Button
+    private lateinit var imageViewLogo: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +59,13 @@ class LoginActivity : AppCompatActivity() {
         buttonSignUp.setOnClickListener {
             // 회원가입 버튼 클릭 시 SignUpActivity로 이동
             val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
+            startActivity(intent)
+        }
+
+        // 이미지뷰 클릭 리스너 설정 (임시)
+        imageViewLogo = findViewById(R.id.icon_logo)
+        imageViewLogo.setOnClickListener {
+            val intent = Intent(this@LoginActivity, MainActivity::class.java)
             startActivity(intent)
         }
 
