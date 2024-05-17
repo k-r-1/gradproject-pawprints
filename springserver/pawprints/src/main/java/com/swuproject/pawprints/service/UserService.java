@@ -4,6 +4,8 @@ import com.swuproject.pawprints.domain.User;
 import com.swuproject.pawprints.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -13,7 +15,16 @@ public class UserService {
     }
 
     public void registerUser(User user) {
-        // 회원 가입 로직 구현
+        Optional<User> existingUserById = userRepository.findByUserId(user.getUserId());
+        if (existingUserById.isPresent()) {
+            throw new IllegalArgumentException("이미 사용 중인 아이디입니다.");
+        }
+
+        Optional<User> existingUserByEmail = userRepository.findByUserEmail(user.getUserEmail());
+        if (existingUserByEmail.isPresent()) {
+            throw new IllegalArgumentException("이미 사용 중인 이메일입니다.");
+        }
+
         userRepository.save(user);
     }
 
