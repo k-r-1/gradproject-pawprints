@@ -9,22 +9,22 @@ public class User {
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(name = "user_id", unique = true, nullable = false)
     private String userId;
 
-    @Column(nullable = false)
+    @Column(name = "user_pw", nullable = false)
     private String userPw;
 
-    @Column(unique = true, nullable = false)
+    @Column(name = "user_email", unique = true, nullable = false)
     private String userEmail;
 
-    @Column(nullable = false)
+    @Column(name = "user_name", nullable = false)
     private String userName;
 
-    @Column(nullable = false)
+    @Column(name = "user_nickname", nullable = false)
     private String userNickname;
 
-    @Column(nullable = false)
+    @Column(name = "user_phone", nullable = false)
     private String userPhone;
 
     // Getter, Setter, 생성자 등 추가
