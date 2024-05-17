@@ -3,13 +3,20 @@ package com.swuproject.pawprints.ui
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.swuproject.pawprints.R
 import com.swuproject.pawprints.common.Utils
+import com.swuproject.pawprints.network.RetrofitClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,11 +35,58 @@ class SignUpActivity : AppCompatActivity() {
             onBackPressed()
         }
 
+        // 회원가입 버튼 클릭 리스너 설정
+        findViewById<Button>(R.id.btn_sign_up).setOnClickListener {
+            signUp()
+        }
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+    }
+
+    private fun signUp() {
+        // 입력 필드에서 사용자 정보 가져오기
+        val userId = findViewById<EditText>(R.id.edit_id).text.toString()
+        val userPw = findViewById<EditText>(R.id.edit_pw).text.toString()
+        val userEmail = findViewById<EditText>(R.id.edit_email).text.toString()
+        val userName = findViewById<EditText>(R.id.edit_name).text.toString()
+        val userNickname = findViewById<EditText>(R.id.edit_nickname).text.toString()
+        val userPhone = findViewById<EditText>(R.id.edit_phone).text.toString()
+
+        // RetrofitService 인스턴스 가져오기
+        val retrofitService = RetrofitClient.getRetrofitService()
+        // 요청 바디 생성
+        val requestBody = mapOf(
+            "userId" to userId,
+            "userPw" to userPw,
+            "userEmail" to userEmail,
+            "userName" to userName,
+            "userNickname" to userNickname,
+            "userPhone" to userPhone
+        )
+
+        // 회원가입 API 호출
+        retrofitService.signup(requestBody)
+            .enqueue(object : Callback<String> {
+                override fun onResponse(call: Call<String>, response: Response<String>) {
+                    if (response.isSuccessful) {
+                        // 회원가입 성공 처리
+                        Toast.makeText(this@SignUpActivity, "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                        finish()
+                    } else {
+                        // 회원가입 실패 처리
+                        Toast.makeText(this@SignUpActivity, "회원가입에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    // 네트워크 오류 처리
+                    Toast.makeText(this@SignUpActivity, "네트워크 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                }
+            })
     }
     override fun onBackPressed() {
         super.onBackPressed()
