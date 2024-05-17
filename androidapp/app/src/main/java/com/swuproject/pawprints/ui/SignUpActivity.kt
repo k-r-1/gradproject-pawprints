@@ -70,11 +70,13 @@ class SignUpActivity : AppCompatActivity() {
 
         // 회원가입 API 호출
         retrofitService.signup(requestBody)
-            .enqueue(object : Callback<String> {
-                override fun onResponse(call: Call<String>, response: Response<String>) {
+            .enqueue(object : Callback<Map<String, String>> {
+                override fun onResponse(call: Call<Map<String, String>>, response: Response<Map<String, String>>) {
                     if (response.isSuccessful) {
                         // 회원가입 성공 처리
-                        Toast.makeText(this@SignUpActivity, "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                        val responseBody = response.body()
+                        val message = responseBody?.get("message") ?: "알 수 없는 오류"
+                        Toast.makeText(this@SignUpActivity, message, Toast.LENGTH_SHORT).show()
                         finish()
                     } else {
                         // 회원가입 실패 처리
@@ -82,7 +84,7 @@ class SignUpActivity : AppCompatActivity() {
                     }
                 }
 
-                override fun onFailure(call: Call<String>, t: Throwable) {
+                override fun onFailure(call: Call<Map<String, String>>, t: Throwable) {
                     // 네트워크 오류 처리
                     Toast.makeText(this@SignUpActivity, "네트워크 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
                 }
