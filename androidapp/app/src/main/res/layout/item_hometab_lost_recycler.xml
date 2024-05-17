@@ -29,53 +29,206 @@
             android:layout_marginBottom="10dp"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_hometab_lostrecycler_title"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="제목 :" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_hometab_lostrecycler_breed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="종 : " />
+                <TextView
+                    android:id="@+id/tv_hometab_lostrecycler_title_fix"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="제목" />
 
-            <TextView
-                android:id="@+id/tv_hometab_lostrecycler_gender"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="성별/나이 : " />
+                <TextView
+                    android:id="@+id/tv_homtab_lostrecycler_line1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="| " />
 
-            <TextView
-                android:id="@+id/tv_hometab_lostrecycler_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="지역 : " />
+                <TextView
+                    android:id="@+id/tv_hometab_lostrecycler_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="흰둥이" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_hometab_lostrecycler_date"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="실종날짜 : " />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_hometab_lostrecycler_location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="실종장소 : " />
+                <TextView
+                    android:id="@+id/tv_hometab_lostrecycler_breed_fix"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="종" />
 
-            <TextView
-                android:id="@+id/tv_hometab_lostrecycler_feature"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="특징 : " />
+                <TextView
+                    android:id="@+id/tv_hometab_lostrecycler_line2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="| " />
 
-            <TextView
-                android:id="@+id/tv_hometab_lostrecycler_contact"
+                <TextView
+                    android:id="@+id/tv_hometab_lostrecycler_breed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="말티즈" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="연락처 : " />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_hometab_lostrecycler_gender_fix"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="성별/나이" />
+
+                <TextView
+                    android:id="@+id/tv_hometab_lostrecycler_line3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="| " />
+
+                <TextView
+                    android:id="@+id/tv_hometab_lostrecycler_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="여자 / 8" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_hometab_lostrecycler_area_fix"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="지역" />
+
+                <TextView
+                    android:id="@+id/tv_hometab_lostrecycler_line4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="| " />
+
+                <TextView
+                    android:id="@+id/tv_hometab_lostrecycler_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="서울시 노원구" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_hometab_lostrecycler_date_fix"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="실종날짜" />
+
+                <TextView
+                    android:id="@+id/tv_hometab_lostrecycler_line5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="| " />
+
+                <TextView
+                    android:id="@+id/tv_hometab_lostrecycler_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="2024.05.17" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_hometab_lostrecycler_location_fix"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="실종장소" />
+
+                <TextView
+                    android:id="@+id/tv_hometab_lostrecycler_line6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="| " />
+
+                <TextView
+                    android:id="@+id/tv_hometab_lostrecycler_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="화랑대역 앞" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_hometab_lostrecycler_feature_fix"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="특징" />
+
+                <TextView
+                    android:id="@+id/tv_hometab_lostrecycler_line7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="| " />
+
+                <TextView
+                    android:id="@+id/tv_hometab_lostrecycler_feature"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="빨간 목줄 하고 있음" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_hometab_lostrecycler_contact_fix"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="연락처" />
+
+                <TextView
+                    android:id="@+id/tv_hometab_lostrecycler_line8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="| " />
+
+                <TextView
+                    android:id="@+id/tv_hometab_lostrecycler_contact"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="010-1111-2222" />
+            </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
 
