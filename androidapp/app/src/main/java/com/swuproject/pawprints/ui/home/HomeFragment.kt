@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.swuproject.pawprints.R
 import com.swuproject.pawprints.databinding.FragmentHomeBinding
@@ -29,19 +31,50 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         binding.homeViewpager.adapter = ViewPagerAdapter(requireActivity())
 
-        TabLayoutMediator(binding.homeTabLayout, binding.homeViewpager) { tab, pos ->
-            tab.text = tabTextList[pos]
+        // TabLayout과 ViewPager2를 연결하고 탭 텍스트의 크기를 변경합니다.
+        TabLayoutMediator(binding.homeTabLayout, binding.homeViewpager) { tab, position ->
+            val tabView = LayoutInflater.from(context).inflate(R.layout.custom_home_tab, null)
+            val textView = tabView.findViewById<TextView>(R.id.tv_custom_home_tab)
+            textView.text = tabTextList[position]
+
+            tab.customView = tabView
         }.attach()
 
+        // 초기 탭 색상 설정
+        updateTabTextColor(binding.homeTabLayout.selectedTabPosition)
+
+        // 탭의 선택 상태를 감지하고 색상을 변경합니다.
+        binding.homeTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                val position = tab?.position ?: 0
+                updateTabTextColor(position)
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                // Unselected tab 처리는 필요 없습니다.
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                // Reselected tab 처리는 필요 없습니다.
+            }
+        })
+
         return root
+    }
+
+    private fun updateTabTextColor(selectedPosition: Int) {
+        for (i in tabTextList.indices) {
+            val tabView = binding.homeTabLayout.getTabAt(i)?.customView
+            val textView = tabView?.findViewById<TextView>(R.id.tv_custom_home_tab)
+            val isSelected = i == selectedPosition
+            val textColorRes = if (isSelected) R.color.deep_pink else R.color.bottom_nav_not_selected
+            textView?.setTextColor(ContextCompat.getColor(requireContext(), textColorRes))
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
