@@ -44,7 +44,7 @@ class HomeTabLostFragment : Fragment() {
         recyclerView.layoutManager = layoutManager
 
         //drawable 폴더의 파일을 Drawable 형식으로 변환
-        val photo1: Drawable? = context?.resources?.getDrawable(R.drawable.icon_profile_pic, null)
+        val photo1: Drawable? = context?.resources?.getDrawable(R.drawable.dog_sample, null)
 
         // RecyclerView에 표시할 데이터를 생성합니다.
         val list = ArrayList<LostRecyclerData>()
