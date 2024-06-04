@@ -94,6 +94,13 @@ class LoginActivity : AppCompatActivity() {
                         // 로그인 성공 처리
                         Toast.makeText(this@LoginActivity, message, Toast.LENGTH_SHORT).show()
                         if (message == "로그인 성공") {
+                            // SharedPreferences에 로그인 정보 저장
+                            val sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE)
+                            val editor = sharedPreferences.edit()
+                            editor.putString("user_id", userId)
+                            // 필요시 토큰이나 다른 데이터도 저장 가능
+                            editor.apply()
+
                             val intent = Intent(this@LoginActivity, MainActivity::class.java)
                             startActivity(intent)
                             finish()
