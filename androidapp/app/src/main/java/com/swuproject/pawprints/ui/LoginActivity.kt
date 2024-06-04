@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +25,7 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var buttonLogin: Button
     private lateinit var buttonSignUp: Button
+    private lateinit var imageViewLogo: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +62,13 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        // 이미지뷰 클릭 리스너 설정 (임시)
+        imageViewLogo = findViewById(R.id.icon_logo)
+        imageViewLogo.setOnClickListener {
+            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     private fun signIn() {
@@ -85,6 +94,13 @@ class LoginActivity : AppCompatActivity() {
                         // 로그인 성공 처리
                         Toast.makeText(this@LoginActivity, message, Toast.LENGTH_SHORT).show()
                         if (message == "로그인 성공") {
+                            // SharedPreferences에 로그인 정보 저장
+                            val sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE)
+                            val editor = sharedPreferences.edit()
+                            editor.putString("user_id", userId)
+                            // 필요시 토큰이나 다른 데이터도 저장 가능
+                            editor.apply()
+
                             val intent = Intent(this@LoginActivity, MainActivity::class.java)
                             startActivity(intent)
                             finish()

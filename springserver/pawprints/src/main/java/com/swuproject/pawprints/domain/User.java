@@ -6,10 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "users")
 public class User {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "user_id", unique = true, nullable = false)
+    @Column(name = "user_id", unique = true, nullable = false)  // 기본 키로 설정
     private String userId;
 
     @Column(name = "user_pw", nullable = false)
@@ -28,14 +25,6 @@ public class User {
     private String userPhone;
 
     // Getter, Setter, 생성자 등 추가
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getUserId() {
         return userId;
@@ -84,5 +73,4 @@ public class User {
     public void setUserPhone(String userPhone) {
         this.userPhone = userPhone;
     }
-
 }

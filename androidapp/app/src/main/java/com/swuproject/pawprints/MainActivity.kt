@@ -1,5 +1,6 @@
 package com.swuproject.pawprints
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -8,6 +9,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.swuproject.pawprints.common.Utils
 import com.swuproject.pawprints.databinding.ActivityMainBinding
+import com.swuproject.pawprints.ui.LoginActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,6 +18,18 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // 로그인 상태 확인
+        val sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE)
+        val userId = sharedPreferences.getString("user_id", null)
+
+        if (userId == null) {
+            // 로그인되지 않은 경우 로그인 액티비티로 이동
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+            return
+        }
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

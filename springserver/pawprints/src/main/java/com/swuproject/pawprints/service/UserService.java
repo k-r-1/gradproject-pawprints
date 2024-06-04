@@ -34,4 +34,12 @@ public class UserService {
                 .filter(user -> user.getUserPw().equals(userPw))
                 .orElse(null);
     }
+
+    public boolean isUserIdAvailable(String userId) {
+        return !userRepository.findByUserId(userId).isPresent();
+    }
+
+    public boolean isUserEmailAvailable(String userEmail) {
+        return !userRepository.findByUserEmail(userEmail).isPresent();
+    }
 }
