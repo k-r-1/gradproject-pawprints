@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingTop="20dp"
-    android:paddingBottom="10dp">
+    android:paddingTop="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +15,7 @@
         <ImageView
             android:id="@+id/iv_hometab_sightrecycler_photo"
             android:layout_width="120dp"
-            android:layout_height="wrap_content"
+            android:layout_height="120dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
@@ -182,4 +181,10 @@
 
         </LinearLayout>
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#D1BDC0" />
+
 </LinearLayout>

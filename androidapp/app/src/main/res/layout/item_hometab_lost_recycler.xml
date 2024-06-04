@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingTop="20dp"
-    android:paddingBottom="10dp">
+    android:paddingTop="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +15,7 @@
         <ImageView
             android:id="@+id/iv_hometab_lostrecycler_photo"
             android:layout_width="120dp"
-            android:layout_height="wrap_content"
+            android:layout_height="120dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
@@ -46,7 +45,7 @@
                     android:id="@+id/tv_homtab_lostrecycler_line1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="| " />
+                    android:text=" | " />
 
                 <TextView
                     android:id="@+id/tv_hometab_lostrecycler_title"
@@ -71,7 +70,7 @@
                     android:id="@+id/tv_hometab_lostrecycler_line2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="| " />
+                    android:text=" | " />
 
                 <TextView
                     android:id="@+id/tv_hometab_lostrecycler_breed"
@@ -96,7 +95,7 @@
                     android:id="@+id/tv_hometab_lostrecycler_line3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="| " />
+                    android:text=" | " />
 
                 <TextView
                     android:id="@+id/tv_hometab_lostrecycler_gender"
@@ -121,7 +120,7 @@
                     android:id="@+id/tv_hometab_lostrecycler_line4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="| " />
+                    android:text=" | " />
 
                 <TextView
                     android:id="@+id/tv_hometab_lostrecycler_area"
@@ -146,7 +145,7 @@
                     android:id="@+id/tv_hometab_lostrecycler_line5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="| " />
+                    android:text=" | " />
 
                 <TextView
                     android:id="@+id/tv_hometab_lostrecycler_date"
@@ -171,7 +170,7 @@
                     android:id="@+id/tv_hometab_lostrecycler_line6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="| " />
+                    android:text=" | " />
 
                 <TextView
                     android:id="@+id/tv_hometab_lostrecycler_location"
@@ -196,7 +195,7 @@
                     android:id="@+id/tv_hometab_lostrecycler_line7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="| " />
+                    android:text=" | " />
 
                 <TextView
                     android:id="@+id/tv_hometab_lostrecycler_feature"
@@ -221,7 +220,7 @@
                     android:id="@+id/tv_hometab_lostrecycler_line8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="| " />
+                    android:text=" | " />
 
                 <TextView
                     android:id="@+id/tv_hometab_lostrecycler_contact"
@@ -232,5 +231,10 @@
 
         </LinearLayout>
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#D1BDC0" />
 
 </LinearLayout>
