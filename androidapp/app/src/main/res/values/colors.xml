@@ -12,6 +12,7 @@
     <color name="primary_pink">#FFEAEE</color> <!-- 상단바/하단바 -->
     <color name="deep_pink">#FA7676</color> <!-- 진한 버튼 -->
     <color name="light_pink">#80E85B5B</color> <!-- 연한 버튼 -->
+    <color name="very_light_pink">#FFB3B3</color> <!-- 매우 연한 핑크색 -->
 
     <color name="bottom_nav_selected">#FA7676</color> <!-- 네비 아이콘 선택 -->
     <color name="bottom_nav_not_selected">#FF888888</color> <!-- 네비 아이콘 미선택 -->

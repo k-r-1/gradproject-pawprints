@@ -137,6 +137,26 @@
                         android:background="@drawable/edit_background"
                         android:padding="8dp"/> <!-- 스피너 배경 추가 및 여백 조정 -->
 
+                    <EditText
+                        android:id="@+id/pet_breed_edit_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="16sp"
+                        android:inputType="text"
+                        android:background="@drawable/edit_background"
+                        android:padding="8dp"
+                        android:visibility="gone"/>
+
+                    <Button
+                        android:id="@+id/reset_breed_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="재설정"
+                        android:backgroundTint="@color/very_light_pink"
+                        app:cornerRadius="30dp"
+                        android:visibility="gone"/>
+
                 </LinearLayout>
 
                 <LinearLayout
