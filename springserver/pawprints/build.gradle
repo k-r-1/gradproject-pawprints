@@ -26,6 +26,8 @@ dependencies {
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+	// 추가적으로 javax.persistence-api를 명시적으로 추가합니다.
+	implementation 'javax.persistence:javax.persistence-api:2.2'
 }
 
 tasks.named('test') {
