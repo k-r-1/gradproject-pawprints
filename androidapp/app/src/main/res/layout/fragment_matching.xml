@@ -1,15 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.matching.MatchingFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/text_matching"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="15dp">
 
-</FrameLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="나의 반려동물"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_margin="15dp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/pet_list_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/pet_list_section_bg"
+            android:gravity="center"
+            android:layout_margin="15dp"
+            android:padding="10dp">
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/lostReportSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="실종 신고 정보"
+            android:textSize="18sp"
+            android:visibility="gone"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/lostReportTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="제목"
+            android:textSize="16sp"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/lost_report_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="위치"
+            android:textSize="16sp"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/lost_report_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="날짜"
+            android:textSize="16sp"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/lost_report_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="설명"
+            android:textSize="16sp"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/lost_report_contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="연락처"
+            android:textSize="16sp"
+            android:layout_marginTop="10dp"/>
+
+        <Button
+            android:id="@+id/matching_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="매칭"
+            android:layout_marginTop="20dp"/>
+
+        <LinearLayout
+            android:id="@+id/similar_sightings_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
