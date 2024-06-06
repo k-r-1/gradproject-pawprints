@@ -2,6 +2,7 @@ package com.swuproject.pawprints.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
@@ -26,6 +27,9 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var buttonLogin: Button
     private lateinit var buttonSignUp: Button
     private lateinit var imageViewLogo: ImageView
+    private lateinit var editPw: EditText
+    private lateinit var pwToggle: ImageView
+    private var isPasswordVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +71,22 @@ class LoginActivity : AppCompatActivity() {
         imageViewLogo.setOnClickListener {
             val intent = Intent(this@LoginActivity, MainActivity::class.java)
             startActivity(intent)
+        }
+
+        // 비밀번호 EditText와 아이콘 설정
+        editPw = findViewById(R.id.edit_pw)
+        pwToggle = findViewById(R.id.pw_toggle)
+        pwToggle.setOnClickListener {
+            val selection = editPw.selectionEnd
+            if (isPasswordVisible) {
+                editPw.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                pwToggle.setImageResource(R.drawable.ic_visibility_off)
+            } else {
+                editPw.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                pwToggle.setImageResource(R.drawable.ic_visibility)
+            }
+            isPasswordVisible = !isPasswordVisible
+            editPw.setSelection(selection)
         }
 
     }
