@@ -1,5 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="#FFFEE6" /> <!-- 배경 색상 -->
-    <corners android:radius="10dp" /> <!-- 모서리 반지름 10dp -->
+    <gradient
+        android:startColor="#FFEEE5"
+        android:endColor="#FFFFFF"
+        android:angle="90" />
+    <corners android:radius="16dp" />
+    <elevation android:shadowColor="#000000" android:shadowDx="0" android:shadowDy="4" android:shadowRadius="2" />
 </shape>
