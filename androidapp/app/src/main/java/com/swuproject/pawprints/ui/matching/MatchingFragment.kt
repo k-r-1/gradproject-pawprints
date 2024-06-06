@@ -7,27 +7,23 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.swuproject.pawprints.common.Utils
 import com.swuproject.pawprints.databinding.FragmentMatchingBinding
 import com.swuproject.pawprints.network.LostReport
 import com.swuproject.pawprints.network.RetrofitClient
 import com.swuproject.pawprints.network.RetrofitService
+import com.swuproject.pawprints.network.Pet
+import com.swuproject.pawprints.network.SimilarSighting
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import com.swuproject.pawprints.network.Pet
-import com.swuproject.pawprints.network.SimilarSighting
-
 
 class MatchingFragment : Fragment() {
 
     private var _binding: FragmentMatchingBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
     private lateinit var retrofitService: RetrofitService
+    private var selectedPetName: String? = null // 선택된 반려동물 이름 저장
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,29 +35,33 @@ class MatchingFragment : Fragment() {
 
         retrofitService = RetrofitClient.getRetrofitService()
 
-        // Utils를 사용하여 SharedPreferences에서 사용자 ID 가져오기
+        // SharedPreferences에서 사용자 ID 가져오기
         val userId = Utils.getUserId(requireContext())
 
         // 반려동물 목록 가져오기
-        // userId가 null이 아닌 경우 text_name에 표시
         if (userId != null) {
+            binding.petListSection.removeAllViews()
+            val loadingTextView = TextView(requireContext()).apply {
+                text = "반려동물 정보를 가져오는 중입니다..."
+                textSize = 16f
+            }
+            binding.petListSection.addView(loadingTextView)
             fetchPets(userId)
-        } else {
         }
 
         // 매칭 버튼 클릭 이벤트 설정
         val matchingButton: Button = binding.matchingButton
         matchingButton.setOnClickListener {
-            if (userId != null) {
+            if (userId != null && selectedPetName != null) {
                 // 매칭 결과를 불러오는 로직 구현
-                findSimilarSightings(userId)
-            } else {
+                findSimilarSightings(userId, selectedPetName!!)
             }
         }
 
         return root
     }
 
+    // 사용자 ID로 반려동물 목록 가져오기
     private fun fetchPets(userId: String) {
         retrofitService.getPetsByUserId(userId).enqueue(object : Callback<List<Pet>> {
             override fun onResponse(call: Call<List<Pet>>, response: Response<List<Pet>>) {
@@ -74,24 +74,34 @@ class MatchingFragment : Fragment() {
 
             override fun onFailure(call: Call<List<Pet>>, t: Throwable) {
                 // 오류 처리
+                binding.petListSection.removeAllViews()
+                val errorTextView = TextView(requireContext()).apply {
+                    text = "반려동물 정보를 가져오는 데 실패했습니다."
+                    textSize = 16f
+                }
+                binding.petListSection.addView(errorTextView)
             }
         })
     }
 
+    // 반려동물 목록을 화면에 버튼으로 표시
     private fun displayPets(pets: List<Pet>) {
+        binding.petListSection.removeAllViews() // 기존 뷰 삭제
         for (pet in pets) {
-            val petView = TextView(requireContext()).apply {
+            val petButton = Button(requireContext()).apply {
                 text = pet.name
                 textSize = 16f
                 setOnClickListener {
-                    // 펫 클릭 시 실종 신고 정보 가져오기
+                    // 펫 클릭 시 실종 신고 정보 가져오기 및 매칭 요청
+                    selectedPetName = pet.name // 선택된 반려동물 이름 저장
                     fetchLostReport(pet.id)
                 }
             }
-            binding.petListSection.addView(petView)
+            binding.petListSection.addView(petButton) // 버튼을 레이아웃에 추가
         }
     }
 
+    // 반려동물 ID로 실종 신고 정보 가져오기
     private fun fetchLostReport(petId: Int) {
         retrofitService.getLostReportByPetId(petId).enqueue(object : Callback<LostReport> {
             override fun onResponse(call: Call<LostReport>, response: Response<LostReport>) {
@@ -108,6 +118,7 @@ class MatchingFragment : Fragment() {
         })
     }
 
+    // 실종 신고 정보를 화면에 표시
     private fun displayLostReport(lostReport: LostReport) {
         binding.lostReportSection.visibility = View.VISIBLE
         binding.lostReportTitle.text = lostReport.title
@@ -117,9 +128,9 @@ class MatchingFragment : Fragment() {
         binding.lostReportContact.text = lostReport.contact
     }
 
-    private fun findSimilarSightings(userId: String) {
-        // 매칭 로직 구현
-        val requestBody = mapOf("userId" to userId)
+    // 유사한 목격 사례 찾기 요청
+    private fun findSimilarSightings(userId: String, petName: String) {
+        val requestBody = mapOf("userId" to userId, "pet_name" to petName)
         RetrofitClient.getFlaskRetrofitService().findSimilarSightings(requestBody).enqueue(object : Callback<List<SimilarSighting>> {
             override fun onResponse(call: Call<List<SimilarSighting>>, response: Response<List<SimilarSighting>>) {
                 if (response.isSuccessful) {
@@ -135,6 +146,7 @@ class MatchingFragment : Fragment() {
         })
     }
 
+    // 유사한 목격 사례를 화면에 표시
     private fun displaySimilarSightings(similarSightings: List<SimilarSighting>) {
         binding.similarSightingsSection.removeAllViews()
         for (sighting in similarSightings) {

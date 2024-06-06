@@ -21,14 +21,19 @@
             android:textStyle="bold" />
 
         <LinearLayout
-            android:id="@+id/pet_list_section"
+            android:id="@+id/petListSection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="@drawable/pet_list_section_bg"
             android:gravity="center"
             android:layout_margin="15dp"
             android:padding="10dp">
+            <TextView
+                android:id="@+id/loadingTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="반려동물 정보를 가져오는 중입니다..."
+                android:textSize="16sp"/>
         </LinearLayout>
 
         <TextView
@@ -49,7 +54,7 @@
             android:layout_marginTop="10dp"/>
 
         <TextView
-            android:id="@+id/lost_report_location"
+            android:id="@+id/lostReportLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="위치"
@@ -57,7 +62,7 @@
             android:layout_marginTop="10dp"/>
 
         <TextView
-            android:id="@+id/lost_report_date"
+            android:id="@+id/lostReportDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="날짜"
@@ -65,7 +70,7 @@
             android:layout_marginTop="10dp"/>
 
         <TextView
-            android:id="@+id/lost_report_description"
+            android:id="@+id/lostReportDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="설명"
@@ -73,7 +78,7 @@
             android:layout_marginTop="10dp"/>
 
         <TextView
-            android:id="@+id/lost_report_contact"
+            android:id="@+id/lostReportContact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="연락처"
@@ -81,14 +86,14 @@
             android:layout_marginTop="10dp"/>
 
         <Button
-            android:id="@+id/matching_button"
+            android:id="@+id/matchingButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="매칭"
             android:layout_marginTop="20dp"/>
 
         <LinearLayout
-            android:id="@+id/similar_sightings_section"
+            android:id="@+id/similarSightingsSection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
