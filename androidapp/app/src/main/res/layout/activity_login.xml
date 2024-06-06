@@ -129,6 +129,17 @@
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
+            <TextView
+                android:id="@+id/tv_login_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="아이디 또는 비밀번호가 틀립니다."
+                android:textColor="@android:color/holo_red_dark"
+                android:visibility="gone"
+                android:layout_marginTop="10dp"
+                android:textSize="14sp" />
+
             <Button
                 android:id="@+id/btn_login"
                 android:layout_width="match_parent"

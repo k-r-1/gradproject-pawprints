@@ -4,9 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -29,6 +31,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var imageViewLogo: ImageView
     private lateinit var editPw: EditText
     private lateinit var pwToggle: ImageView
+    private lateinit var loginErrorTextView: TextView
     private var isPasswordVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,6 +92,9 @@ class LoginActivity : AppCompatActivity() {
             editPw.setSelection(selection)
         }
 
+        // 로그인 에러 메시지 TextView 설정
+        loginErrorTextView = findViewById(R.id.tv_login_error)
+
     }
 
     private fun signIn() {
@@ -127,13 +133,13 @@ class LoginActivity : AppCompatActivity() {
                         }
                     } else {
                         // 로그인 실패 처리
-                        val errorMessage = "로그인 실패: ${response.code()} ${response.message()}"
-                        Toast.makeText(this@LoginActivity, errorMessage, Toast.LENGTH_SHORT).show()
-                        Log.e("LoginActivity", errorMessage)
+                        loginErrorTextView.text = "아이디 또는 비밀번호가 맞지 않습니다. 다시 확인해 주세요."
+                        loginErrorTextView.visibility = View.VISIBLE
                     }
                 }
 
                 override fun onFailure(call: Call<Map<String, String>>, t: Throwable) {
+                    loginErrorTextView.visibility = View.GONE // 네트워크 오류일 때는 에러 메시지 숨김
                     val errorMessage = when (t) {
                         is SocketTimeoutException -> "서버 응답 시간을 초과했습니다."
                         is ConnectException -> "서버에 연결할 수 없습니다. 서버가 실행 중인지 확인하세요."
