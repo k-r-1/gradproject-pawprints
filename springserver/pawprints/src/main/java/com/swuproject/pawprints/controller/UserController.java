@@ -42,6 +42,11 @@ public class UserController {
         Map<String, String> response = new HashMap<>();
         if (user != null) {
             response.put("message", "로그인 성공");
+            response.put("userId", user.getUserId());
+            response.put("userEmail", user.getUserEmail());
+            response.put("userName", user.getUserName());
+            response.put("userNickname", user.getUserNickname());
+            response.put("userPhone", user.getUserPhone());
             return ResponseEntity.ok(response);
         } else {
             response.put("message", "로그인 실패");
