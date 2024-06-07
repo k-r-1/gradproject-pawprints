@@ -34,8 +34,8 @@ class EditPetInfoFragment : Fragment() {
         val saveButton: Button = view.findViewById(R.id.save_button)
 
         // Spinner에 표시될 항목 배열을 정의합니다.
-        val petTypes = arrayOf("클릭하여 종류를 선택해주세요", "개", "고양이")
-        val petGenders = arrayOf("클릭하여 성별을 선택해주세요", "암컷", "수컷")
+        val petTypes = arrayOf("클릭하여 종류를 선택해 주세요", "개", "고양이")
+        val petGenders = arrayOf("클릭하여 성별을 선택해 주세요", "암컷", "수컷")
 
         // 개와 고양이 품종 배열을 정의하고 가나다 순으로 정렬합니다.
         val dogBreeds = arrayOf(
