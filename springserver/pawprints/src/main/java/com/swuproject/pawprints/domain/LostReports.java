@@ -1,51 +1,29 @@
+// LostReports.java
 package com.swuproject.pawprints.domain;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import jakarta.persistence.*;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Table(name = "lost_reports")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "lostId")
 public class LostReports {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "lost_id")
     private Long lostId;
 
-    @ManyToOne
-    @JoinColumn(name = "pet_id", nullable = false)
-    @JsonBackReference
-    private Pet pet;
-
-    @Column(name = "lost_title", nullable = false)
+    private Long petId;
     private String lostTitle;
-
-    @Column(name = "lost_area_lat", nullable = false)
     private Double lostAreaLat;
-
-    @Column(name = "lost_area_lng", nullable = false)
     private Double lostAreaLng;
-
-    @Column(name = "lost_date", nullable = false)
-    private String lostDate;
-
-    @Column(name = "lost_location", nullable = false)
+    private LocalDateTime lostDate;
     private String lostLocation;
-
-    @Column(name = "lost_description", nullable = false)
     private String lostDescription;
-
-    @Column(name = "lost_contact", nullable = false)
     private String lostContact;
 
-    @OneToMany(mappedBy = "lostReports", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
-    private List<LostReportsImage> images;
+    @OneToMany(mappedBy = "lostReport", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<LostReportsImage> lostImages;
 
     // Getters and Setters
 
@@ -57,12 +35,12 @@ public class LostReports {
         this.lostId = lostId;
     }
 
-    public Pet getPet() {
-        return pet;
+    public Long getPetId() {
+        return petId;
     }
 
-    public void setPet(Pet pet) {
-        this.pet = pet;
+    public void setPetId(Long petId) {
+        this.petId = petId;
     }
 
     public String getLostTitle() {
@@ -89,11 +67,11 @@ public class LostReports {
         this.lostAreaLng = lostAreaLng;
     }
 
-    public String getLostDate() {
+    public LocalDateTime getLostDate() {
         return lostDate;
     }
 
-    public void setLostDate(String lostDate) {
+    public void setLostDate(LocalDateTime lostDate) {
         this.lostDate = lostDate;
     }
 
@@ -121,28 +99,11 @@ public class LostReports {
         this.lostContact = lostContact;
     }
 
-    public List<LostReportsImage> getImages() {
-        return images;
+    public List<LostReportsImage> getLostImages() {
+        return lostImages;
     }
 
-    public void setImages(List<LostReportsImage> images) {
-        this.images = images;
-    }
-
-    @Override
-    public String toString() {
-        return "LostReports{" +
-                "lostId=" + lostId +
-                ", lostTitle='" + lostTitle + '\'' +
-                ", lostAreaLat=" + lostAreaLat +
-                ", lostAreaLng=" + lostAreaLng +
-                ", lostDate='" + lostDate + '\'' +
-                ", lostLocation='" + lostLocation + '\'' +
-                ", lostDescription='" + lostDescription + '\'' +
-                ", lostContact='" + lostContact + '\'' +
-                ", pet=" + (pet != null ? pet.getId() : null) +
-                '}';
+    public void setLostImages(List<LostReportsImage> lostImages) {
+        this.lostImages = lostImages;
     }
 }
-
-
