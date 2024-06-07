@@ -1,10 +1,8 @@
 package com.swuproject.pawprints.ui
 
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
+import android.view.View
+import android.widget.*
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -37,17 +35,44 @@ class SignUpActivity : AppCompatActivity() {
 
         // 회원가입 버튼 클릭 리스너 설정
         findViewById<Button>(R.id.btn_sign_up).setOnClickListener {
-            signUp()
+            if (findViewById<CheckBox>(R.id.checkbox_agree).isChecked) {
+                signUp()
+            } else {
+                Toast.makeText(this, "개인정보 수집 및 이용 동의가 필요합니다.", Toast.LENGTH_SHORT).show()
+            }
         }
 
         // 아이디 중복 확인 버튼 클릭 리스너 설정
         findViewById<Button>(R.id.btn_check_id).setOnClickListener {
-            checkUserId()
+            if (findViewById<EditText>(R.id.edit_id).text.toString().isEmpty()) {
+                findViewById<TextView>(R.id.error_id).visibility = View.VISIBLE
+            } else {
+                findViewById<TextView>(R.id.error_id).visibility = View.GONE
+                checkUserId()
+            }
         }
 
         // 이메일 중복 확인 버튼 클릭 리스너 설정
         findViewById<Button>(R.id.btn_check_email).setOnClickListener {
-            checkUserEmail()
+            if (findViewById<EditText>(R.id.edit_email).text.toString().isEmpty()) {
+                findViewById<TextView>(R.id.error_email).visibility = View.VISIBLE
+            } else {
+                findViewById<TextView>(R.id.error_email).visibility = View.GONE
+                checkUserEmail()
+            }
+        }
+
+        // CheckBox 클릭 리스너 설정
+        findViewById<CheckBox>(R.id.checkbox_agree).setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                findViewById<CheckBox>(R.id.checkbox_disagree).isChecked = false
+            }
+        }
+
+        findViewById<CheckBox>(R.id.checkbox_disagree).setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                findViewById<CheckBox>(R.id.checkbox_agree).isChecked = false
+            }
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
