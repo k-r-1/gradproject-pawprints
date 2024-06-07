@@ -22,25 +22,33 @@
             android:layout_margin="15dp"
             android:textStyle="bold" />
 
-        <LinearLayout
-            android:id="@+id/pet_list_section"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@drawable/pet_list_section_bg"
-            android:gravity="center"
             android:layout_margin="15dp"
-            android:padding="10dp"> <!-- 여백 추가 -->
+            app:cardElevation="4dp"
+            app:cardCornerRadius="8dp">
 
-            <!-- 여기에 반려동물을 추가할 수 있습니다 -->
+            <LinearLayout
+                android:id="@+id/pet_list_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:gravity="center"
+                android:padding="10dp"> <!-- 여백 추가 -->
 
-        </LinearLayout>
+                <!-- 여기에 반려동물을 추가할 수 있습니다 -->
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="정보를 수정할 반려동물을 선택해 주세요."
-            android:textColor="@color/deep_pink"
+            android:textColor="@android:color/holo_red_dark"
             android:layout_gravity="center"
             android:layout_marginTop="3dp"/>
 
@@ -51,19 +59,51 @@
             android:orientation="vertical"
             android:paddingTop="20dp"> <!-- 여백 조정 -->
 
-            <ImageView
-                android:id="@+id/pet_image"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:contentDescription="Pet Image"
-                android:src="@drawable/twotone_add_a_photo_24" />
+            <androidx.cardview.widget.CardView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:cardCornerRadius="50dp"
+                app:cardElevation="2dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/pet_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="Pet Image"
+                        android:src="@drawable/pet_image_background" />
+
+                    <ImageView
+                        android:id="@+id/camera_icon"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/twotone_add_a_photo_24"
+                        android:layout_gravity="center"
+                        android:layout_margin="8dp"
+                        android:contentDescription="Camera Icon" />
+
+                </FrameLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                app:cardElevation="4dp"
+                app:cardCornerRadius="8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="15dp"
-                android:layout_marginTop="15dp"> <!-- 여백 조정 -->
+                android:padding="30dp" >
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -153,7 +193,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="재설정"
-                        android:backgroundTint="@color/very_light_pink"
+                        android:backgroundTint="#D86359"
                         app:cornerRadius="30dp"
                         android:visibility="gone"/>
 
@@ -263,18 +303,20 @@
                 </LinearLayout>
 
             </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 
         <Button
             android:id="@+id/save_button"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/deep_pink"
-            app:cornerRadius="30dp"
-            android:textSize="23sp"
             android:text="완료"
-            android:layout_marginTop="16dp"/> <!-- 여백 조정 -->
+            android:textSize="16sp"
+            android:backgroundTint="@color/deep_pink"
+            android:layout_marginTop="10dp"
+            app:cornerRadius="30dp"
+            android:layout_gravity="center"/>
 
     </LinearLayout>
 

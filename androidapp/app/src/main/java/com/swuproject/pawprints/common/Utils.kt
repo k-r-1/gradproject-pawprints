@@ -20,6 +20,12 @@ object Utils {
         return sharedPreferences.getString("user_id", null)
     }
 
+    // SharedPreferences에서 사용자 이름 가져오기
+    fun getUserName(context: Context): String? {
+        val sharedPreferences: SharedPreferences = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+        return sharedPreferences.getString("user_name", null)
+    }
+
     // 상태 표시줄 색상 변경
     fun setStatusBarColor(activity: AppCompatActivity, colorResId: Int) {
         val window = activity.window

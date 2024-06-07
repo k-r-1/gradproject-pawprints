@@ -120,10 +120,19 @@ class LoginActivity : AppCompatActivity() {
                         // 로그인 성공 처리
                         Toast.makeText(this@LoginActivity, message, Toast.LENGTH_SHORT).show()
                         if (message == "로그인 성공") {
+                            val userId = responseBody?.get("userId") ?: "Unknown"
+                            val userName = responseBody?.get("userName") ?: "Unknown"
+                            val userEmail = responseBody?.get("userEmail") ?: "Unknown"
+                            val userNickname = responseBody?.get("userNickname") ?: "Unknown"
+                            val userPhone = responseBody?.get("userPhone") ?: "Unknown"
                             // SharedPreferences에 로그인 정보 저장
                             val sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE)
                             val editor = sharedPreferences.edit()
                             editor.putString("user_id", userId)
+                            editor.putString("user_name", userName)
+                            editor.putString("user_email", userEmail)
+                            editor.putString("user_nickname", userNickname)
+                            editor.putString("user_phone", userPhone)
                             // 필요시 토큰이나 다른 데이터도 저장 가능
                             editor.apply()
 

@@ -24,14 +24,14 @@ class MypageFragment : Fragment() {
         _binding = FragmentMypageBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        // Utils를 사용하여 SharedPreferences에서 사용자 ID 가져오기
-        val userId = Utils.getUserId(requireContext())
+        // Utils를 사용하여 SharedPreferences에서 사용자 이름 가져오기
+        val userName = Utils.getUserName(requireContext())
 
-        // userId가 null이 아닌 경우 text_name에 표시
-        if (userId != null) {
-            binding.textName.text = userId
+        // userName이 null이 아닌 경우 text_name에 표시
+        if (userName != null) {
+            binding.textName.text = userName
         } else {
-            binding.textName.text = "사용자 이름 없음"
+            binding.textName.text = "Unknown"
         }
 
         // 버튼 클릭 이벤트 리스너 설정
