@@ -192,7 +192,7 @@
                         android:id="@+id/edit_phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="전화번호"
+                        android:hint="연락처"
                         android:inputType="phone"
                         android:textSize="16sp"
                         android:padding="10dp"
@@ -201,10 +201,10 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/btn_update"
+                android:id="@+id/save_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="수정"
+                android:text="완료"
                 android:textSize="16sp"
                 android:backgroundTint="@color/deep_pink"
                 android:layout_marginTop="20dp"
