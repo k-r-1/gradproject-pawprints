@@ -21,9 +21,9 @@ class MainActivity : AppCompatActivity() {
 
         // 로그인 상태 확인
         val sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE)
-        val userId = sharedPreferences.getString("user_id", null)
+        val isLoggedIn = sharedPreferences.getBoolean("is_logged_in", false)
 
-        if (userId == null) {
+        if (!isLoggedIn) {
             // 로그인되지 않은 경우 로그인 액티비티로 이동
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
