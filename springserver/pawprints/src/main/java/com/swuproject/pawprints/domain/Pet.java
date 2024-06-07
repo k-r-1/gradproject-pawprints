@@ -1,9 +1,14 @@
 package com.swuproject.pawprints.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import java.util.List;
 
 @Entity
 @Table(name = "pets")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Pet {
 
     @Id
@@ -35,7 +40,12 @@ public class Pet {
     @Column(name = "pet_feature", nullable = false)
     private String feature;
 
+    @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<LostReports> lostReports;
+
     // Getters and Setters
+
     public int getId() {
         return id;
     }
@@ -106,5 +116,13 @@ public class Pet {
 
     public void setFeature(String feature) {
         this.feature = feature;
+    }
+
+    public List<LostReports> getLostReports() {
+        return lostReports;
+    }
+
+    public void setLostReports(List<LostReports> lostReports) {
+        this.lostReports = lostReports;
     }
 }
