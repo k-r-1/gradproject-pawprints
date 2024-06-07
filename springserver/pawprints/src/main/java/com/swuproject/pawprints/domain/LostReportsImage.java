@@ -7,40 +7,20 @@ public class LostReportsImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long lostImageId;
-    private Long lostId;
+
+    @ManyToOne
+    @JoinColumn(name = "lostId")
+    private LostReports lostReports;
+
     private String lostImagePath;
 
-    // 기본 생성자
-    public LostReportsImage() {}
+    // Getters and Setters
+    public Long getLostImageId() { return lostImageId; }
+    public void setLostImageId(Long lostImageId) { this.lostImageId = lostImageId; }
 
-    // 모든 필드를 포함한 생성자
-    public LostReportsImage(Long lostId, String lostImagePath) {
-        this.lostId = lostId;
-        this.lostImagePath = lostImagePath;
-    }
+    public LostReports getLostReports() { return lostReports; }
+    public void setLostReports(LostReports lostReports) { this.lostReports = lostReports; }
 
-    // Getter와 Setter
-    public Long getLostImageId() {
-        return lostImageId;
-    }
-
-    public void setLostImageId(Long lostImageId) {
-        this.lostImageId = lostImageId;
-    }
-
-    public Long getLostId() {
-        return lostId;
-    }
-
-    public void setLostId(Long lostId) {
-        this.lostId = lostId;
-    }
-
-    public String getLostImagePath() {
-        return lostImagePath;
-    }
-
-    public void setLostImagePath(String lostImagePath) {
-        this.lostImagePath = lostImagePath;
-    }
+    public String getLostImagePath() { return lostImagePath; }
+    public void setLostImagePath(String lostImagePath) { this.lostImagePath = lostImagePath; }
 }
