@@ -133,7 +133,7 @@ class LoginActivity : AppCompatActivity() {
                         }
                     } else {
                         // 로그인 실패 처리
-                        loginErrorTextView.text = "아이디 또는 비밀번호가 맞지 않습니다. 다시 확인해 주세요."
+                        loginErrorTextView.text = "아이디 또는 비밀번호가 맞지 않습니다."
                         loginErrorTextView.visibility = View.VISIBLE
                     }
                 }
