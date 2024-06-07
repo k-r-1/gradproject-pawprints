@@ -1,5 +1,6 @@
 package com.swuproject.pawprints.ui.matching
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.swuproject.pawprints.R
 import com.swuproject.pawprints.common.Utils
 import com.swuproject.pawprints.databinding.FragmentMatchingBinding
 import com.swuproject.pawprints.network.LostReport
@@ -86,18 +88,45 @@ class MatchingFragment : Fragment() {
 
     // 반려동물 목록을 화면에 버튼으로 표시
     private fun displayPets(pets: List<Pet>) {
-        binding.petListSection.removeAllViews() // 기존 뷰 삭제
-        for (pet in pets) {
-            val petButton = Button(requireContext()).apply {
-                text = pet.name
-                textSize = 16f
-                setOnClickListener {
-                    // 펫 클릭 시 실종 신고 정보 가져오기 및 매칭 요청
-                    selectedPetName = pet.name // 선택된 반려동물 이름 저장
-                    fetchLostReport(pet.id)
+        binding.petListSection.removeAllViews() // 기존에 추가된 뷰들을 모두 제거
+
+        if (pets.isNotEmpty()) { // 반려동물 목록이 비어있지 않은 경우
+            val petNames = StringBuilder()
+
+            for ((index, pet) in pets.withIndex()) {
+                val petName = TextView(requireContext()).apply {
+                    text = pet.name
+                    textSize = 16f
+                    setTextColor(Color.BLACK)
+                    setPadding(16, 16, 16, 16)
+                    setOnClickListener {
+                        selectedPetName = pet.name
+                        fetchLostReport(pet.id)
+                    }
+                }
+
+                binding.petListSection.addView(petName)
+
+                if (index < pets.size - 1) {
+                    val separator = TextView(requireContext()).apply {
+                        text = " | "
+                        textSize = 16f
+                        setTextColor(Color.BLACK)
+                    }
+                    binding.petListSection.addView(separator)
+                    petNames.append(pet.name).append(" | ")
+                } else {
+                    petNames.append(pet.name)
                 }
             }
-            binding.petListSection.addView(petButton) // 버튼을 레이아웃에 추가
+        } else { // 반려동물 목록이 비어있는 경우
+            val noDataTextView = TextView(requireContext()).apply {
+                text = "반려동물 정보가 없습니다."
+                textSize = 16f
+                setTextColor(Color.BLACK)
+                setPadding(16, 16, 16, 16)
+            }
+            binding.petListSection.addView(noDataTextView)
         }
     }
 

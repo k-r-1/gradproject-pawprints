@@ -1,6 +1,7 @@
 package com.swuproject.pawprints.ui.mypage
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.swuproject.pawprints.R
 import com.swuproject.pawprints.common.Utils
 import com.swuproject.pawprints.databinding.FragmentMypageBinding
+import com.swuproject.pawprints.ui.LoginActivity
 
 class MypageFragment : Fragment() {
 
@@ -52,6 +54,21 @@ class MypageFragment : Fragment() {
         }
         binding.btnContactUs.setOnClickListener {
             findNavController().navigate(R.id.action_mypageFragment_to_contactUsFragment)
+        }
+
+        // 로그아웃 버튼 클릭 이벤트 리스너 설정
+        binding.btnLogout.setOnClickListener {
+            val sharedPreferences = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.clear() // 모든 저장된 데이터 삭제
+            editor.apply()
+
+            // 로그인 액티비티로 이동
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+            startActivity(intent)
+
+            // 현재 액티비티 종료
+            requireActivity().finish()
         }
 
         return root

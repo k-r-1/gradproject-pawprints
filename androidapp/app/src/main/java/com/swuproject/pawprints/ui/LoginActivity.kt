@@ -128,6 +128,7 @@ class LoginActivity : AppCompatActivity() {
                             // SharedPreferences에 로그인 정보 저장
                             val sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE)
                             val editor = sharedPreferences.edit()
+                            editor.putBoolean("is_logged_in", true) // 로그인 상태 저장
                             editor.putString("user_id", userId)
                             editor.putString("user_name", userName)
                             editor.putString("user_email", userEmail)
