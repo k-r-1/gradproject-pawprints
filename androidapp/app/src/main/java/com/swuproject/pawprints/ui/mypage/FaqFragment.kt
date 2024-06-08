@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.swuproject.pawprints.R
@@ -26,6 +28,13 @@ class FaqFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupFaqList()
         setupRecyclerView(view)
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Navigate back to MypageFragment
+                findNavController().navigate(R.id.navigation_mypage)
+            }
+        })
     }
 
     private fun setupFaqList() {

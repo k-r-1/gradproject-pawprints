@@ -10,7 +10,9 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.swuproject.pawprints.R
 import com.swuproject.pawprints.common.Utils
 import com.swuproject.pawprints.databinding.FragmentEditPetInfoBinding
@@ -122,6 +124,13 @@ class EditPetInfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Navigate back to MypageFragment
+                findNavController().navigate(R.id.navigation_mypage)
+            }
+        })
 
         // Spinner에 표시될 항목 배열을 정의합니다.
         val petTypes = arrayOf("클릭하여 종류를 선택해주세요", "개", "고양이")
