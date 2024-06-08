@@ -20,4 +20,9 @@ public class PetController {
     public List<Pet> getPetsByUserId(@PathVariable String userId) {
         return petService.getPetsByUserId(userId);
     }
+
+    @GetMapping("/{userId}/lost")
+    public List<Pet> getLostPetsByUserId(@PathVariable String userId) {
+        return petService.getLostPetsByUserId(userId);
+    }
 }

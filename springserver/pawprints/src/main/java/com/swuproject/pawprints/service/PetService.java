@@ -18,4 +18,8 @@ public class PetService {
     public List<Pet> getPetsByUserId(String userId) {
         return petRepository.findByUserId(userId);
     }
+
+    public List<Pet> getLostPetsByUserId(String userId) {
+        return petRepository.findLostPetsByUserId(userId);
+    }
 }
