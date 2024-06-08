@@ -30,4 +30,14 @@ public class PetController {
     public void updatePet(@PathVariable int petId, @RequestBody Pet pet) {
         petService.updatePet(petId, pet);
     }
+
+    @DeleteMapping("/{petId}")
+    public void deletePet(@PathVariable int petId) {
+        petService.deletePet(petId);
+    }
+
+    @PostMapping
+    public void addPet(@RequestBody Pet pet) {
+        petService.addPet(pet);
+    }
 }

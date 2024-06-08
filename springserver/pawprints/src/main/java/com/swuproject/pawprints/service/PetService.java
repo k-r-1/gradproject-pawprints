@@ -34,4 +34,13 @@ public class PetService {
         pet.setFeature(updatedPet.getFeature());
         petRepository.save(pet);
     }
+
+    public void deletePet(int petId) {
+        Pet pet = petRepository.findById(petId).orElseThrow(() -> new RuntimeException("Pet not found"));
+        petRepository.delete(pet);
+    }
+
+    public void addPet(Pet pet) {
+        petRepository.save(pet);
+    }
 }
