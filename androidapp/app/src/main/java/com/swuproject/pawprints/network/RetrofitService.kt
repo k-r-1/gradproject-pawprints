@@ -1,5 +1,6 @@
 package com.swuproject.pawprints.network
 
+import com.swuproject.pawprints.dto.SightReportResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -34,4 +35,7 @@ interface RetrofitService {
 
     @GET("/api/lostReports")
     fun getLostReports(): Call<List<LostReportResponse>>
+
+    @GET("/api/sightReports")
+    fun getSightReports(): Call<List<SightReportResponse>>
 }

@@ -8,18 +8,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.swuproject.pawprints.R
+import com.swuproject.pawprints.dto.SightReportResponse
 
-class SightRecyclerAdapter(private val items: ArrayList<SightRecyclerData>) : RecyclerView.Adapter<SightRecyclerAdapter.ViewHolder>()
+class SightRecyclerAdapter(private val items: List<SightReportResponse>, private val context: Context) : RecyclerView.Adapter<SightRecyclerAdapter.ViewHolder>() {
 
-{
     override fun getItemCount(): Int = items.size
 
-    override fun onBindViewHolder(holder: SightRecyclerAdapter.ViewHolder, position: Int) {
-
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
-        val listener = View.OnClickListener { it ->
-            Toast.makeText(it.context, "Clicked -> title : ${item.sight_title}, breed : ${item.sight_breed}", Toast.LENGTH_SHORT).show()
+        val listener = View.OnClickListener {
+            Toast.makeText(it.context, "Clicked -> title : ${item.sightTitle}, breed : ${item.sightBreed}", Toast.LENGTH_SHORT).show()
         }
         holder.apply {
             bind(listener, item)
@@ -29,11 +29,10 @@ class SightRecyclerAdapter(private val items: ArrayList<SightRecyclerData>) : Re
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflatedView = LayoutInflater.from(parent.context).inflate(R.layout.item_hometab_sight_recycler, parent, false)
-        return SightRecyclerAdapter.ViewHolder(inflatedView)
+        return ViewHolder(inflatedView, context)
     }
 
-    // 각 항목에 필요한 기능을 구현
-    class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+    class ViewHolder(v: View, private val context: Context) : RecyclerView.ViewHolder(v) {
         private var view: View = v
         private var photoImageView: ImageView = v.findViewById(R.id.iv_hometab_sightrecycler_photo)
         private var titleTextView: TextView = v.findViewById(R.id.tv_hometab_sightrecycler_title)
@@ -42,17 +41,22 @@ class SightRecyclerAdapter(private val items: ArrayList<SightRecyclerData>) : Re
         private var dateTextView: TextView = v.findViewById(R.id.tv_hometab_sightrecycler_date)
         private var locationTextView: TextView = v.findViewById(R.id.tv_hometab_sightrecycler_location)
         private var featureTextView: TextView = v.findViewById(R.id.tv_hometab_sightrecycler_feature)
-        fun bind(listener: View.OnClickListener, item: SightRecyclerData) {
-            item.sight_photo?.let { photoImageView.setImageDrawable(it) }
-            titleTextView.text = item.sight_title
-            breedTextView.text = item.sight_breed
-            areaTextView.text = item.sight_area
-            dateTextView.text = item.sight_date
-            locationTextView.text = item.sight_location
-            featureTextView.text = item.sight_feature
+
+        fun bind(listener: View.OnClickListener, item: SightReportResponse) {
+            val firstImage = item.sightImages.firstOrNull()?.sightImagePath
+            if (firstImage != null) {
+                Glide.with(context).load(firstImage).into(photoImageView)
+            } else {
+                photoImageView.setImageResource(R.drawable.dog_sample2) // 기본 이미지
+            }
+            titleTextView.text = item.sightTitle
+            breedTextView.text = item.sightBreed
+            areaTextView.text = "${item.sightAreaLat}, ${item.sightAreaLng}"
+            dateTextView.text = item.sightDate
+            locationTextView.text = item.sightLocation
+            featureTextView.text = item.sightDescription
 
             view.setOnClickListener(listener)
         }
     }
-
 }
