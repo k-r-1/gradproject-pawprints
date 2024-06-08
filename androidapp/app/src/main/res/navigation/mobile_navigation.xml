@@ -36,34 +36,23 @@
         tools:layout="@layout/fragment_mypage">
         <action
             android:id="@+id/action_mypageFragment_to_contactUsFragment"
-            app:destination="@id/contactUsFragment"
-            app:popUpTo="@id/navigation_mypage"
-            app:popUpToInclusive="true"/>
+            app:destination="@id/contactUsFragment"/>
         <action
             android:id="@+id/action_mypageFragment_to_editPetInfoFragment"
-            app:destination="@id/editPetInfoFragment"
-            app:popUpTo="@id/navigation_mypage"
-            app:popUpToInclusive="true"/>
+            app:destination="@id/editPetInfoFragment"/>
         <action
             android:id="@+id/action_mypageFragment_to_editProfileFragment"
-            app:destination="@id/editProfileFragment"
-            app:popUpTo="@id/navigation_mypage"
-            app:popUpToInclusive="true"/>
+            app:destination="@id/editProfileFragment"/>
         <action
             android:id="@+id/action_mypageFragment_to_faqFragment"
-            app:destination="@id/faqFragment"
-            app:popUpTo="@id/navigation_mypage"
-            app:popUpToInclusive="true"/>
+            app:destination="@id/faqFragment"/>
         <action
             android:id="@+id/action_mypageFragment_to_MyMissingReportFragment"
-            app:destination="@id/myMissingReportFragment"
-            app:popUpTo="@id/navigation_mypage"
-            app:popUpToInclusive="true"/>
+            app:destination="@id/myMissingReportFragment"/>
         <action
             android:id="@+id/action_mypageFragment_to_MySightingReportFragment"
-            app:destination="@id/mySightingReportFragment"
-            app:popUpTo="@id/navigation_mypage"
-            app:popUpToInclusive="true"/>
+            app:destination="@id/mySightingReportFragment"/>
+
     </fragment>
 
     <fragment
