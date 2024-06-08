@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         navView.setupWithNavController(navController)
 
-        // 프래그먼트 전환 시 툴바 제목 변경
+        // 프래그먼트 전환 시 툴바 제목 및 BottomNavigationView 선택 항목 업데이트
         navController.addOnDestinationChangedListener { _, destination, _ ->
             toolbarTitle.text = when (destination.id) {
                 R.id.navigation_predictedlocation -> "예상위치"
@@ -62,6 +62,16 @@ class MainActivity : AppCompatActivity() {
                 R.id.myMissingReportFragment -> "나의 실종 신고"
                 R.id.mySightingReportFragment -> "나의 목격 신고"
                 else -> ""
+            }
+            // 하단바 메뉴의 선택 항목 업데이트
+            when (destination.id) {
+                R.id.navigation_predictedlocation,
+                R.id.navigation_matching,
+                R.id.navigation_home,
+                R.id.navigation_map,
+                R.id.navigation_mypage -> navView.menu.findItem(destination.id).isChecked = true
+
+                else -> navView.menu.findItem(R.id.navigation_mypage).isChecked = true
             }
         }
     }
