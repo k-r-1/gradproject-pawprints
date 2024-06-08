@@ -1,71 +1,49 @@
 package com.swuproject.pawprints.ui.home
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.swuproject.pawprints.R
-import com.swuproject.pawprints.ui.home.LostRecyclerData
+import com.swuproject.pawprints.databinding.ItemHometabLostRecyclerBinding
 
-class LostRecyclerAdapter(private var items: ArrayList<LostRecyclerData>) : RecyclerView.Adapter<LostRecyclerAdapter.ViewHolder>() {
+class LostRecyclerAdapter(private var items: List<LostRecyclerData>) :
+    RecyclerView.Adapter<LostRecyclerAdapter.LostViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LostViewHolder {
+        val binding = ItemHometabLostRecyclerBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false)
+        return LostViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: LostViewHolder, position: Int) {
+        holder.bind(items[position])
+    }
 
     override fun getItemCount(): Int = items.size
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = items[position]
-        val listener = View.OnClickListener {
-            Toast.makeText(it.context, "Clicked -> title : ${item.lostTitle}, breed : ${item.lostBreed}", Toast.LENGTH_SHORT).show()
-            // 클릭 이벤트 처리할 내용을 추가할 수 있습니다.
-        }
-        holder.apply {
-            bind(listener, item)
-            itemView.tag = item
-        }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val inflatedView = LayoutInflater.from(parent.context).inflate(R.layout.item_hometab_lost_recycler, parent, false)
-        return ViewHolder(inflatedView)
-    }
-
     fun updateData(newItems: List<LostRecyclerData>) {
-        items.clear()
-        items.addAll(newItems)
+        items = newItems
         notifyDataSetChanged()
     }
 
-    class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        private var view: View = v
-        private var photoImageView: ImageView = v.findViewById(R.id.iv_hometab_lostrecycler_photo)
-        private var titleTextView: TextView = v.findViewById(R.id.tv_hometab_lostrecycler_title)
-        private var breedTextView: TextView = v.findViewById(R.id.tv_hometab_lostrecycler_breed)
-        private var genderTextView: TextView = v.findViewById(R.id.tv_hometab_lostrecycler_gender)
-        private var areaTextView: TextView = v.findViewById(R.id.tv_hometab_lostrecycler_area)
-        private var dateTextView: TextView = v.findViewById(R.id.tv_hometab_lostrecycler_date)
-        private var locationTextView: TextView = v.findViewById(R.id.tv_hometab_lostrecycler_location)
-        private var featureTextView: TextView = v.findViewById(R.id.tv_hometab_lostrecycler_feature)
-        private var contactTextView: TextView = v.findViewById(R.id.tv_hometab_lostrecycler_contact)
+    inner class LostViewHolder(private val binding: ItemHometabLostRecyclerBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(listener: View.OnClickListener, item: LostRecyclerData) {
-            // 이미지 다운로드 및 표시 (예: Glide 사용)
-            Glide.with(photoImageView.context)
-                .load(item.lostImagePaths.firstOrNull()) // 첫 번째 이미지 경로를 사용
-                .into(photoImageView)
+        fun bind(item: LostRecyclerData) {
+            binding.tvHometabLostrecyclerTitle.text = item.lostTitle
+            binding.tvHometabLostrecyclerBreed.text = item.lostBreed
+            binding.tvHometabLostrecyclerGender.text = item.lostGender
+            binding.tvHometabLostrecyclerArea.text = item.lostLocation
+            binding.tvHometabLostrecyclerDate.text = item.lostDate
+            binding.tvHometabLostrecyclerFeature.text = item.lostDescription
+            binding.tvHometabLostrecyclerContact.text = item.lostContact
 
-            titleTextView.text = item.lostTitle
-            breedTextView.text = item.lostBreed
-            genderTextView.text = item.lostGender
-            areaTextView.text = item.lostArea
-            dateTextView.text = item.lostDate
-            locationTextView.text = item.lostLocation
-            featureTextView.text = item.lostDescription
-            contactTextView.text = item.lostContact
-
-            view.setOnClickListener(listener)
+            // 이미지 로드
+            if (item.lostImagePaths.isNotEmpty()) {
+                Glide.with(binding.ivHometabLostrecyclerPhoto.context)
+                    .load(item.lostImagePaths[0]) // 첫 번째 이미지를 로드
+                    .into(binding.ivHometabLostrecyclerPhoto)
+            }
         }
     }
 }

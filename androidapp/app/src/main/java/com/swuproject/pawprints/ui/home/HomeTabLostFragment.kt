@@ -6,13 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.swuproject.pawprints.databinding.FragmentHomeTabLostBinding
 import com.swuproject.pawprints.network.LostReportResponse
-import com.swuproject.pawprints.network.LostReports
-import com.swuproject.pawprints.network.RetrofitService
-import com.swuproject.pawprints.network.ServiceBuilder
+import com.swuproject.pawprints.network.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -46,11 +43,11 @@ class HomeTabLostFragment : Fragment() {
     }
 
     private fun fetchLostReports() {
-        val service = ServiceBuilder.buildService(RetrofitService::class.java)
+        val service = RetrofitClient.getRetrofitService()
         val requestCall = service.getLostReports()
 
-        requestCall.enqueue(object : Callback<List<LostReports>> {
-            override fun onResponse(call: Call<List<LostReports>>, response: Response<List<LostReports>>) {
+        requestCall.enqueue(object : Callback<List<LostReportResponse>> {
+            override fun onResponse(call: Call<List<LostReportResponse>>, response: Response<List<LostReportResponse>>) {
                 if (response.isSuccessful) {
                     val lostReports = response.body()
                     if (lostReports != null) {
@@ -58,10 +55,10 @@ class HomeTabLostFragment : Fragment() {
                             LostRecyclerData(
                                 report.images.map { it.lostImagePath },
                                 report.lostTitle,
+                                report.lostBreed,
+                                report.lostGender,
                                 "미상",
-                                "미상",
-                                "미상",
-                                report.lostDate.toString(),
+                                report.lostDate,
                                 report.lostLocation,
                                 report.lostDescription,
                                 report.lostContact
@@ -70,17 +67,19 @@ class HomeTabLostFragment : Fragment() {
                         adapter.updateData(lostReportDataList)
                     }
                 } else {
-                    // 실패 처리
                     Log.e("LostReportsAPI", "Error1: ${response.code()} ${response.message()}")
+                    response.errorBody()?.let {
+                        Log.e("LostReportsAPI", "Error body: ${it.string()}")
+                    }
                 }
             }
 
-            override fun onFailure(call: Call<List<LostReports>>, t: Throwable) {
-                // 실패 처리
+            override fun onFailure(call: Call<List<LostReportResponse>>, t: Throwable) {
                 Log.e("LostReportsAPI", "Error2: ${t.message}")
             }
         })
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

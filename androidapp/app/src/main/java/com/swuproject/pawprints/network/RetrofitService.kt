@@ -30,5 +30,5 @@ interface RetrofitService {
     fun findSimilarSightings(@Body requestBody: Map<String, String>): Call<List<SimilarSighting>>
 
     @GET("/api/lostReports")
-    fun getLostReports(): Call<List<LostReports>>
+    fun getLostReports(): Call<List<LostReportResponse>>
 }

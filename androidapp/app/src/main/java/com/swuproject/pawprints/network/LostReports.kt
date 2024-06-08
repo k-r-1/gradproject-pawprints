@@ -17,10 +17,3 @@ data class LostReports(
     val images: List<LostReportsImage>
 )
 
-data class LostReportsImage(
-    val lostImageId: Long,
-    val lostId: Long,
-    val lostImagePath: String,
-    @JsonBackReference
-    val lostReport: LostReports? = null
-)

@@ -1,4 +1,3 @@
-// LostReportResponse.kt
 package com.swuproject.pawprints.network
 
 data class LostReportResponse(
@@ -11,5 +10,7 @@ data class LostReportResponse(
     val lostLocation: String,
     val lostDescription: String,
     val lostContact: String,
-    val lostImagePath: String
+    val lostBreed: String,
+    val lostGender: String,
+    val images: List<LostReportsImage>
 )
