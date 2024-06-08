@@ -51,12 +51,6 @@ class LoginActivity : AppCompatActivity() {
             insets
         }
         buttonLogin = findViewById(R.id.btn_login)
-//        buttonLogin.setOnClickListener {
-//            // 로그인 버튼 클릭 시 MainActivity로 이동
-//            val intent = Intent(this@LoginActivity, MainActivity::class.java)
-//            startActivity(intent)
-//            finish() // LoginActivity 종료
-//        }
         // 로그인 버튼 클릭 리스너 설정
         findViewById<Button>(R.id.btn_login).setOnClickListener {
             signIn()
@@ -66,13 +60,6 @@ class LoginActivity : AppCompatActivity() {
         buttonSignUp.setOnClickListener {
             // 회원가입 버튼 클릭 시 SignUpActivity로 이동
             val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
-            startActivity(intent)
-        }
-
-        // 이미지뷰 클릭 리스너 설정 (임시)
-        imageViewLogo = findViewById(R.id.icon_logo)
-        imageViewLogo.setOnClickListener {
-            val intent = Intent(this@LoginActivity, MainActivity::class.java)
             startActivity(intent)
         }
 
