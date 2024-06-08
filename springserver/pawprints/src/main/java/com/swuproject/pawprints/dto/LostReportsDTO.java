@@ -1,18 +1,10 @@
-package com.swuproject.pawprints.domain;
+package com.swuproject.pawprints.dto;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
-import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
-@JsonSerialize(using = LostReportsSerializer.class)
-public class LostReports {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class LostReportsDTO {
     private Long lostId;
-
     private Long petId;
     private String lostTitle;
     private Double lostAreaLat;
@@ -21,9 +13,9 @@ public class LostReports {
     private String lostLocation;
     private String lostDescription;
     private String lostContact;
-
-    @OneToMany(mappedBy = "lostReports", cascade = CascadeType.ALL)
-    private List<LostReportsImage> images;
+    private List<LostReportsImageDTO> images;
+    private String lostBreed;
+    private String lostGender;
 
     // Getters and Setters
     public Long getLostId() {
@@ -94,15 +86,31 @@ public class LostReports {
         return lostContact;
     }
 
-    public void setLos tContact(String lostContact) {
+    public void setLostContact(String lostContact) {
         this.lostContact = lostContact;
     }
 
-    public List<LostReportsImage> getImages() {
+    public List<LostReportsImageDTO> getImages() {
         return images;
     }
 
-    public void setImages(List<LostReportsImage> images) {
+    public void setImages(List<LostReportsImageDTO> images) {
         this.images = images;
+    }
+
+    public String getLostBreed() {
+        return lostBreed;
+    }
+
+    public void setLostBreed(String lostBreed) {
+        this.lostBreed = lostBreed;
+    }
+
+    public String getLostGender() {
+        return lostGender;
+    }
+
+    public void setLostGender(String lostGender) {
+        this.lostGender = lostGender;
     }
 }

@@ -1,25 +1,32 @@
 package com.swuproject.pawprints.controller;
 
+import com.swuproject.pawprints.dto.LostReportsDTO;
 import com.swuproject.pawprints.domain.LostReports;
 import com.swuproject.pawprints.service.LostReportsService;
+import com.swuproject.pawprints.repository.LostReportsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/lostReports")
+@RequestMapping("/lostReports")
 public class LostReportsController {
+
+    @Autowired
+    private LostReportsRepository lostReportsRepository;
 
     @Autowired
     private LostReportsService lostReportsService;
 
     @GetMapping
-    public ResponseEntity<List<LostReports>> getAllLostReports() {
-        List<LostReports> lostReports = lostReportsService.getAllLostReports();
-        return ResponseEntity.ok(lostReports);
+    public List<LostReportsDTO> getAllLostReports() {
+        List<LostReports> lostReports = lostReportsRepository.findAll();
+        return lostReports.stream()
+                .map(lostReportsService::convertToDTO)
+                .collect(Collectors.toList());
     }
 }

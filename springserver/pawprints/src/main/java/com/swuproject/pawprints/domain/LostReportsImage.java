@@ -1,24 +1,22 @@
-// LostReportsImage.java
 package com.swuproject.pawprints.domain;
 
 import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-@Table(name = "lost_reports_image")
 public class LostReportsImage {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long lostImageId;
 
-    @ManyToOne
-    @JoinColumn(name = "lost_id")
-    private LostReports lostReport;
-
     private String lostImagePath;
 
-    // Getters and Setters
+    @ManyToOne
+    @JoinColumn(name = "lost_id")
+    @JsonBackReference
+    private LostReports lostReports;
 
+    // Getters and Setters
     public Long getLostImageId() {
         return lostImageId;
     }
@@ -27,19 +25,19 @@ public class LostReportsImage {
         this.lostImageId = lostImageId;
     }
 
-    public LostReports getLostReport() {
-        return lostReport;
-    }
-
-    public void setLostReport(LostReports lostReport) {
-        this.lostReport = lostReport;
-    }
-
     public String getLostImagePath() {
         return lostImagePath;
     }
 
     public void setLostImagePath(String lostImagePath) {
         this.lostImagePath = lostImagePath;
+    }
+
+    public LostReports getLostReports() {
+        return lostReports;
+    }
+
+    public void setLostReports(LostReports lostReports) {
+        this.lostReports = lostReports;
     }
 }
