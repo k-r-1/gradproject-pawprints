@@ -30,7 +30,7 @@ interface RetrofitService {
     @GET("/api/pets/{userId}/lost")
     fun getLostPetsByUserId(@Path("userId") userId: String): Call<List<Pet>>
 
-    @POST("/api/matching/find_similar_sightings") // 경로 수정
+    @POST("/api/matching/find_similar_sightings")
     fun findSimilarSightings(@Body requestBody: Map<String, String>): Call<List<SimilarSighting>>
 
     @GET("/api/lostReports")
@@ -38,4 +38,7 @@ interface RetrofitService {
 
     @GET("/api/sightReports")
     fun getSightReports(): Call<List<SightReportResponse>>
+
+    @POST("/api/pets/{petId}")
+    fun updatePet(@Path("petId") petId: Int, @Body pet: Pet): Call<Void>
 }

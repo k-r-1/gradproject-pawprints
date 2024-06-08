@@ -8,7 +8,6 @@ import java.util.List;
 
 @Service
 public class PetService {
-    // Pet
 
     private final PetRepository petRepository;
 
@@ -22,5 +21,17 @@ public class PetService {
 
     public List<Pet> getLostPetsByUserId(String userId) {
         return petRepository.findLostPetsByUserId(userId);
+    }
+
+    public void updatePet(int petId, Pet updatedPet) {
+        Pet pet = petRepository.findById(petId).orElseThrow(() -> new RuntimeException("Pet not found"));
+        pet.setName(updatedPet.getName());
+        pet.setType(updatedPet.getType());
+        pet.setBreed(updatedPet.getBreed());
+        pet.setAge(updatedPet.getAge());
+        pet.setGender(updatedPet.getGender());
+        pet.setColor(updatedPet.getColor());
+        pet.setFeature(updatedPet.getFeature());
+        petRepository.save(pet);
     }
 }

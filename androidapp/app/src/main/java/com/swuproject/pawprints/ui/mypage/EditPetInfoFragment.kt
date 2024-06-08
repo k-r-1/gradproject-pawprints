@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -28,7 +28,25 @@ class EditPetInfoFragment : Fragment() {
     private var _binding: FragmentEditPetInfoBinding? = null
     private val binding get() = _binding!!
     private lateinit var retrofitService: RetrofitService
-    private var selectedPetName: String? = null // 선택된 반려동물 이름 저장
+    private var selectedPet: Pet? = null // 선택된 반려동물 정보 저장
+    private var selectedTextView: TextView? = null // 선택된 반려동물 이름 TextView 저장
+
+    private val dogBreeds = arrayOf(
+        "비글", "비숑 프리제", "보더 콜리", "보스턴 테리어", "불독",
+        "치와와", "코커 스패니얼", "닥스훈트", "잉글리쉬 쉽독",
+        "골든 리트리버", "이탈리안 그레이하운드", "진도", "래브라도 리트리버",
+        "말티즈", "미니어처 핀셔", "파피용", "페키니즈", "포인터",
+        "포메라니안", "푸들", "퍼그", "사모예드", "슈나우저", "셰퍼드",
+        "셰틀랜드 쉽독", "시바 이누", "시추", "스피츠",
+        "웰시 코기", "요크셔 테리어"
+    ).sortedArray() + "기타"
+
+    private val catBreeds = arrayOf(
+        "아비시니안", "아메리칸 쇼트헤어", "벵갈", "봄베이",
+        "브리티시 쇼트헤어", "칼리코", "메인쿤", "먼치킨",
+        "노르웨이 숲 고양이", "페르시안", "래그돌", "러시안 블루",
+        "스코티시 폴드", "샴", "시베리안", "스핑크스", "턱시도", "태비", "터키시 앙고라"
+    ).sortedArray() + "기타"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,37 +97,30 @@ class EditPetInfoFragment : Fragment() {
         })
     }
 
-    // 반려동물 목록을 화면에 버튼으로 표시
     private fun displayPets(pets: List<Pet>) {
         binding.petListSection.removeAllViews() // 기존에 추가된 뷰들을 모두 제거
 
         if (pets.isNotEmpty()) { // 반려동물 목록이 비어있지 않은 경우
-            val petNames = StringBuilder()
-
-            for ((index, pet) in pets.withIndex()) {
+            for (pet in pets) {
                 val petName = TextView(requireContext()).apply {
                     text = pet.name
                     textSize = 16f
                     setTextColor(Color.BLACK)
                     setPadding(16, 16, 16, 16)
                     setOnClickListener {
-                        selectedPetName = pet.name
+                        selectedPet = pet
+                        displayPetDetails(pet)
+                        enableEditing(false) // 정보 표시 모드로 설정
+
+                        // 이전에 선택된 TextView의 색상을 원래대로 돌림
+                        selectedTextView?.setTextColor(Color.BLACK)
+                        // 현재 선택된 TextView의 색상을 변경
+                        this.setTextColor(resources.getColor(R.color.deep_pink))
+                        // 현재 선택된 TextView를 저장
+                        selectedTextView = this
                     }
                 }
-
                 binding.petListSection.addView(petName)
-
-                if (index < pets.size - 1) {
-                    val separator = TextView(requireContext()).apply {
-                        text = " | "
-                        textSize = 16f
-                        setTextColor(Color.BLACK)
-                    }
-                    binding.petListSection.addView(separator)
-                    petNames.append(pet.name).append(" | ")
-                } else {
-                    petNames.append(pet.name)
-                }
             }
         } else { // 반려동물 목록이 비어있는 경우
             val noDataTextView = TextView(requireContext()).apply {
@@ -120,6 +131,117 @@ class EditPetInfoFragment : Fragment() {
             }
             binding.petListSection.addView(noDataTextView)
         }
+    }
+
+    private fun displayPetDetails(pet: Pet) {
+        binding.petNameTextView.text = pet.name
+        binding.petAgeTextView.text = pet.age.toString()
+        binding.petColorTextView.text = pet.color
+        binding.petFeatureTextView.text = pet.feature
+
+        // 종류와 성별 텍스트 설정
+        binding.petTypeTextView.text = when (pet.type) {
+            "Dog" -> "개"
+            "Cat" -> "고양이"
+            else -> pet.type
+        }
+        binding.petGenderTextView.text = pet.gender
+
+        // 품종 설정
+        if (getIndex(binding.petBreedSpinner, pet.breed) == -1) {
+            // 품종이 스피너 항목에 없는 경우
+            binding.petBreedTextView.text = pet.breed
+            binding.petBreedSpinner.visibility = View.GONE
+            binding.petBreedEditText.visibility = View.GONE
+            binding.resetBreedButton.visibility = View.GONE
+        } else {
+            // 품종이 스피너 항목에 있는 경우
+            binding.petBreedTextView.text = pet.breed
+            binding.petBreedSpinner.visibility = View.GONE
+            binding.petBreedEditText.visibility = View.GONE
+            binding.resetBreedButton.visibility = View.GONE
+        }
+    }
+
+    private fun enableEditing(enabled: Boolean) {
+        if (enabled) {
+            binding.petNameTextView.visibility = View.GONE
+            binding.petTypeTextView.visibility = View.GONE
+            binding.petBreedTextView.visibility = View.GONE
+            binding.petAgeTextView.visibility = View.GONE
+            binding.petGenderTextView.visibility = View.GONE
+            binding.petColorTextView.visibility = View.GONE
+            binding.petFeatureTextView.visibility = View.GONE
+
+            binding.petNameEditText.visibility = View.VISIBLE
+            binding.petTypeSpinner.visibility = View.VISIBLE
+            binding.petBreedSpinner.visibility = View.VISIBLE
+            binding.petAgeEditText.visibility = View.VISIBLE
+            binding.petGenderSpinner.visibility = View.VISIBLE
+            binding.petColorEditText.visibility = View.VISIBLE
+            binding.petFeatureEditText.visibility = View.VISIBLE
+
+            binding.editButton.visibility = View.GONE
+            binding.saveButton.visibility = View.VISIBLE
+
+            selectedPet?.let {
+                binding.petNameEditText.setText(it.name)
+                binding.petAgeEditText.setText(it.age.toString())
+                binding.petColorEditText.setText(it.color)
+                binding.petFeatureEditText.setText(it.feature)
+                binding.petTypeSpinner.setSelection(getPetTypeIndex(it.type))
+                binding.petGenderSpinner.setSelection(getIndex(binding.petGenderSpinner, it.gender))
+                if (getIndex(binding.petBreedSpinner, it.breed) == -1) {
+                    binding.petBreedEditText.setText(it.breed)
+                    binding.petBreedEditText.visibility = View.VISIBLE
+                    binding.petBreedSpinner.visibility = View.GONE
+                    binding.resetBreedButton.visibility = View.VISIBLE
+                } else {
+                    binding.petBreedSpinner.setSelection(getIndex(binding.petBreedSpinner, it.breed))
+                    binding.petBreedEditText.visibility = View.GONE
+                    binding.petBreedSpinner.visibility = View.VISIBLE
+                    binding.resetBreedButton.visibility = View.GONE
+                }
+            }
+        } else {
+            binding.petNameTextView.visibility = View.VISIBLE
+            binding.petTypeTextView.visibility = View.VISIBLE
+            binding.petBreedTextView.visibility = View.VISIBLE
+            binding.petAgeTextView.visibility = View.VISIBLE
+            binding.petGenderTextView.visibility = View.VISIBLE
+            binding.petColorTextView.visibility = View.VISIBLE
+            binding.petFeatureTextView.visibility = View.VISIBLE
+
+            binding.petNameEditText.visibility = View.GONE
+            binding.petTypeSpinner.visibility = View.GONE
+            binding.petBreedSpinner.visibility = View.GONE
+            binding.petAgeEditText.visibility = View.GONE
+            binding.petGenderSpinner.visibility = View.GONE
+            binding.petColorEditText.visibility = View.GONE
+            binding.petFeatureEditText.visibility = View.GONE
+
+            binding.editButton.visibility = View.VISIBLE
+            binding.saveButton.visibility = View.GONE
+            binding.petBreedEditText.visibility = View.GONE
+            binding.resetBreedButton.visibility = View.GONE
+        }
+    }
+
+    private fun getPetTypeIndex(petType: String): Int {
+        return when (petType) {
+            "Dog" -> 1 // '개'는 인덱스 1
+            "Cat" -> 2 // '고양이'는 인덱스 2
+            else -> 0 // 기본값
+        }
+    }
+
+    private fun getIndex(spinner: Spinner, myString: String): Int {
+        for (i in 0 until spinner.count) {
+            if (spinner.getItemAtPosition(i).toString().equals(myString, ignoreCase = true)) {
+                return i
+            }
+        }
+        return -1
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -135,24 +257,6 @@ class EditPetInfoFragment : Fragment() {
         // Spinner에 표시될 항목 배열을 정의합니다.
         val petTypes = arrayOf("클릭하여 종류를 선택해주세요", "개", "고양이")
         val petGenders = arrayOf("클릭하여 성별을 선택해주세요", "암컷", "수컷")
-
-        // 개와 고양이 품종 배열을 정의하고 가나다 순으로 정렬합니다.
-        val dogBreeds = arrayOf(
-            "비글", "비숑 프리제", "보더 콜리", "보스턴 테리어", "불독",
-            "치와와", "코커 스패니얼", "닥스훈트", "잉글리쉬 쉽독",
-            "골든 리트리버", "이탈리안 그레이하운드", "진도", "래브라도 리트리버",
-            "말티즈", "미니어처 핀셔", "파피용", "페키니즈", "포인터",
-            "포메라니안", "푸들", "퍼그", "사모예드", "슈나우저", "셰퍼드",
-            "셰틀랜드 쉽독", "시바 이누", "시추", "스피츠",
-            "웰시 코기", "요크셔 테리어"
-        ).sortedArray() + "기타"
-
-        val catBreeds = arrayOf(
-            "아비시니안", "아메리칸 쇼트헤어", "벵갈", "봄베이",
-            "브리티시 쇼트헤어", "칼리코", "메인쿤", "먼치킨",
-            "노르웨이 숲 고양이", "페르시안", "래그돌", "러시안 블루",
-            "스코티시 폴드", "샴", "시베리안", "스핑크스", "턱시도", "태비", "터키시 앙고라"
-        ).sortedArray() + "기타"
 
         // Spinner에 항목을 설정할 ArrayAdapter를 초기화합니다.
         val petTypeAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, petTypes)
@@ -225,6 +329,11 @@ class EditPetInfoFragment : Fragment() {
             binding.petBreedSpinner.setSelection(0)
         }
 
+        // 수정 버튼 클릭 시 수정 모드로 전환합니다.
+        binding.editButton.setOnClickListener {
+            enableEditing(true)
+        }
+
         // 저장 버튼 클릭 시 유효성 검사를 수행합니다.
         binding.saveButton.setOnClickListener {
             val selectedPetType = binding.petTypeSpinner.selectedItemPosition
@@ -235,13 +344,45 @@ class EditPetInfoFragment : Fragment() {
             if (selectedPetType == 0 || (selectedPetBreed == 0 && binding.petBreedEditText.visibility == View.GONE) || selectedPetGender == 0 || (binding.petBreedEditText.visibility == View.VISIBLE && binding.petBreedEditText.text.isEmpty())) {
                 Toast.makeText(requireContext(), "모든 항목을 선택해 주세요.", Toast.LENGTH_SHORT).show()
             } else {
-                // 폼 제출 로직: 예를 들어, 서버에 데이터 전송 또는 데이터베이스에 저장
-                Toast.makeText(requireContext(), "정보가 저장되었습니다.", Toast.LENGTH_SHORT).show()
+                // 반려동물 정보 업데이트
+                selectedPet?.let {
+                    it.name = binding.petNameEditText.text.toString()
+                    it.age = binding.petAgeEditText.text.toString().toInt()
+                    it.color = binding.petColorEditText.text.toString()
+                    it.feature = binding.petFeatureEditText.text.toString()
+                    it.type = when (binding.petTypeSpinner.selectedItem.toString()) {
+                        "개" -> "Dog"
+                        "고양이" -> "Cat"
+                        else -> binding.petTypeSpinner.selectedItem.toString()
+                    }
+                    it.gender = binding.petGenderSpinner.selectedItem.toString()
+                    it.breed = if (binding.petBreedEditText.visibility == View.VISIBLE) {
+                        binding.petBreedEditText.text.toString()
+                    } else {
+                        binding.petBreedSpinner.selectedItem.toString()
+                    }
+                    updatePetInfo(it)
+                }
             }
         }
     }
 
+    private fun updatePetInfo(pet: Pet) {
+        retrofitService.updatePet(pet.id, pet).enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    Toast.makeText(requireContext(), "정보가 업데이트되었습니다.", Toast.LENGTH_SHORT).show()
+                    enableEditing(false) // 정보 표시 모드로 전환
+                } else {
+                    Toast.makeText(requireContext(), "정보 업데이트에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                }
+            }
 
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Toast.makeText(requireContext(), "정보 업데이트에 실패했습니다.", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

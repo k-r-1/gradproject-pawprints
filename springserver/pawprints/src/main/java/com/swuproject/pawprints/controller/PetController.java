@@ -25,4 +25,9 @@ public class PetController {
     public List<Pet> getLostPetsByUserId(@PathVariable String userId) {
         return petService.getLostPetsByUserId(userId);
     }
+
+    @PostMapping("/{petId}")
+    public void updatePet(@PathVariable int petId, @RequestBody Pet pet) {
+        petService.updatePet(petId, pet);
+    }
 }
