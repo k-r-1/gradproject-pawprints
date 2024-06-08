@@ -1,3 +1,4 @@
+/*
 package com.swuproject.pawprints.service;
 
 import org.springframework.stereotype.Service;
@@ -20,3 +21,4 @@ public class MatchingService {
         return restTemplate.postForObject(flaskUrl, request, List.class);
     }
 }
+*/

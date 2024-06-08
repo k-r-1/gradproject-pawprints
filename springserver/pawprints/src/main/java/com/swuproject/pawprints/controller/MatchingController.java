@@ -1,4 +1,4 @@
-package com.swuproject.pawprints.controller;
+/* package com.swuproject.pawprints.controller;
 
 import com.swuproject.pawprints.service.MatchingService;
 import org.springframework.web.bind.annotation.*;
@@ -20,4 +20,4 @@ public class MatchingController {
     public List<Map<String, Object>> findSimilarSightings(@RequestBody Map<String, String> request) {
         return matchingService.findSimilarSightings(request);
     }
-}
+} */
