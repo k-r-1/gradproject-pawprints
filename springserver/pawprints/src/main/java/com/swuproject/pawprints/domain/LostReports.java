@@ -1,13 +1,9 @@
 package com.swuproject.pawprints.domain;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
-import javax.persistence.*;
-import java.time.LocalDateTime;
+import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@JsonSerialize(using = LostReportsSerializer.class)
 public class LostReports {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +13,7 @@ public class LostReports {
     private String lostTitle;
     private Double lostAreaLat;
     private Double lostAreaLng;
-    private LocalDateTime lostDate;
+    private String lostDate;
     private String lostLocation;
     private String lostDescription;
     private String lostContact;
@@ -26,83 +22,33 @@ public class LostReports {
     private List<LostReportsImage> images;
 
     // Getters and Setters
-    public Long getLostId() {
-        return lostId;
-    }
+    public Long getLostId() { return lostId; }
+    public void setLostId(Long lostId) { this.lostId = lostId; }
 
-    public void setLostId(Long lostId) {
-        this.lostId = lostId;
-    }
+    public Long getPetId() { return petId; }
+    public void setPetId(Long petId) { this.petId = petId; }
 
-    public Long getPetId() {
-        return petId;
-    }
+    public String getLostTitle() { return lostTitle; }
+    public void setLostTitle(String lostTitle) { this.lostTitle = lostTitle; }
 
-    public void setPetId(Long petId) {
-        this.petId = petId;
-    }
+    public Double getLostAreaLat() { return lostAreaLat; }
+    public void setLostAreaLat(Double lostAreaLat) { this.lostAreaLat = lostAreaLat; }
 
-    public String getLostTitle() {
-        return lostTitle;
-    }
+    public Double getLostAreaLng() { return lostAreaLng; }
+    public void setLostAreaLng(Double lostAreaLng) { this.lostAreaLng = lostAreaLng; }
 
-    public void setLostTitle(String lostTitle) {
-        this.lostTitle = lostTitle;
-    }
+    public String getLostDate() { return lostDate; }
+    public void setLostDate(String lostDate) { this.lostDate = lostDate; }
 
-    public Double getLostAreaLat() {
-        return lostAreaLat;
-    }
+    public String getLostLocation() { return lostLocation; }
+    public void setLostLocation(String lostLocation) { this.lostLocation = lostLocation; }
 
-    public void setLostAreaLat(Double lostAreaLat) {
-        this.lostAreaLat = lostAreaLat;
-    }
+    public String getLostDescription() { return lostDescription; }
+    public void setLostDescription(String lostDescription) { this.lostDescription = lostDescription; }
 
-    public Double getLostAreaLng() {
-        return lostAreaLng;
-    }
+    public String getLostContact() { return lostContact; }
+    public void setLostContact(String lostContact) { this.lostContact = lostContact; }
 
-    public void setLostAreaLng(Double lostAreaLng) {
-        this.lostAreaLng = lostAreaLng;
-    }
-
-    public LocalDateTime getLostDate() {
-        return lostDate;
-    }
-
-    public void setLostDate(LocalDateTime lostDate) {
-        this.lostDate = lostDate;
-    }
-
-    public String getLostLocation() {
-        return lostLocation;
-    }
-
-    public void setLostLocation(String lostLocation) {
-        this.lostLocation = lostLocation;
-    }
-
-    public String getLostDescription() {
-        return lostDescription;
-    }
-
-    public void setLostDescription(String lostDescription) {
-        this.lostDescription = lostDescription;
-    }
-
-    public String getLostContact() {
-        return lostContact;
-    }
-
-    public void setLos tContact(String lostContact) {
-        this.lostContact = lostContact;
-    }
-
-    public List<LostReportsImage> getImages() {
-        return images;
-    }
-
-    public void setImages(List<LostReportsImage> images) {
-        this.images = images;
-    }
+    public List<LostReportsImage> getImages() { return images; }
+    public void setImages(List<LostReportsImage> images) { this.images = images; }
 }
