@@ -2,25 +2,25 @@ package com.swuproject.pawprints.domain;
 
 import jakarta.persistence.*;
 
+import java.math.BigInteger;
+
 @Entity
 public class LostReportsImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long lostImageId;
+    private int lostImageId;
 
-    @ManyToOne
-    @JoinColumn(name = "lostId")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lostId", nullable = false)
     private LostReports lostReports;
 
     private String lostImagePath;
 
     // Getters and Setters
-    public Long getLostImageId() { return lostImageId; }
-    public void setLostImageId(Long lostImageId) { this.lostImageId = lostImageId; }
-
+    public int getLostImageId() { return lostImageId; }
+    public void setLostImageId(int lostImageId) { this.lostImageId = lostImageId; }
     public LostReports getLostReports() { return lostReports; }
     public void setLostReports(LostReports lostReports) { this.lostReports = lostReports; }
-
     public String getLostImagePath() { return lostImagePath; }
     public void setLostImagePath(String lostImagePath) { this.lostImagePath = lostImagePath; }
 }
