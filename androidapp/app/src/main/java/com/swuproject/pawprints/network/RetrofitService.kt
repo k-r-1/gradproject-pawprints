@@ -26,6 +26,9 @@ interface RetrofitService {
     @GET("/api/lost_reports/{petId}")
     fun getLostReportByPetId(@Path("petId") petId: Int): Call<LostReports>
 
+    @GET("/api/pets/{userId}/lost")
+    fun getLostPetsByUserId(@Path("userId") userId: String): Call<List<Pet>>
+
     @POST("/api/matching/find_similar_sightings") // 경로 수정
     fun findSimilarSightings(@Body requestBody: Map<String, String>): Call<List<SimilarSighting>>
 

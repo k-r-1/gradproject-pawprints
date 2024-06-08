@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.swuproject.pawprints.R
@@ -48,14 +47,12 @@ class MatchingFragment : Fragment() {
                 textSize = 16f
             }
             binding.petListSection.addView(loadingTextView)
-            fetchPets(userId)
+            fetchLostPets(userId) // 실종된 반려동물만 가져오기
         }
 
         // 매칭 버튼 클릭 이벤트 설정
-        val matchingButton: Button = binding.matchingButton
-        matchingButton.setOnClickListener {
+        binding.matchingButton.setOnClickListener {
             if (userId != null && selectedPetName != null) {
-                // 매칭 결과를 불러오는 로직 구현
                 findSimilarSightings(userId, selectedPetName!!)
             }
         }
@@ -63,36 +60,30 @@ class MatchingFragment : Fragment() {
         return root
     }
 
-    // 사용자 ID로 반려동물 목록 가져오기
-    private fun fetchPets(userId: String) {
-        retrofitService.getPetsByUserId(userId).enqueue(object : Callback<List<Pet>> {
+    // 사용자 ID로 실종된 반려동물 목록 가져오기
+    private fun fetchLostPets(userId: String) {
+        retrofitService.getLostPetsByUserId(userId).enqueue(object : Callback<List<Pet>> {
             override fun onResponse(call: Call<List<Pet>>, response: Response<List<Pet>>) {
                 if (response.isSuccessful) {
                     response.body()?.let { pets ->
-                        displayPets(pets)
+                        displayLostPets(pets)
                     }
+                } else {
+                    showError("반려동물 정보를 가져오는 데 실패했습니다.")
                 }
             }
 
             override fun onFailure(call: Call<List<Pet>>, t: Throwable) {
-                // 오류 처리
-                binding.petListSection.removeAllViews()
-                val errorTextView = TextView(requireContext()).apply {
-                    text = "반려동물 정보를 가져오는 데 실패했습니다."
-                    textSize = 16f
-                }
-                binding.petListSection.addView(errorTextView)
+                showError("반려동물 정보를 가져오는 데 실패했습니다.")
             }
         })
     }
 
-    // 반려동물 목록을 화면에 버튼으로 표시
-    private fun displayPets(pets: List<Pet>) {
+    // 실종된 반려동물 목록을 화면에 표시
+    private fun displayLostPets(pets: List<Pet>) {
         binding.petListSection.removeAllViews() // 기존에 추가된 뷰들을 모두 제거
 
         if (pets.isNotEmpty()) { // 반려동물 목록이 비어있지 않은 경우
-            val petNames = StringBuilder()
-
             for ((index, pet) in pets.withIndex()) {
                 val petName = TextView(requireContext()).apply {
                     text = pet.name
@@ -104,30 +95,21 @@ class MatchingFragment : Fragment() {
                         fetchLostReport(pet.id)
                     }
                 }
-
                 binding.petListSection.addView(petName)
-
-                if (index < pets.size - 1) {
-                    val separator = TextView(requireContext()).apply {
-                        text = " | "
-                        textSize = 16f
-                        setTextColor(Color.BLACK)
-                    }
-                    binding.petListSection.addView(separator)
-                    petNames.append(pet.name).append(" | ")
-                } else {
-                    petNames.append(pet.name)
-                }
             }
         } else { // 반려동물 목록이 비어있는 경우
-            val noDataTextView = TextView(requireContext()).apply {
-                text = "반려동물 정보가 없습니다."
-                textSize = 16f
-                setTextColor(Color.BLACK)
-                setPadding(16, 16, 16, 16)
-            }
-            binding.petListSection.addView(noDataTextView)
+            showError("실종된 반려동물 정보가 없습니다.")
         }
+    }
+
+    // 오류 메시지 표시
+    private fun showError(message: String) {
+        binding.petListSection.removeAllViews()
+        val errorTextView = TextView(requireContext()).apply {
+            text = message
+            textSize = 16f
+        }
+        binding.petListSection.addView(errorTextView)
     }
 
     // 반려동물 ID로 실종 신고 정보 가져오기
@@ -138,11 +120,13 @@ class MatchingFragment : Fragment() {
                     response.body()?.let { lostReport ->
                         displayLostReport(lostReport)
                     }
+                } else {
+                    showError("실종 신고 정보를 가져오는 데 실패했습니다.")
                 }
             }
 
             override fun onFailure(call: Call<LostReports>, t: Throwable) {
-                // 오류 처리
+                showError("실종 신고 정보를 가져오는 데 실패했습니다.")
             }
         })
     }
@@ -166,11 +150,13 @@ class MatchingFragment : Fragment() {
                     response.body()?.let { similarSightings ->
                         displaySimilarSightings(similarSightings)
                     }
+                } else {
+                    showError("유사한 목격 사례를 찾는 데 실패했습니다.")
                 }
             }
 
             override fun onFailure(call: Call<List<SimilarSighting>>, t: Throwable) {
-                // 오류 처리
+                showError("유사한 목격 사례를 찾는 데 실패했습니다.")
             }
         })
     }
