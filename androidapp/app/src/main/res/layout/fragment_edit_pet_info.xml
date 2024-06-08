@@ -52,45 +52,22 @@
             android:layout_gravity="center"
             android:layout_marginTop="3dp"/>
 
+        <Button
+            android:id="@+id/add_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="새로운 반려동물 등록"
+            android:textSize="14sp"
+            android:backgroundTint="#F88A67"
+            android:layout_marginTop="15dp"
+            app:cornerRadius="30dp"
+            android:layout_gravity="center"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="vertical"
-            android:paddingTop="20dp"> <!-- 여백 조정 -->
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                app:cardCornerRadius="50dp"
-                app:cardElevation="2dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="15dp">
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:id="@+id/pet_image"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
-                        android:contentDescription="Pet Image"
-                        android:src="@drawable/pet_image_background" />
-
-                    <ImageView
-                        android:id="@+id/camera_icon"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/twotone_add_a_photo_24"
-                        android:layout_gravity="center"
-                        android:layout_margin="8dp"
-                        android:contentDescription="Camera Icon" />
-
-                </FrameLayout>
-
-            </androidx.cardview.widget.CardView>
+            android:orientation="vertical" >
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -100,6 +77,7 @@
                 app:cardCornerRadius="8dp">
 
                 <LinearLayout
+                    android:id="@+id/pet_info_section"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -372,27 +350,64 @@
 
                     </LinearLayout>
 
+                    <!-- 등록 및 삭제 버튼 추가 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="end">
+
+                        <Button
+                            android:id="@+id/edit_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="수정"
+                            android:textSize="13sp"
+                            android:backgroundTint="@color/light_pink"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="5dp"
+                            app:cornerRadius="30dp"
+                            android:layout_gravity="center"
+                            android:visibility="gone"/>
+
+                        <Button
+                            android:id="@+id/delete_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="삭제"
+                            android:textSize="13sp"
+                            android:backgroundTint="@color/light_pink"
+                            android:layout_marginTop="5dp"
+                            app:cornerRadius="30dp"
+                            android:layout_gravity="center"
+                            android:visibility="gone"/>
+
+
+                    </LinearLayout>
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 
+
         <Button
-            android:id="@+id/edit_button"
+            android:id="@+id/update_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="수정하기"
+            android:text="저장"
             android:textSize="16sp"
             android:backgroundTint="@color/deep_pink"
             android:layout_marginTop="10dp"
             app:cornerRadius="30dp"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/save_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="저장"
+            android:text="등록"
             android:textSize="16sp"
             android:backgroundTint="@color/deep_pink"
             android:layout_marginTop="10dp"

@@ -3,6 +3,7 @@ package com.swuproject.pawprints.network
 import com.swuproject.pawprints.dto.SightReportResponse
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -41,4 +42,11 @@ interface RetrofitService {
 
     @POST("/api/pets/{petId}")
     fun updatePet(@Path("petId") petId: Int, @Body pet: Pet): Call<Void>
+
+    @DELETE("/api/pets/{petId}")
+    fun deletePet(@Path("petId") petId: Int): Call<Void>
+
+    @POST("/api/pets")
+    fun addPet(@Body pet: Pet): Call<Void>
+
 }

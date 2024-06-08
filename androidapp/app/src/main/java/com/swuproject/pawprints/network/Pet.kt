@@ -8,7 +8,8 @@ data class Pet(
     var age: Int,
     var gender: String,
     var color: String,
-    var feature: String
+    var feature: String,
+    var userId: String // userId 필드 추가
 )
 
 
