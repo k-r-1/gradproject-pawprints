@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pawprints</string>
+    <string name="app_name">발도장</string>
     <string name="title_predictedlocation">예상위치</string>
     <string name="title_matching">매칭</string>
     <string name="title_home">홈</string>

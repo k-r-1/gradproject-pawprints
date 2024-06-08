@@ -1,61 +1,87 @@
 package com.swuproject.pawprints.ui.home
 
-import android.content.Context
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.swuproject.pawprints.R
 import com.swuproject.pawprints.databinding.FragmentHomeTabLostBinding
+import com.swuproject.pawprints.network.LostReportResponse
+import com.swuproject.pawprints.network.RetrofitClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeTabLostFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HomeTabLostFragment : Fragment() {
-    lateinit var binding: FragmentHomeTabLostBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+
+    private var _binding: FragmentHomeTabLostBinding? = null
+    private val binding get() = _binding!!
+
+    private lateinit var adapter: LostRecyclerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Fragment의 레이아웃을 인플레이트합니다.
-        val rootView = inflater.inflate(R.layout.fragment_home_tab_lost, container, false)
+        _binding = FragmentHomeTabLostBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        // RecyclerView를 레이아웃에서 찾습니다.
-        val recyclerView = rootView.findViewById<RecyclerView>(R.id.hometab_lostRecyclerview)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        // LayoutManager를 설정합니다.
-        val layoutManager = LinearLayoutManager(context)
-        recyclerView.layoutManager = layoutManager
+        setupRecyclerView()
+        fetchLostReports()
+    }
 
-        //drawable 폴더의 파일을 Drawable 형식으로 변환
-        val photo1: Drawable? = context?.resources?.getDrawable(R.drawable.dog_sample, null)
+    private fun setupRecyclerView() {
+        adapter = LostRecyclerAdapter(arrayListOf())
+        binding.hometabLostRecyclerview.layoutManager = LinearLayoutManager(context)
+        binding.hometabLostRecyclerview.adapter = adapter
+    }
 
-        // RecyclerView에 표시할 데이터를 생성합니다.
-        val list = ArrayList<LostRecyclerData>()
-        list.add(LostRecyclerData(photo1, "title1", "dog", "w", "nowon", "20240426", "비선아파트", "빨간 목줄", "이슈니")) // Drawable 요소가 null이 됩니다.
-        list.add(LostRecyclerData(photo1, "title2", "dog", "w", "nowon", "20240426", "비선아파트", "빨간 목줄", "이슈니")) // Drawable 요소가 null이 됩니다.
-        list.add(LostRecyclerData(photo1, "title3", "dog", "w", "nowon", "20240426", "비선아파트", "빨간 목줄", "이슈니"))
-        list.add(LostRecyclerData(photo1, "title4", "dog", "w", "nowon", "20240426", "비선아파트", "빨간 목줄", "이슈니"))
-        // 어댑터를 생성하고 RecyclerView에 설정합니다.
-        val adapter = LostRecyclerAdapter(list)
-        recyclerView.adapter = adapter
+    private fun fetchLostReports() {
+        val service = RetrofitClient.getRetrofitService()
+        val requestCall = service.getLostReports()
 
-        return rootView
+        requestCall.enqueue(object : Callback<List<LostReportResponse>> {
+            override fun onResponse(call: Call<List<LostReportResponse>>, response: Response<List<LostReportResponse>>) {
+                if (response.isSuccessful) {
+                    val lostReports = response.body()
+                    if (lostReports != null) {
+                        val lostReportDataList = lostReports.map { report ->
+                            LostRecyclerData(
+                                report.images.map { it.lostImagePath },
+                                report.lostTitle,
+                                report.lostBreed,
+                                report.lostGender,
+                                "미상",
+                                report.lostDate,
+                                report.lostLocation,
+                                report.lostDescription,
+                                report.lostContact
+                            )
+                        }
+                        adapter.updateData(lostReportDataList)
+                    }
+                } else {
+                    Log.e("LostReportsAPI", "Error1: ${response.code()} ${response.message()}")
+                    response.errorBody()?.let {
+                        Log.e("LostReportsAPI", "Error body: ${it.string()}")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<LostReportResponse>>, t: Throwable) {
+                Log.e("LostReportsAPI", "Error2: ${t.message}")
+            }
+        })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
