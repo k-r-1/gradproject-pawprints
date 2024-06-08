@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface PetRepository extends JpaRepository<Pet, Integer> {
+    // Pet
     List<Pet> findByUserId(String userId);
 
     @Query("SELECT p FROM Pet p JOIN LostReports lr ON p.id = lr.petId WHERE p.userId = :userId")
