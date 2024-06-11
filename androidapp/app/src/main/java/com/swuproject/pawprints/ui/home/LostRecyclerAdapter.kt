@@ -21,7 +21,7 @@ class LostRecyclerAdapter(private val items: List<LostReportResponse>, private v
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
         val listener = View.OnClickListener {
-            Toast.makeText(it.context, "Clicked -> title : ${item.lostTitle}, breed : ${item.lostBreed}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(it.context, "Clicked -> title : ${item.lostTitle}, breed : ${item.petBreed}", Toast.LENGTH_SHORT).show()
         }
         holder.apply {
             bind(listener, item)
@@ -54,8 +54,8 @@ class LostRecyclerAdapter(private val items: List<LostReportResponse>, private v
                 photoImageView.setImageResource(R.drawable.dog_sample2) // 기본 이미지
             }
             titleTextView.text = item.lostTitle
-            breedTextView.text = item.lostBreed
-            genderageTextView.text = "${item.lostGender} / ${item.lostAge}"
+            breedTextView.text = item.petBreed
+            genderageTextView.text = "${item.petGender} / ${item.petAge}"
             areaTextView.text = "${item.lostAreaLat}, ${item.lostAreaLng}"
             dateTextView.text = item.lostDate
             locationTextView.text = item.lostLocation
