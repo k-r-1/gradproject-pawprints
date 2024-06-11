@@ -89,7 +89,11 @@ class SignUpActivity : AppCompatActivity() {
         retrofitService.checkUserId(userId).enqueue(object : Callback<Map<String, String>> {
             override fun onResponse(call: Call<Map<String, String>>, response: Response<Map<String, String>>) {
                 val responseBody = response.body()
-                val message = responseBody?.get("message") ?: "알 수 없는 오류"
+                val message = when {
+                    response.isSuccessful -> responseBody?.get("message") ?: "알 수 없는 오류"
+                    response.code() == 409 -> "이미 사용 중인 아이디입니다."
+                    else -> "오류: ${response.code()} ${response.message()}"
+                }
                 Toast.makeText(this@SignUpActivity, message, Toast.LENGTH_SHORT).show()
             }
 
@@ -111,7 +115,11 @@ class SignUpActivity : AppCompatActivity() {
         retrofitService.checkUserEmail(userEmail).enqueue(object : Callback<Map<String, String>> {
             override fun onResponse(call: Call<Map<String, String>>, response: Response<Map<String, String>>) {
                 val responseBody = response.body()
-                val message = responseBody?.get("message") ?: "알 수 없는 오류"
+                val message = when {
+                    response.isSuccessful -> responseBody?.get("message") ?: "알 수 없는 오류"
+                    response.code() == 409 -> "이미 사용 중인 이메일입니다."
+                    else -> "오류: ${response.code()} ${response.message()}"
+                }
                 Toast.makeText(this@SignUpActivity, message, Toast.LENGTH_SHORT).show()
             }
 
