@@ -206,7 +206,11 @@
                             android:layout_height="wrap_content"
                             android:text="재설정"
                             android:backgroundTint="#D86359"
-                            app:cornerRadius="30dp"
+                            app:cornerRadius="20dp"
+                            android:stateListAnimator="@null"
+                            android:padding="0dp"
+                            android:minWidth="60dp"
+                            android:minHeight="50dp"
                             android:visibility="gone"/>
 
                     </LinearLayout>
