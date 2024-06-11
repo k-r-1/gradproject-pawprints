@@ -4,6 +4,7 @@ import com.swuproject.pawprints.domain.LostReports;
 import com.swuproject.pawprints.domain.Pet;
 import com.swuproject.pawprints.dto.LostReportsImageResponse;
 import com.swuproject.pawprints.dto.LostReportsResponse;
+import com.swuproject.pawprints.dto.PetResponse;
 import com.swuproject.pawprints.repository.LostReportsRepository;
 import com.swuproject.pawprints.repository.PetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,11 +47,18 @@ public class LostReportsService {
 
             // Add pet's information
             Pet pet = lostReports.getPet();
+            PetResponse petResponse = new PetResponse();
             if (pet != null) {
-                response.getPet().setBreed(pet.getBreed());
-                response.getPet().setGender(pet.getGender());
-                response.getPet().setAge(pet.getAge());
+                petResponse.setBreed(pet.getBreed() != null ? pet.getBreed() : "정보 없음");
+                petResponse.setGender(pet.getGender() != null ? pet.getGender() : "정보 없음");
+                petResponse.setAge(pet.getAge() != 0 ? pet.getAge() : 0); // 나이는 0일 수 있습니다.
+            } else {
+                petResponse.setBreed("정보 없음");
+                petResponse.setGender("정보 없음");
+                petResponse.setAge(0);
             }
+
+            response.setPetResponse(petResponse);
 
             return response;
         }).collect(Collectors.toList());

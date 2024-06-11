@@ -29,12 +29,22 @@ public class LostReportsResponse {
 
     private Pet pet = new Pet();
 
+    private PetResponse pet2;
+
     public Pet getPet() {
         return pet;
     }
 
     public void setPet(Pet pet) {
         this.pet = pet;
+    }
+
+    public PetResponse getPetResponse() {
+        return pet2;
+    }
+
+    public void setPetResponse(PetResponse pet2) {
+        this.pet2 = pet2;
     }
 
     public String getPetBreed() {
