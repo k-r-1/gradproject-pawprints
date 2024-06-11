@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide
 import com.swuproject.pawprints.R
 import com.swuproject.pawprints.databinding.ItemHometabLostRecyclerBinding
 import com.swuproject.pawprints.dto.LostReportResponse
-import com.swuproject.pawprints.dto.SightReportResponse
 
 class LostRecyclerAdapter(private val items: List<LostReportResponse>, private val context: Context) : RecyclerView.Adapter<LostRecyclerAdapter.ViewHolder>() {
 
@@ -49,7 +48,11 @@ class LostRecyclerAdapter(private val items: List<LostReportResponse>, private v
         fun bind(listener: View.OnClickListener, item: LostReportResponse) {
             val firstImage = item.lostImages.firstOrNull()?.lostImagePath
             if (firstImage != null) {
-                Glide.with(context).load(firstImage).into(photoImageView)
+                // gs:// URL을 https://storage.googleapis.com/로 변환
+                val imageUrl = firstImage.replace("gs://", "https://storage.googleapis.com/")
+
+                // Glide를 사용해 이미지 로드
+                Glide.with(context).load(imageUrl).into(photoImageView)
             } else {
                 photoImageView.setImageResource(R.drawable.dog_sample2) // 기본 이미지
             }

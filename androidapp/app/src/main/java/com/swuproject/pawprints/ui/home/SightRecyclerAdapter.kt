@@ -45,7 +45,11 @@ class SightRecyclerAdapter(private val items: List<SightReportResponse>, private
         fun bind(listener: View.OnClickListener, item: SightReportResponse) {
             val firstImage = item.sightImages.firstOrNull()?.sightImagePath
             if (firstImage != null) {
-                Glide.with(context).load(firstImage).into(photoImageView)
+                // gs:// URL을 https://storage.googleapis.com/로 변환
+                val imageUrl = firstImage.replace("gs://", "https://storage.googleapis.com/")
+
+                // Glide를 사용해 이미지 로드
+                Glide.with(context).load(imageUrl).into(photoImageView)
             } else {
                 photoImageView.setImageResource(R.drawable.dog_sample2) // 기본 이미지
             }
