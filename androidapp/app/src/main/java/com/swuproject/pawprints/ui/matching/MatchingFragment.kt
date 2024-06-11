@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.swuproject.pawprints.R
 import com.swuproject.pawprints.common.Utils
@@ -25,6 +26,7 @@ class MatchingFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var retrofitService: RetrofitService
     private var selectedPetName: String? = null // 선택된 반려동물 이름 저장
+    private var selectedTextView: TextView? = null // 선택된 텍스트뷰 저장
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -84,15 +86,25 @@ class MatchingFragment : Fragment() {
         binding.petListSection.removeAllViews() // 기존에 추가된 뷰들을 모두 제거
 
         if (pets.isNotEmpty()) { // 반려동물 목록이 비어있지 않은 경우
-            for ((index, pet) in pets.withIndex()) {
+            for (pet in pets) {
                 val petName = TextView(requireContext()).apply {
                     text = pet.name
                     textSize = 16f
                     setTextColor(Color.BLACK)
                     setPadding(16, 16, 16, 16)
                     setOnClickListener {
-                        selectedPetName = pet.name
-                        fetchLostReport(pet.id)
+                        // 이미 선택된 반려동물을 다시 클릭하면 선택 해제
+                        if (selectedPetName == pet.name) {
+                            selectedPetName = null
+                            setTextColor(Color.BLACK)
+                            selectedTextView = null
+                        } else {
+                            selectedPetName = pet.name
+                            setTextColor(resources.getColor(R.color.deep_pink))
+                            selectedTextView?.setTextColor(Color.BLACK) // 이전 선택 해제
+                            selectedTextView = this
+                            fetchLostReport(pet.id)
+                        }
                     }
                 }
                 binding.petListSection.addView(petName)
@@ -121,14 +133,19 @@ class MatchingFragment : Fragment() {
                         displayLostReport(lostReport)
                     }
                 } else {
-                    showError("실종 신고 정보를 가져오는 데 실패했습니다.")
+                    showErrorToast("실종 신고 정보를 가져오는 데 실패했습니다.")
                 }
             }
 
             override fun onFailure(call: Call<LostReports>, t: Throwable) {
-                showError("실종 신고 정보를 가져오는 데 실패했습니다.")
+                showErrorToast("실종 신고 정보를 가져오는 데 실패했습니다.")
             }
         })
+    }
+
+    // 토스트 메시지로 오류 표시
+    private fun showErrorToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     // 실종 신고 정보를 화면에 표시
