@@ -58,7 +58,8 @@
             android:layout_height="wrap_content"
             android:text="새로운 반려동물 등록"
             android:textSize="14sp"
-            android:backgroundTint="#F88A67"
+            android:stateListAnimator="@null"
+            android:backgroundTint="#F68562"
             android:layout_marginTop="15dp"
             app:cornerRadius="30dp"
             android:layout_gravity="center"/>
@@ -94,6 +95,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="이름"
+                            android:textColor="@color/black"
                             android:textSize="18sp"
                             android:layout_marginEnd="8dp"/> <!-- 여백 조정 -->
 
@@ -130,6 +132,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="종류"
+                            android:textColor="@color/black"
                             android:textSize="18sp"
                             android:layout_marginEnd="8dp"/> <!-- 여백 조정 -->
 
@@ -164,6 +167,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="품종"
+                            android:textColor="@color/black"
                             android:textSize="18sp"
                             android:layout_marginEnd="8dp"/> <!-- 여백 조정 -->
 
@@ -218,6 +222,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="나이"
+                            android:textColor="@color/black"
                             android:textSize="18sp"
                             android:layout_marginEnd="8dp"/> <!-- 여백 조정 -->
 
@@ -255,6 +260,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="성별"
+                            android:textColor="@color/black"
                             android:textSize="18sp"
                             android:layout_marginEnd="8dp"/> <!-- 여백 조정 -->
 
@@ -289,6 +295,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="색깔"
+                            android:textColor="@color/black"
                             android:textSize="18sp"
                             android:layout_marginEnd="8dp"/> <!-- 여백 조정 -->
 
@@ -325,6 +332,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="특징"
+                            android:textColor="@color/black"
                             android:textSize="18sp"
                             android:layout_marginEnd="8dp"/> <!-- 여백 조정 -->
 
@@ -335,7 +343,9 @@
                             android:layout_weight="1"
                             android:textSize="16sp"
                             android:background="@drawable/edit_background"
-                            android:padding="8dp"/>
+                            android:padding="8dp"
+                            android:maxLines="10"
+                            android:scrollHorizontally="false"/>
 
                         <EditText
                             android:id="@+id/pet_feature_edit_text"
@@ -343,10 +353,14 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textSize="16sp"
-                            android:inputType="text"
+                            android:inputType="textMultiLine"
                             android:background="@drawable/edit_background"
                             android:padding="8dp"
-                            android:visibility="gone"/> <!-- EditText 배경 추가 및 여백 조정 -->
+                            android:visibility="gone"
+                            android:lines="5"
+                            android:maxLines="10"
+                            android:scrollHorizontally="false"/>
+
 
                     </LinearLayout>
 
@@ -363,11 +377,14 @@
                             android:layout_height="wrap_content"
                             android:text="수정"
                             android:textSize="13sp"
+                            android:stateListAnimator="@null"
                             android:backgroundTint="@color/light_pink"
                             android:layout_marginTop="5dp"
                             android:layout_marginRight="5dp"
-                            app:cornerRadius="30dp"
                             android:layout_gravity="center"
+                            android:padding="0dp"
+                            android:minWidth="50dp"
+                            android:minHeight="40dp"
                             android:visibility="gone"/>
 
                         <Button
@@ -376,10 +393,13 @@
                             android:layout_height="wrap_content"
                             android:text="삭제"
                             android:textSize="13sp"
+                            android:stateListAnimator="@null"
                             android:backgroundTint="@color/light_pink"
                             android:layout_marginTop="5dp"
-                            app:cornerRadius="30dp"
                             android:layout_gravity="center"
+                            android:padding="0dp"
+                            android:minWidth="50dp"
+                            android:minHeight="40dp"
                             android:visibility="gone"/>
 
 
@@ -398,6 +418,8 @@
             android:text="저장"
             android:textSize="16sp"
             android:backgroundTint="@color/deep_pink"
+            android:stateListAnimator="@null"
+            android:textStyle="bold"
             android:layout_marginTop="10dp"
             app:cornerRadius="30dp"
             android:layout_gravity="center"
@@ -410,6 +432,8 @@
             android:text="등록"
             android:textSize="16sp"
             android:backgroundTint="@color/deep_pink"
+            android:stateListAnimator="@null"
+            android:textStyle="bold"
             android:layout_marginTop="10dp"
             app:cornerRadius="30dp"
             android:layout_gravity="center"
