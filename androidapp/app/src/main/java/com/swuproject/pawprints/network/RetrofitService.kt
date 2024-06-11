@@ -6,6 +6,7 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -15,6 +16,9 @@ interface RetrofitService {
 
     @POST("/api/users/signin")
     fun signin(@Body requestBody: Map<String, String>): Call<Map<String, String>>
+
+    @PUT("/api/users/update")
+    fun updateUser(@Body userUpdates: Map<String, String>): Call<Void>
 
     @GET("/api/users/check-id")
     fun checkUserId(@Query("userId") userId: String): Call<Map<String, String>>
