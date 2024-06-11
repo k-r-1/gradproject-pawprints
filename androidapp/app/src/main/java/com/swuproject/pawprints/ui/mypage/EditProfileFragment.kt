@@ -65,7 +65,7 @@ class EditProfileFragment : Fragment() {
         })
 
         binding.btnCheckEmail.setOnClickListener {
-            val email = binding.editEmail.text.toString()
+            val email = binding.editEmail.text.toString().trim()
             if (email.isNotEmpty()) {
                 RetrofitClient.getRetrofitService().checkUserEmail(email).enqueue(object : Callback<Map<String, String>> {
                     override fun onResponse(call: Call<Map<String, String>>, response: Response<Map<String, String>>) {
@@ -87,10 +87,10 @@ class EditProfileFragment : Fragment() {
         }
 
         binding.saveButton.setOnClickListener {
-            val updatedName = binding.editName.text.toString()
-            val updatedEmail = binding.editEmail.text.toString()
-            val updatedNickname = binding.editNickname.text.toString()
-            val updatedPhone = binding.editPhone.text.toString()
+            val updatedName = binding.editName.text.toString().trim()
+            val updatedEmail = binding.editEmail.text.toString().trim()
+            val updatedNickname = binding.editNickname.text.toString().trim()
+            val updatedPhone = binding.editPhone.text.toString().trim()
 
             if (updatedName.isEmpty() || updatedEmail.isEmpty() || updatedNickname.isEmpty() || updatedPhone.isEmpty()) {
                 Toast.makeText(requireContext(), "모든 필드를 채워주세요.", Toast.LENGTH_SHORT).show()
