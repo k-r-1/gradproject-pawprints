@@ -102,35 +102,58 @@ class EditProfileFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            val userUpdates = mapOf(
-                "userId" to userId.orEmpty(),
-                "userName" to updatedName,
-                "userEmail" to updatedEmail,
-                "userNickname" to updatedNickname,
-                "userPhone" to updatedPhone
-            )
-
-            RetrofitClient.getRetrofitService().updateUser(userUpdates).enqueue(object : Callback<Void> {
-                override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                    if (response.isSuccessful) {
-                        with(sharedPreferences.edit()) {
-                            putString("user_name", updatedName)
-                            putString("user_email", updatedEmail)
-                            putString("user_nickname", updatedNickname)
-                            putString("user_phone", updatedPhone)
-                            apply()
+            // 이메일 중복 확인 다시 한번 수행
+            if (updatedEmail != userEmail) {
+                RetrofitClient.getRetrofitService().checkUserEmail(updatedEmail).enqueue(object : Callback<Map<String, String>> {
+                    override fun onResponse(call: Call<Map<String, String>>, response: Response<Map<String, String>>) {
+                        if (response.isSuccessful && response.body()?.get("message") == "사용 가능한 이메일입니다.") {
+                            saveUserProfile(userId, updatedName, updatedEmail, updatedNickname, updatedPhone)
+                        } else {
+                            Toast.makeText(requireContext(), "이미 사용 중인 이메일입니다.", Toast.LENGTH_SHORT).show()
                         }
-                        Toast.makeText(requireContext(), "정보가 성공적으로 수정되었습니다.", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(requireContext(), "정보 수정에 실패했습니다.", Toast.LENGTH_SHORT).show()
                     }
-                }
 
-                override fun onFailure(call: Call<Void>, t: Throwable) {
-                    Toast.makeText(requireContext(), "정보 수정 중 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
-                }
-            })
+                    override fun onFailure(call: Call<Map<String, String>>, t: Throwable) {
+                        Toast.makeText(requireContext(), "이메일 중복 확인 중 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                })
+            } else {
+                saveUserProfile(userId, updatedName, updatedEmail, updatedNickname, updatedPhone)
+            }
         }
+    }
+
+    private fun saveUserProfile(userId: String?, updatedName: String, updatedEmail: String, updatedNickname: String, updatedPhone: String) {
+        val sharedPreferences = requireActivity().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+
+        val userUpdates = mapOf(
+            "userId" to userId.orEmpty(),
+            "userName" to updatedName,
+            "userEmail" to updatedEmail,
+            "userNickname" to updatedNickname,
+            "userPhone" to updatedPhone
+        )
+
+        RetrofitClient.getRetrofitService().updateUser(userUpdates).enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    with(sharedPreferences.edit()) {
+                        putString("user_name", updatedName)
+                        putString("user_email", updatedEmail)
+                        putString("user_nickname", updatedNickname)
+                        putString("user_phone", updatedPhone)
+                        apply()
+                    }
+                    Toast.makeText(requireContext(), "정보가 성공적으로 수정되었습니다.", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(requireContext(), "정보 수정에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Toast.makeText(requireContext(), "정보 수정 중 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     override fun onDestroyView() {
