@@ -2,8 +2,6 @@ package com.swuproject.pawprints.domain;
 
 import jakarta.persistence.*;
 
-import java.math.BigInteger;
-
 @Entity
 public class LostReportsImage {
     @Id

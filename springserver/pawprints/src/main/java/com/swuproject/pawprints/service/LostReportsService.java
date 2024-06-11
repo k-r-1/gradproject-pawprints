@@ -1,10 +1,11 @@
 package com.swuproject.pawprints.service;
 
 import com.swuproject.pawprints.domain.LostReports;
+import com.swuproject.pawprints.domain.Pet;
 import com.swuproject.pawprints.dto.LostReportsImageResponse;
 import com.swuproject.pawprints.dto.LostReportsResponse;
-import com.swuproject.pawprints.dto.PetResponse;
 import com.swuproject.pawprints.repository.LostReportsRepository;
+import com.swuproject.pawprints.repository.PetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,20 +18,24 @@ public class LostReportsService {
     @Autowired
     private LostReportsRepository lostReportsRepository;
 
+    @Autowired
+    private PetRepository petRepository;
+
     public List<LostReportsResponse> getAllLostReports() {
         List<LostReports> lostReportsList = lostReportsRepository.findAll();
 
-        return lostReportsList.stream().map(lostReport -> {
+        return lostReportsList.stream().map(lostReports -> {
             LostReportsResponse response = new LostReportsResponse();
-            response.setLostId(lostReport.getLostId());
-            response.setLostTitle(lostReport.getLostTitle());
-            response.setLostAreaLat(lostReport.getLostAreaLat());
-            response.setLostAreaLng(lostReport.getLostAreaLng());
-            response.setLostDate(lostReport.getLostDate());
-            response.setLostLocation(lostReport.getLostLocation());
-            response.setLostDescription(lostReport.getLostDescription());
+            response.setLostId(lostReports.getLostId());
+            response.setPet(lostReports.getPet());
+            response.setLostTitle(lostReports.getLostTitle());
+            response.setLostAreaLat(lostReports.getLostAreaLat());
+            response.setLostAreaLng(lostReports.getLostAreaLng());
+            response.setLostDate(lostReports.getLostDate());
+            response.setLostLocation(lostReports.getLostLocation());
+            response.setLostDescription(lostReports.getLostDescription());
             response.setLostImages(
-                    lostReport.getLostImages().stream()
+                    lostReports.getLostImages().stream()
                             .map(image -> {
                                 LostReportsImageResponse imageResponse = new LostReportsImageResponse();
                                 imageResponse.setLostImageId(image.getLostImageId());
@@ -39,20 +44,13 @@ public class LostReportsService {
                             }).collect(Collectors.toList())
             );
 
-            // Breed
-            PetResponse breedResponse = new PetResponse();
-            breedResponse.setBreed(lostReport.getBreed().getBreed());
-            response.setBreed(breedResponse);
-
-            // Gender
-            PetResponse genderResponse = new PetResponse();
-            genderResponse.setGender(lostReport.getGender().getGender());
-            response.setGender(genderResponse);
-
-            // Age
-            PetResponse ageResponse = new PetResponse();
-            ageResponse.setAge(lostReport.getAge().getAge());
-            response.setAge(ageResponse);
+            // Add pet's information
+            Pet pet = lostReports.getPet();
+            if (pet != null) {
+                response.getPet().setBreed(pet.getBreed());
+                response.getPet().setGender(pet.getGender());
+                response.getPet().setAge(pet.getAge());
+            }
 
             return response;
         }).collect(Collectors.toList());

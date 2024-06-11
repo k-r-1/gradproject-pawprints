@@ -1,24 +1,24 @@
 package com.swuproject.pawprints.dto;
 
+import com.swuproject.pawprints.domain.Pet;
+
 import java.util.Date;
 import java.util.List;
 
 public class LostReportsResponse {
     private int lostId;
-    private int petId;
+    private String petBreed;
+    private String petGender;
+    private int petAge;
     private String lostTitle;
     private Double lostAreaLat;
     private Double lostAreaLng;
     private Date lostDate;
     private String lostLocation;
     private String lostDescription;
-    private String lostContact;
     private List<LostReportsImageResponse> lostImages;
-    private PetResponse breed;
-    private PetResponse gender;
-    private PetResponse age;
 
-    // Getters and Setters
+
     public int getLostId() {
         return lostId;
     }
@@ -27,12 +27,38 @@ public class LostReportsResponse {
         this.lostId = lostId;
     }
 
-    public int getPetId() {
-        return petId;
+    private Pet pet = new Pet();
+
+    public Pet getPet() {
+        return pet;
     }
 
-    public void setPetId(int petId) {
-        this.petId = petId;
+    public void setPet(Pet pet) {
+        this.pet = pet;
+    }
+
+    public String getPetBreed() {
+        return petBreed;
+    }
+
+    public void setPetBreed(String petBreed) {
+        this.petBreed = petBreed;
+    }
+
+    public String getPetGender() {
+        return petGender;
+    }
+
+    public void setPetGender(String petGender) {
+        this.petGender = petGender;
+    }
+
+    public int getPetAge() {
+        return petAge;
+    }
+
+    public void setPetAge(int petAge) {
+        this.petAge = petAge;
     }
 
     public String getLostTitle() {
@@ -83,43 +109,11 @@ public class LostReportsResponse {
         this.lostDescription = lostDescription;
     }
 
-    public String getLostContact() {
-        return lostContact;
-    }
-
-    public void setLostContact(String lostContact) {
-        this.lostContact = lostContact;
-    }
-
     public List<LostReportsImageResponse> getLostImages() {
         return lostImages;
     }
 
     public void setLostImages(List<LostReportsImageResponse> lostImages) {
         this.lostImages = lostImages;
-    }
-
-    public PetResponse getBreed() {
-        return breed;
-    }
-
-    public void setBreed(PetResponse breed) {
-        this.breed = breed;
-    }
-
-    public PetResponse getGender() {
-        return gender;
-    }
-
-    public void setGender(PetResponse gender) {
-        this.gender = gender;
-    }
-
-    public PetResponse getAge() {
-        return age;
-    }
-
-    public void setAge(PetResponse age) {
-        this.age = age;
     }
 }

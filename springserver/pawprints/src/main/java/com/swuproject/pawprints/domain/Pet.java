@@ -2,9 +2,15 @@ package com.swuproject.pawprints.domain;
 
 import jakarta.persistence.*;
 
+import java.math.BigInteger;
+import java.util.List;
+
 @Entity
 @Table(name = "pets")
 public class Pet {
+    @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<LostReports> lostReports;
+
     // Pet
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +40,7 @@ public class Pet {
 
     @Column(name = "pet_feature", nullable = false)
     private String feature;
+
 
     // Getters and Setters
     public int getId() {
