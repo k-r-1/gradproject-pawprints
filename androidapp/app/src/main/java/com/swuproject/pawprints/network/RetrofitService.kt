@@ -1,6 +1,7 @@
 package com.swuproject.pawprints.network
 
 import com.swuproject.pawprints.dto.SightReportResponse
+import com.swuproject.pawprints.dto.LostReportResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
