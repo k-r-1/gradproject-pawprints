@@ -148,6 +148,7 @@
                 android:textSize="23sp"
                 android:backgroundTint="@color/deep_pink"
                 app:cornerRadius="20dp"
+                android:stateListAnimator="@null"
                 android:layout_marginTop="30dp" />
 
             <Button

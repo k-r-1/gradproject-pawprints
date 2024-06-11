@@ -98,6 +98,7 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="#D86359"
                     android:text="중복확인"
+                    android:stateListAnimator="@null"
                     android:textSize="13sp"
                     app:cornerRadius="20dp"
                     android:layout_marginStart="8dp"
@@ -242,6 +243,8 @@
                 android:backgroundTint="@color/deep_pink"
                 android:layout_marginTop="20dp"
                 app:cornerRadius="30dp"
+                android:stateListAnimator="@null"
+                android:textStyle="bold"
                 android:layout_gravity="center"/>
         </LinearLayout>
     </LinearLayout>
