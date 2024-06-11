@@ -31,7 +31,6 @@ public class LostReportsService {
             response.setLostId(lostReports.getLostId());
             response.setPetId(lostReports.getPetId());
             List<Pet> petList = petRepository.findLostPetsByPetId(lostReports.getPetId());
-            //Pet pet = (Pet) petRepository.findLostPetsByPetId(lostReports.getPetId());
             response.setPetBreed(petList.get(0).getBreed());
             response.setPetGender(petList.get(0).getGender());
             response.setPetAge(petList.get(0).getAge());
@@ -50,20 +49,6 @@ public class LostReportsService {
                                 return imageResponse;
                             }).collect(Collectors.toList())
             );
-
-            /*Pet pet = lostReports.getPet();
-            PetResponse petResponse = new PetResponse();
-            if (pet != null) {
-                petResponse.setBreed(pet.getBreed() != null ? pet.getBreed() : "정보 없음");
-                petResponse.setGender(pet.getGender() != null ? pet.getGender() : "정보 없음");
-                petResponse.setAge(pet.getAge() != 0 ? pet.getAge() : 0); // 나이는 0일 수 있습니다.
-            } else {
-                petResponse.setBreed("정보 없음");
-                petResponse.setGender("정보 없음");
-                petResponse.setAge(0);
-            }
-
-            response.setPetResponse(petResponse); */
 
             return response;
         }).collect(Collectors.toList());
