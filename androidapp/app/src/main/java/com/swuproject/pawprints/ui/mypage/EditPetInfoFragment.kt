@@ -114,6 +114,7 @@ class EditPetInfoFragment : Fragment() {
                             binding.deleteButton.visibility = View.GONE
                             binding.editButton.visibility = View.GONE
                             binding.updateButton.visibility = View.GONE
+                            binding.saveButton.visibility = View.GONE
                             clearPetDetails()
                             resetEditMode()
                         } else {
@@ -128,6 +129,7 @@ class EditPetInfoFragment : Fragment() {
                             selectedTextView = this
                             binding.deleteButton.visibility = View.VISIBLE // 삭제 버튼 보이기
                             binding.editButton.visibility = View.VISIBLE // 수정 버튼 보이기
+                            binding.saveButton.visibility = View.GONE // 저장 버튼 숨기기
                         }
                     }
                 }
@@ -437,6 +439,18 @@ class EditPetInfoFragment : Fragment() {
         binding.addButton.setOnClickListener {
             clearPetDetails()
             resetEditMode()
+
+            // EditText 초기화
+            binding.petNameEditText.setText("")
+            binding.petAgeEditText.setText("")
+            binding.petColorEditText.setText("")
+            binding.petFeatureEditText.setText("")
+
+            // Spinner 초기화
+            binding.petTypeSpinner.setSelection(0)
+            binding.petGenderSpinner.setSelection(0)
+            binding.petBreedSpinner.setSelection(0)
+
             binding.petNameEditText.visibility = View.VISIBLE
             binding.petTypeSpinner.visibility = View.VISIBLE
             binding.petBreedSpinner.visibility = View.VISIBLE
