@@ -7,8 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.swuproject.pawprints.R
 import com.swuproject.pawprints.databinding.FragmentHomeTabLostBinding
-import com.swuproject.pawprints.network.LostReportResponse
+import com.swuproject.pawprints.databinding.FragmentHomeTabSightBinding
+import com.swuproject.pawprints.dto.LostReportResponse
+import com.swuproject.pawprints.dto.SightReportResponse
 import com.swuproject.pawprints.network.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -16,72 +20,45 @@ import retrofit2.Response
 
 class HomeTabLostFragment : Fragment() {
 
-    private var _binding: FragmentHomeTabLostBinding? = null
-    private val binding get() = _binding!!
+    lateinit var binding: FragmentHomeTabLostBinding
 
-    private lateinit var adapter: LostRecyclerAdapter
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentHomeTabLostBinding.inflate(inflater, container, false)
-        return binding.root
+        binding = FragmentHomeTabLostBinding.inflate(inflater, container, false)
+        val rootView = binding.root
+
+        val recyclerView = rootView.findViewById<RecyclerView>(R.id.hometab_lostRecyclerview)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+
+        fetchLostReports { lostReports ->
+            val adapter = LostRecyclerAdapter(lostReports, requireContext())
+            recyclerView.adapter = adapter
+        }
+
+        return rootView
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        setupRecyclerView()
-        fetchLostReports()
-    }
-
-    private fun setupRecyclerView() {
-        adapter = LostRecyclerAdapter(arrayListOf())
-        binding.hometabLostRecyclerview.layoutManager = LinearLayoutManager(context)
-        binding.hometabLostRecyclerview.adapter = adapter
-    }
-
-    private fun fetchLostReports() {
-        val service = RetrofitClient.getRetrofitService()
-        val requestCall = service.getLostReports()
-
-        requestCall.enqueue(object : Callback<List<LostReportResponse>> {
-            override fun onResponse(call: Call<List<LostReportResponse>>, response: Response<List<LostReportResponse>>) {
+    private fun fetchLostReports(callback: (List<LostReportResponse>) -> Unit) {
+        val retrofitService = RetrofitClient.getRetrofitService()
+        retrofitService.getLostReports().enqueue(object : Callback<List<LostReportResponse>> {
+            override fun onResponse(
+                call: Call<List<LostReportResponse>>,
+                response: Response<List<LostReportResponse>>
+            ) {
                 if (response.isSuccessful) {
-                    val lostReports = response.body()
-                    if (lostReports != null) {
-                        val lostReportDataList = lostReports.map { report ->
-                            LostRecyclerData(
-                                report.images.map { it.lostImagePath },
-                                report.lostTitle,
-                                report.lostBreed,
-                                report.lostGender,
-                                "미상",
-                                report.lostDate,
-                                report.lostLocation,
-                                report.lostDescription,
-                                report.lostContact
-                            )
-                        }
-                        adapter.updateData(lostReportDataList)
-                    }
-                } else {
-                    Log.e("LostReportsAPI", "Error1: ${response.code()} ${response.message()}")
-                    response.errorBody()?.let {
-                        Log.e("LostReportsAPI", "Error body: ${it.string()}")
-                    }
+                    callback(response.body() ?: emptyList())
                 }
             }
 
             override fun onFailure(call: Call<List<LostReportResponse>>, t: Throwable) {
-                Log.e("LostReportsAPI", "Error2: ${t.message}")
+                // 실패 처리
             }
         })
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

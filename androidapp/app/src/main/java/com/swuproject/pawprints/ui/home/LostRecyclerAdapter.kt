@@ -1,49 +1,68 @@
 package com.swuproject.pawprints.ui.home
 
+import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.swuproject.pawprints.R
 import com.swuproject.pawprints.databinding.ItemHometabLostRecyclerBinding
+import com.swuproject.pawprints.dto.LostReportResponse
+import com.swuproject.pawprints.dto.SightReportResponse
 
-class LostRecyclerAdapter(private var items: List<LostRecyclerData>) :
-    RecyclerView.Adapter<LostRecyclerAdapter.LostViewHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LostViewHolder {
-        val binding = ItemHometabLostRecyclerBinding.inflate(
-            LayoutInflater.from(parent.context), parent, false)
-        return LostViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: LostViewHolder, position: Int) {
-        holder.bind(items[position])
-    }
+class LostRecyclerAdapter(private val items: List<LostReportResponse>, private val context: Context) : RecyclerView.Adapter<LostRecyclerAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int = items.size
 
-    fun updateData(newItems: List<LostRecyclerData>) {
-        items = newItems
-        notifyDataSetChanged()
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val item = items[position]
+        val listener = View.OnClickListener {
+            Toast.makeText(it.context, "Clicked -> title : ${item.lostTitle}, breed : ${item.lostBreed}", Toast.LENGTH_SHORT).show()
+        }
+        holder.apply {
+            bind(listener, item)
+            itemView.tag = item
+        }
     }
 
-    inner class LostViewHolder(private val binding: ItemHometabLostRecyclerBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val inflatedView = LayoutInflater.from(parent.context).inflate(R.layout.item_hometab_lost_recycler, parent, false)
+        return ViewHolder(inflatedView, context)
+    }
 
-        fun bind(item: LostRecyclerData) {
-            binding.tvHometabLostrecyclerTitle.text = item.lostTitle
-            binding.tvHometabLostrecyclerBreed.text = item.lostBreed
-            binding.tvHometabLostrecyclerGender.text = item.lostGender
-            binding.tvHometabLostrecyclerArea.text = item.lostLocation
-            binding.tvHometabLostrecyclerDate.text = item.lostDate
-            binding.tvHometabLostrecyclerFeature.text = item.lostDescription
-            binding.tvHometabLostrecyclerContact.text = item.lostContact
+    class ViewHolder(v: View, private val context: Context) : RecyclerView.ViewHolder(v) {
+        private var view: View = v
+        private var photoImageView: ImageView = v.findViewById(R.id.iv_hometab_lostrecycler_photo)
+        private var titleTextView: TextView = v.findViewById(R.id.tv_hometab_lostrecycler_title)
+        private var breedTextView: TextView = v.findViewById(R.id.tv_hometab_lostrecycler_breed)
+        private var genderageTextView: TextView = v.findViewById(R.id.tv_hometab_lostrecycler_gender)
+        private var areaTextView: TextView = v.findViewById(R.id.tv_hometab_lostrecycler_area)
+        private var dateTextView: TextView = v.findViewById(R.id.tv_hometab_lostrecycler_date)
+        private var locationTextView: TextView = v.findViewById(R.id.tv_hometab_lostrecycler_location)
+        private var featureTextView: TextView = v.findViewById(R.id.tv_hometab_lostrecycler_feature)
+        private var contactTextView: TextView = v.findViewById(R.id.tv_hometab_lostrecycler_contact)
 
-            // 이미지 로드
-            if (item.lostImagePaths.isNotEmpty()) {
-                Glide.with(binding.ivHometabLostrecyclerPhoto.context)
-                    .load(item.lostImagePaths[0]) // 첫 번째 이미지를 로드
-                    .into(binding.ivHometabLostrecyclerPhoto)
+        fun bind(listener: View.OnClickListener, item: LostReportResponse) {
+            val firstImage = item.lostImages.firstOrNull()?.lostImagePath
+            if (firstImage != null) {
+                Glide.with(context).load(firstImage).into(photoImageView)
+            } else {
+                photoImageView.setImageResource(R.drawable.dog_sample2) // 기본 이미지
             }
+            titleTextView.text = item.lostTitle
+            breedTextView.text = item.lostBreed
+            genderageTextView.text = "${item.lostGender} / ${item.lostAge}"
+            areaTextView.text = "${item.lostAreaLat}, ${item.lostAreaLng}"
+            dateTextView.text = item.lostDate
+            locationTextView.text = item.lostLocation
+            featureTextView.text = item.lostDescription
+            contactTextView.text = item.lostContact
+
+            view.setOnClickListener(listener)
         }
     }
 }
