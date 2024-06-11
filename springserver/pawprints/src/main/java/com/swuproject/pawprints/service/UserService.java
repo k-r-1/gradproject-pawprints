@@ -4,6 +4,7 @@ import com.swuproject.pawprints.domain.User;
 import com.swuproject.pawprints.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -41,5 +42,21 @@ public class UserService {
 
     public boolean isUserEmailAvailable(String userEmail) {
         return !userRepository.findByUserEmail(userEmail).isPresent();
+    }
+
+    public void updateUser(Map<String, String> userUpdates) throws Exception {
+        String userId = userUpdates.get("userId");
+        Optional<User> userOptional = userRepository.findById(userId);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setUserName(userUpdates.get("userName"));
+            user.setUserEmail(userUpdates.get("userEmail"));
+            user.setUserNickname(userUpdates.get("userNickname"));
+            user.setUserPhone(userUpdates.get("userPhone"));
+            userRepository.save(user);
+        } else {
+            throw new Exception("사용자를 찾을 수 없습니다.");
+        }
     }
 }

@@ -77,4 +77,14 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(response);  // 중복 이메일의 경우 409 상태 코드 반환
         }
     }
+
+    @PutMapping("/update")
+    public ResponseEntity<String> updateUser(@RequestBody Map<String, String> userUpdates) {
+        try {
+            userService.updateUser(userUpdates);
+            return ResponseEntity.ok("사용자 정보가 성공적으로 업데이트되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("사용자 정보 업데이트 중 오류가 발생했습니다.");
+        }
+    }
 }
