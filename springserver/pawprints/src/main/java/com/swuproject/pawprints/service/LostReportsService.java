@@ -27,8 +27,14 @@ public class LostReportsService {
 
         return lostReportsList.stream().map(lostReports -> {
             LostReportsResponse response = new LostReportsResponse();
+            PetResponse petResponse = new PetResponse();
             response.setLostId(lostReports.getLostId());
-            response.setPet(lostReports.getPet());
+            response.setPetId(lostReports.getPetId());
+            List<Pet> petList = petRepository.findLostPetsByPetId(lostReports.getPetId());
+            //Pet pet = (Pet) petRepository.findLostPetsByPetId(lostReports.getPetId());
+            response.setPetBreed(petList.get(0).getBreed());
+            response.setPetGender(petList.get(0).getGender());
+            response.setPetAge(petList.get(0).getAge());
             response.setLostTitle(lostReports.getLostTitle());
             response.setLostAreaLat(lostReports.getLostAreaLat());
             response.setLostAreaLng(lostReports.getLostAreaLng());
@@ -45,8 +51,7 @@ public class LostReportsService {
                             }).collect(Collectors.toList())
             );
 
-            // Add pet's information
-            Pet pet = lostReports.getPet();
+            /*Pet pet = lostReports.getPet();
             PetResponse petResponse = new PetResponse();
             if (pet != null) {
                 petResponse.setBreed(pet.getBreed() != null ? pet.getBreed() : "정보 없음");
@@ -58,7 +63,7 @@ public class LostReportsService {
                 petResponse.setAge(0);
             }
 
-            response.setPetResponse(petResponse);
+            response.setPetResponse(petResponse); */
 
             return response;
         }).collect(Collectors.toList());

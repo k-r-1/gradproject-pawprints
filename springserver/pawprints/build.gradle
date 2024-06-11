@@ -24,6 +24,7 @@ dependencies {
 	testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.8.1')
 	runtimeOnly 'mysql:mysql-connector-java'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.14.1' // 자신의 Jackson 버전에 맞게 변경
 
 	// 추가적으로 필요한 종속성
 	implementation 'jakarta.persistence:jakarta.persistence-api:3.0.0'

@@ -1,12 +1,17 @@
 package com.swuproject.pawprints.dto;
 
 import com.swuproject.pawprints.domain.Pet;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 import java.util.Date;
 import java.util.List;
 
 public class LostReportsResponse {
     private int lostId;
+    @ManyToOne
+    @JoinColumn(name = "pet_id")
+    private int petId;
     private String petBreed;
     private String petGender;
     private int petAge;
@@ -26,6 +31,10 @@ public class LostReportsResponse {
     public void setLostId(int lostId) {
         this.lostId = lostId;
     }
+
+    public int getPetId() { return petId; }
+
+    public void setPetId(int petId) { this.petId = petId; }
 
     private Pet pet = new Pet();
 

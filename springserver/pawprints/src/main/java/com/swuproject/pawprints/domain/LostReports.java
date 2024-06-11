@@ -10,11 +10,11 @@ public class LostReports {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int lostId;
 
-    @ManyToOne
-
-    private Pet pet; // pet 필드를 사용하여 Pet 엔티티를 참조하도록 수정
-
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pet_id")
+    private Pet pet;
+
+    @Column(name = "pet_id", insertable = false, updatable = false) // petId는 데이터베이스에 매핑되지 않음
     private int petId;
 
     // Pet 엔티티의 필드를 가져올 수 있도록 추가
@@ -48,16 +48,25 @@ public class LostReports {
         this.lostId = lostId;
     }
 
+    public int getPetId() {
+        return petId;
+    }
+
+    public void setPetId(int petId) {
+        this.petId = petId;
+    }
+
     public Pet getPet() {
         return pet;
     }
 
     public void setPet(Pet pet) {
         this.pet = pet;
-        // Pet 엔티티가 설정되면 해당 정보를 가져와서 설정
-        this.petBreed = pet.getBreed();
-        this.petGender = pet.getGender();
-        this.petAge = pet.getAge();
+        if (pet != null) {
+            this.petBreed = pet.getBreed();
+            this.petGender = pet.getGender();
+            this.petAge = pet.getAge();
+        }
     }
 
     public String getPetBreed() {
