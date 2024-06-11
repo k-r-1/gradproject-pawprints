@@ -40,6 +40,7 @@ public class LostReportsService {
             response.setLostDate(lostReports.getLostDate());
             response.setLostLocation(lostReports.getLostLocation());
             response.setLostDescription(lostReports.getLostDescription());
+            response.setLostContact(lostReports.getLostContact());
             response.setLostImages(
                     lostReports.getLostImages().stream()
                             .map(image -> {

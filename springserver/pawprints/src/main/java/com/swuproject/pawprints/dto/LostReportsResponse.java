@@ -21,6 +21,7 @@ public class LostReportsResponse {
     private Date lostDate;
     private String lostLocation;
     private String lostDescription;
+    private String lostContact;
     private List<LostReportsImageResponse> lostImages;
 
 
@@ -127,6 +128,10 @@ public class LostReportsResponse {
     public void setLostDescription(String lostDescription) {
         this.lostDescription = lostDescription;
     }
+
+    public String getLostContact() { return lostContact; }
+
+    public void setLostContact(String lostContact) { this.lostContact = lostContact; }
 
     public List<LostReportsImageResponse> getLostImages() {
         return lostImages;
