@@ -84,9 +84,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun signIn() {
-        // 입력 필드에서 사용자 정보 가져오기
-        val userId = findViewById<EditText>(R.id.edit_id).text.toString()
-        val userPw = findViewById<EditText>(R.id.edit_pw).text.toString()
+        // 입력 필드에서 사용자 정보 가져오기 (공백 제거)
+        val userId = findViewById<EditText>(R.id.edit_id).text.toString().trim()
+        val userPw = findViewById<EditText>(R.id.edit_pw).text.toString().trim()
 
         // RetrofitService 인스턴스 가져오기
         val retrofitService = RetrofitClient.getRetrofitService()

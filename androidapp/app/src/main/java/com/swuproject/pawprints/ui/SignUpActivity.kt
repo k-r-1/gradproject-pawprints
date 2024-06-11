@@ -83,7 +83,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun checkUserId() {
-        val userId = findViewById<EditText>(R.id.edit_id).text.toString()
+        val userId = findViewById<EditText>(R.id.edit_id).text.toString().trim()
         val retrofitService = RetrofitClient.getRetrofitService()
 
         retrofitService.checkUserId(userId).enqueue(object : Callback<Map<String, String>> {
@@ -105,7 +105,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun checkUserEmail() {
-        val userEmail = findViewById<EditText>(R.id.edit_email).text.toString()
+        val userEmail = findViewById<EditText>(R.id.edit_email).text.toString().trim()
         val retrofitService = RetrofitClient.getRetrofitService()
 
         retrofitService.checkUserEmail(userEmail).enqueue(object : Callback<Map<String, String>> {
@@ -127,13 +127,13 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun signUp() {
-        // 입력 필드에서 사용자 정보 가져오기
-        val userId = findViewById<EditText>(R.id.edit_id).text.toString()
-        val userPw = findViewById<EditText>(R.id.edit_pw).text.toString()
-        val userEmail = findViewById<EditText>(R.id.edit_email).text.toString()
-        val userName = findViewById<EditText>(R.id.edit_name).text.toString()
-        val userNickname = findViewById<EditText>(R.id.edit_nickname).text.toString()
-        val userPhone = findViewById<EditText>(R.id.edit_phone).text.toString()
+        // 입력 필드에서 사용자 정보 가져오기 (공백 제거)
+        val userId = findViewById<EditText>(R.id.edit_id).text.toString().trim()
+        val userPw = findViewById<EditText>(R.id.edit_pw).text.toString().trim()
+        val userEmail = findViewById<EditText>(R.id.edit_email).text.toString().trim()
+        val userName = findViewById<EditText>(R.id.edit_name).text.toString().trim()
+        val userNickname = findViewById<EditText>(R.id.edit_nickname).text.toString().trim()
+        val userPhone = findViewById<EditText>(R.id.edit_phone).text.toString().trim()
 
         // 입력 값 검증
         if (userId.isEmpty() || userPw.isEmpty() || userEmail.isEmpty() || userName.isEmpty() || userNickname.isEmpty() || userPhone.isEmpty()) {
