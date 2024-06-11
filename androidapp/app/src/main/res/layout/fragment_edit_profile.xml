@@ -200,6 +200,39 @@
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tv_find_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="비밀번호 찾기"
+                    android:textSize="14sp"
+                    android:paddingEnd="8dp"/>
+
+                <TextView
+                    android:id="@+id/tv_separator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="|"
+                    android:textSize="14sp"
+                    android:paddingEnd="8dp"
+                    android:paddingStart="8dp"/>
+
+                <TextView
+                    android:id="@+id/tv_change_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="비밀번호 변경"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+
             <Button
                 android:id="@+id/save_button"
                 android:layout_width="wrap_content"
