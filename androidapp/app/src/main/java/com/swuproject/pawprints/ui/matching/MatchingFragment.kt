@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.swuproject.pawprints.R
 import com.swuproject.pawprints.common.Utils
 import com.swuproject.pawprints.databinding.FragmentMatchingBinding
@@ -150,15 +151,26 @@ class MatchingFragment : Fragment() {
     }
 
     // 실종 신고 정보를 화면에 표시
-    private fun displayLostReport(lostReportResponse: LostReportResponse) { // 여기도 변경
+    private fun displayLostReport(lostReportResponse: LostReportResponse) {
+        val firstImage = lostReportResponse.lostImages.firstOrNull()?.lostImagePath
+        if (firstImage != null) {
+            // gs:// URL을 https://storage.googleapis.com/로 변환
+            val imageUrl = firstImage.replace("gs://", "https://storage.googleapis.com/")
+
+            // Glide를 사용해 이미지 로드
+            Glide.with(requireContext()).load(imageUrl).into(binding.petImage)
+        } else {
+            binding.petImage.setImageResource(R.drawable.dog_sample2) // 기본 이미지
+        }
         binding.lostReportSection.visibility = View.VISIBLE
         binding.lostReportTitle.text = lostReportResponse.lostTitle
         binding.lostReportBreed.text = lostReportResponse.petBreed
         binding.lostReportGender.text = lostReportResponse.petGender
         binding.lostReportAge.text = lostReportResponse.petAge.toString()
-        binding.lostReportLocation.text = "${lostReportResponse.lostAreaLat}, ${lostReportResponse.lostAreaLng}"
+        binding.lostReportArea.text = "${lostReportResponse.lostAreaLat.toString()}, ${lostReportResponse.lostAreaLng.toString()}"
         binding.lostReportDate.text = lostReportResponse.lostDate
         binding.lostReportFeature.text = lostReportResponse.petFeature
+        binding.lostReportLocation.text = lostReportResponse.lostLocation
         binding.lostReportDescription.text = lostReportResponse.lostDescription
         binding.lostReportContact.text = lostReportResponse.lostContact
     }
