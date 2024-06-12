@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonManagedReference
 
 data class LostReports(
-    val lostId: Long,
-    val petId: Long,
+    val lostId: Int,
+    val petId: Int,
     val lostTitle: String,
     val lostAreaLat: Double,
     val lostAreaLng: Double,

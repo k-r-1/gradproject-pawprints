@@ -149,6 +149,9 @@
             android:id="@+id/iv_matchresult_recycler_photo"
             android:layout_width="120dp"
             android:layout_height="120dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             tools:srcCompat="@tools:sample/avatars" />
     </LinearLayout>
 </LinearLayout>

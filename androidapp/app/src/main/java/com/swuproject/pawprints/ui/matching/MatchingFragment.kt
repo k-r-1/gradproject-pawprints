@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.swuproject.pawprints.R
 import com.swuproject.pawprints.common.Utils
 import com.swuproject.pawprints.databinding.FragmentMatchingBinding
+import com.swuproject.pawprints.dto.LostReportResponse
 import com.swuproject.pawprints.network.LostReports
 import com.swuproject.pawprints.network.RetrofitClient
 import com.swuproject.pawprints.network.RetrofitService
@@ -126,8 +127,8 @@ class MatchingFragment : Fragment() {
 
     // 반려동물 ID로 실종 신고 정보 가져오기
     private fun fetchLostReport(petId: Int) {
-        retrofitService.getLostReportByPetId(petId).enqueue(object : Callback<LostReports> {
-            override fun onResponse(call: Call<LostReports>, response: Response<LostReports>) {
+        retrofitService.getLostReportByPetId(petId).enqueue(object : Callback<LostReportResponse> { // 여기를 LostReportResponse로 변경
+            override fun onResponse(call: Call<LostReportResponse>, response: Response<LostReportResponse>) { // 여기도 변경
                 if (response.isSuccessful) {
                     response.body()?.let { lostReport ->
                         displayLostReport(lostReport)
@@ -137,7 +138,7 @@ class MatchingFragment : Fragment() {
                 }
             }
 
-            override fun onFailure(call: Call<LostReports>, t: Throwable) {
+            override fun onFailure(call: Call<LostReportResponse>, t: Throwable) { // 여기도 변경
                 showErrorToast("실종 신고 정보를 가져오는 데 실패했습니다.")
             }
         })
@@ -149,13 +150,17 @@ class MatchingFragment : Fragment() {
     }
 
     // 실종 신고 정보를 화면에 표시
-    private fun displayLostReport(lostReport: LostReports) {
+    private fun displayLostReport(lostReportResponse: LostReportResponse) { // 여기도 변경
         binding.lostReportSection.visibility = View.VISIBLE
-        binding.lostReportTitle.text = lostReport.lostTitle
-        binding.lostReportLocation.text = lostReport.lostLocation
-        binding.lostReportDate.text = lostReport.lostDate
-        binding.lostReportDescription.text = lostReport.lostDescription
-        binding.lostReportContact.text = lostReport.lostContact
+        binding.lostReportTitle.text = lostReportResponse.lostTitle
+        binding.lostReportBreed.text = lostReportResponse.petBreed
+        binding.lostReportGender.text = lostReportResponse.petGender
+        binding.lostReportAge.text = lostReportResponse.petAge.toString()
+        binding.lostReportLocation.text = "${lostReportResponse.lostAreaLat}, ${lostReportResponse.lostAreaLng}"
+        binding.lostReportDate.text = lostReportResponse.lostDate
+        binding.lostReportFeature.text = lostReportResponse.petFeature
+        binding.lostReportDescription.text = lostReportResponse.lostDescription
+        binding.lostReportContact.text = lostReportResponse.lostContact
     }
 
     // 유사한 목격 사례 찾기 요청

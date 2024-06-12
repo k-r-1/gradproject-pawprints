@@ -31,7 +31,7 @@ interface RetrofitService {
     fun getPetsByUserId(@Path("userId") userId: String): Call<List<Pet>>
 
     @GET("/api/lost_reports/{petId}")
-    fun getLostReportByPetId(@Path("petId") petId: Int): Call<LostReports>
+    fun getLostReportByPetId(@Path("petId") petId: Int): Call<LostReportResponse>
 
     @GET("/api/pets/{userId}/lost")
     fun getLostPetsByUserId(@Path("userId") userId: String): Call<List<Pet>>
