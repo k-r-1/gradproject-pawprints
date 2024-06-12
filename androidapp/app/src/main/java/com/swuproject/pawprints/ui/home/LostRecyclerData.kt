@@ -9,6 +9,7 @@ data class LostRecyclerData(
     val lostArea: String,
     val lostDate: String,
     val lostLocation: String,
+    val lostFeature: String,
     val lostDescription: String,
     val lostContact: String
 )

@@ -42,7 +42,8 @@ class LostRecyclerAdapter(private val items: List<LostReportResponse>, private v
         private var areaTextView: TextView = v.findViewById(R.id.tv_hometab_lostrecycler_area)
         private var dateTextView: TextView = v.findViewById(R.id.tv_hometab_lostrecycler_date)
         private var locationTextView: TextView = v.findViewById(R.id.tv_hometab_lostrecycler_location)
-        private var featureTextView: TextView = v.findViewById(R.id.tv_hometab_lostrecycler_feature)
+        private var featureTextView: TextView = v.findViewById(R.id.tv_hometab_lostrecycler_feature) // 특징
+        private var descriptionTextView: TextView = v.findViewById(R.id.tv_hometab_lostrecycler_description) // 설명
         private var contactTextView: TextView = v.findViewById(R.id.tv_hometab_lostrecycler_contact)
 
         fun bind(listener: View.OnClickListener, item: LostReportResponse) {
@@ -62,7 +63,8 @@ class LostRecyclerAdapter(private val items: List<LostReportResponse>, private v
             areaTextView.text = "${item.lostAreaLat}, ${item.lostAreaLng}"
             dateTextView.text = item.lostDate
             locationTextView.text = item.lostLocation
-            featureTextView.text = item.lostDescription
+            featureTextView.text = item.lostFeature
+            descriptionTextView.text = item.lostDescription
             contactTextView.text = item.lostContact
 
             view.setOnClickListener(listener)

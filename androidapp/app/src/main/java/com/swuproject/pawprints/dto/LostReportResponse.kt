@@ -8,6 +8,7 @@ data class LostReportResponse(
     val lostAreaLng: Double?,
     val lostDate: String?, // 날짜 형식이 다를 수 있으므로 문자열로 받습니다.
     val lostLocation: String?,
+    val lostFeature: String,
     val lostDescription: String?,
     val lostContact: String,
     val petBreed: String,
