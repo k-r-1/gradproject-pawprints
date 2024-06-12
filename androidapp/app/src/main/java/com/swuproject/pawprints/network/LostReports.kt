@@ -11,6 +11,7 @@ data class LostReports(
     val lostAreaLng: Double,
     val lostDate: String,
     val lostLocation: String,
+    val lostFeature: String,
     val lostDescription: String,
     val lostContact: String,
     @JsonManagedReference

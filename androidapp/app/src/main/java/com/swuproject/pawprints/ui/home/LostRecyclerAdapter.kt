@@ -63,7 +63,7 @@ class LostRecyclerAdapter(private val items: List<LostReportResponse>, private v
             areaTextView.text = "${item.lostAreaLat}, ${item.lostAreaLng}"
             dateTextView.text = item.lostDate
             locationTextView.text = item.lostLocation
-            featureTextView.text = item.lostFeature
+            featureTextView.text = item.petFeature
             descriptionTextView.text = item.lostDescription
             contactTextView.text = item.lostContact
 
