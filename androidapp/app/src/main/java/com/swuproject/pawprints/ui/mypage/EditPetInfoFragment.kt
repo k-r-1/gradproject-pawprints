@@ -558,15 +558,18 @@ class EditPetInfoFragment : Fragment() {
     }
 
     private fun allFieldsFilled(): Boolean {
+        val isOtherBreedSelected = binding.petBreedSpinner.selectedItem.toString() == "기타"
+
         return binding.petNameEditText.text.isNotEmpty() &&
                 binding.petTypeSpinner.selectedItemPosition != 0 &&
-                (binding.petBreedEditText.visibility != View.VISIBLE || binding.petBreedEditText.text.isNotEmpty()) &&
-                (binding.petBreedSpinner.visibility != View.VISIBLE || binding.petBreedSpinner.selectedItemPosition != 0) &&
+                (!isOtherBreedSelected || binding.petBreedEditText.text.isNotEmpty()) &&
                 binding.petAgeEditText.text.isNotEmpty() &&
                 binding.petGenderSpinner.selectedItemPosition != 0 &&
                 binding.petColorEditText.text.isNotEmpty() &&
                 binding.petFeatureEditText.text.isNotEmpty()
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()
