@@ -20,12 +20,12 @@ public class LostReports {
     // Pet 엔티티의 필드를 가져올 수 있도록 추가
     @Transient // 데이터베이스에 매핑하지 않음
     private String petBreed;
-
     @Transient
     private String petGender;
-
     @Transient
     private int petAge;
+    @Transient
+    private String petFeature;
 
     private String lostTitle;
     private Double lostAreaLat;
@@ -60,12 +60,14 @@ public class LostReports {
         return pet;
     }
 
+
     public void setPet(Pet pet) {
         this.pet = pet;
         if (pet != null) {
             this.petBreed = pet.getBreed();
             this.petGender = pet.getGender();
             this.petAge = pet.getAge();
+            this.petFeature = pet.getFeature();
         }
     }
 
@@ -92,6 +94,10 @@ public class LostReports {
     public void setPetAge(int petAge) {
         this.petAge = petAge;
     }
+
+    public String getPetFeature() { return petFeature; }
+
+    public void setPetFeature(String petFeature) { this.petFeature = petFeature; }
 
     public String getLostTitle() {
         return lostTitle;

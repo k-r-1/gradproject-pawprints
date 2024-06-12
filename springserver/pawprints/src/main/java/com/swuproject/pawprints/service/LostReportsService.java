@@ -34,6 +34,7 @@ public class LostReportsService {
             response.setPetBreed(petList.get(0).getBreed());
             response.setPetGender(petList.get(0).getGender());
             response.setPetAge(petList.get(0).getAge());
+            response.setPetFeature(petList.get(0).getFeature());
             response.setLostTitle(lostReports.getLostTitle());
             response.setLostAreaLat(lostReports.getLostAreaLat());
             response.setLostAreaLng(lostReports.getLostAreaLng());
