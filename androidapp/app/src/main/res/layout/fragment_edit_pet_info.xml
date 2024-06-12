@@ -19,6 +19,7 @@
             android:text="나의 반려동물"
             android:textColor="@color/black"
             android:textSize="20sp"
+            android:drawablePadding="5dp"
             android:layout_margin="15dp"
             android:textStyle="bold" />
 
@@ -47,7 +48,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="정보를 수정할 반려동물을 선택해 주세요."
+            android:text="* 정보를 수정할 반려동물을 선택해 주세요."
             android:textColor="@android:color/holo_red_dark"
             android:layout_gravity="center"
             android:layout_marginTop="3dp"/>
@@ -56,8 +57,10 @@
             android:id="@+id/add_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="새로운 반려동물 등록"
+            android:text="새 반려동물 등록"
             android:textSize="14sp"
+            android:textStyle="bold"
+            android:drawableLeft="@drawable/ic_add"
             android:stateListAnimator="@null"
             android:backgroundTint="#F68562"
             android:layout_marginTop="15dp"
@@ -94,9 +97,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="이름"
+                            android:text="• 이름"
                             android:textColor="@color/black"
-                            android:textSize="18sp"
+                            android:textSize="17sp"
                             android:layout_marginEnd="8dp"/> <!-- 여백 조정 -->
 
                         <TextView
@@ -131,9 +134,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="종류"
+                            android:text="• 종류"
                             android:textColor="@color/black"
-                            android:textSize="18sp"
+                            android:textSize="17sp"
                             android:layout_marginEnd="8dp"/> <!-- 여백 조정 -->
 
                         <TextView
@@ -166,9 +169,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="품종"
+                            android:text="• 품종"
                             android:textColor="@color/black"
-                            android:textSize="18sp"
+                            android:textSize="17sp"
                             android:layout_marginEnd="8dp"/> <!-- 여백 조정 -->
 
                         <TextView
@@ -225,9 +228,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="나이"
+                            android:text="• 나이"
                             android:textColor="@color/black"
-                            android:textSize="18sp"
+                            android:textSize="17sp"
                             android:layout_marginEnd="8dp"/> <!-- 여백 조정 -->
 
                         <TextView
@@ -263,9 +266,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="성별"
+                            android:text="• 성별"
                             android:textColor="@color/black"
-                            android:textSize="18sp"
+                            android:textSize="17sp"
                             android:layout_marginEnd="8dp"/> <!-- 여백 조정 -->
 
                         <TextView
@@ -298,9 +301,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="색깔"
+                            android:text="• 색깔"
                             android:textColor="@color/black"
-                            android:textSize="18sp"
+                            android:textSize="17sp"
                             android:layout_marginEnd="8dp"/> <!-- 여백 조정 -->
 
                         <TextView
@@ -335,9 +338,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="특징"
+                            android:text="• 특징"
                             android:textColor="@color/black"
-                            android:textSize="18sp"
+                            android:textSize="17sp"
                             android:layout_marginEnd="8dp"/> <!-- 여백 조정 -->
 
                         <TextView
@@ -381,8 +384,9 @@
                             android:layout_height="wrap_content"
                             android:text="수정"
                             android:textSize="13sp"
+                            android:textStyle="bold"
                             android:stateListAnimator="@null"
-                            android:backgroundTint="@color/light_pink"
+                            android:backgroundTint="#D86359"
                             android:layout_marginTop="5dp"
                             android:layout_marginRight="5dp"
                             android:layout_gravity="center"
@@ -397,8 +401,9 @@
                             android:layout_height="wrap_content"
                             android:text="삭제"
                             android:textSize="13sp"
+                            android:textStyle="bold"
                             android:stateListAnimator="@null"
-                            android:backgroundTint="@color/light_pink"
+                            android:backgroundTint="#D86359"
                             android:layout_marginTop="5dp"
                             android:layout_gravity="center"
                             android:padding="0dp"

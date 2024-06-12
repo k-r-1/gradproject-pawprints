@@ -238,8 +238,8 @@ class EditPetInfoFragment : Fragment() {
             })
 
         // Spinner에 표시될 항목 배열을 정의합니다.
-        val petTypes = arrayOf("클릭하여 종류를 선택해주세요", "개", "고양이")
-        val petGenders = arrayOf("클릭하여 성별을 선택해주세요", "암컷", "수컷")
+        val petTypes = arrayOf("클릭하여 종류를 선택해 주세요", "개", "고양이")
+        val petGenders = arrayOf("클릭하여 성별을 선택해 주세요", "암컷", "수컷")
 
         // Spinner에 항목을 설정할 ArrayAdapter를 초기화합니다.
         val petTypeAdapter =
