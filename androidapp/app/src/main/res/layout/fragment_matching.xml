@@ -88,23 +88,26 @@
                     android:background="#A6A6A6"
                     android:layout_marginBottom="10dp"/>
 
+                <ImageView
+                    android:id="@+id/pet_image"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="15dp"
+                    android:contentDescription="Pet Image" />
+
                 <androidx.cardview.widget.CardView
                     android:layout_width="120dp"
                     android:layout_height="120dp"
                     android:layout_gravity="center"
                     android:layout_marginBottom="15dp"
+                    android:visibility="gone"
                     app:cardCornerRadius="50dp"
                     app:cardElevation="2dp">
 
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
-
-                        <ImageView
-                            android:id="@+id/pet_image"
-                            android:layout_width="120dp"
-                            android:layout_height="120dp"
-                            android:contentDescription="Pet Image" />
 
                         <ImageView
                             android:id="@+id/camera_icon"
