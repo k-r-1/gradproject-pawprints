@@ -5,23 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/background_color"
     tools:context=".ui.home.HomeFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFCF8"
         android:orientation="vertical">
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/home_tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabIndicatorColor="@color/deep_pink"
-            app:tabIndicatorHeight="5dp"
-            app:tabSelectedTextColor="@color/deep_pink"
-            app:tabTextColor="@color/bottom_nav_not_selected">
+            android:background="@color/background_color"
+            app:tabIndicatorColor="#ED5C4F"
+            app:tabIndicatorHeight="2dp"
+            app:tabSelectedTextColor="#ED5C4F"
+            app:tabTextColor="#4E4E4E">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
@@ -38,46 +39,68 @@
 
         </com.google.android.material.tabs.TabLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#EAEAEA" />
+
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/homeViewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab_home_report"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="40dp"
         android:clickable="true"
-        android:src="@drawable/icon_pen"
+        android:text="신고하기"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:textColor="@color/white"
+        app:icon="@drawable/icon_pen"
+        app:iconTint="@color/white"
+        app:iconGravity="textStart"
+        app:iconPadding="8dp"
+        app:backgroundTint="@color/deep_pink"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:backgroundTint="@color/deep_pink" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab_home_lostreport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/light_pink"
-        android:clickable="true"
-        android:src="@drawable/icon_pen"
+        android:text="실종신고"
+        android:textSize="17sp"
+        android:textColor="@color/white"
+        app:icon="@drawable/icon_pen"
+        app:iconTint="@color/white"
+        app:iconGravity="textStart"
+        app:iconPadding="8dp"
+        app:backgroundTint="@color/light_pink"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/fab_home_report"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab_home_sightreport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/light_pink"
-        android:clickable="true"
-        android:src="@drawable/icon_pen"
+        android:text="목격신고"
+        android:textSize="17sp"
+        android:textColor="@color/white"
+        app:icon="@drawable/icon_pen"
+        app:iconTint="@color/white"
+        app:iconGravity="textStart"
+        app:iconPadding="8dp"
+        app:backgroundTint="@color/light_pink"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/fab_home_lostreport"
         app:layout_constraintEnd_toEndOf="parent" />

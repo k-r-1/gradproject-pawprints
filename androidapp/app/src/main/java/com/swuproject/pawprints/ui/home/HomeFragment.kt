@@ -1,5 +1,6 @@
 package com.swuproject.pawprints.ui.home
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -72,8 +73,10 @@ class HomeFragment : Fragment() {
             val tabView = binding.homeTabLayout.getTabAt(i)?.customView
             val textView = tabView?.findViewById<TextView>(R.id.tv_custom_home_tab)
             val isSelected = i == selectedPosition
-            val textColorRes = if (isSelected) R.color.deep_pink else R.color.bottom_nav_not_selected
-            textView?.setTextColor(ContextCompat.getColor(requireContext(), textColorRes))
+            val textColorRes = if (isSelected) "#ED5C4F" else "#4E4E4E"
+            if (textView != null) {
+                textView.setTextColor(Color.parseColor(textColorRes))
+            }
         }
     }
 
@@ -84,11 +87,11 @@ class HomeFragment : Fragment() {
             fabHomeReport.setOnClickListener { toggleFabMenu() }
             fabHomeLostreport.setOnClickListener {
                 toggleFabMenu()
-                fabHomeLostreport.setImageResource(R.drawable.icon_pen)
+                fabHomeLostreport.icon = ContextCompat.getDrawable(requireContext(), R.drawable.icon_pen)
             }
             fabHomeSightreport.setOnClickListener {
                 toggleFabMenu()
-                fabHomeSightreport.setImageResource(R.drawable.icon_pen)
+                fabHomeSightreport.icon = ContextCompat.getDrawable(requireContext(), R.drawable.icon_pen)
             }
         }
     }
