@@ -21,4 +21,11 @@ public class LostReportsController {
     public List<LostReportsResponse> getLostReports() {
         return lostReportsService.getAllLostReports();
     }
+
+    @GetMapping("/api/lost_reports/{petId}")
+    public ResponseEntity<LostReportsResponse> getLostReportByPetId(@PathVariable int petId) {
+        LostReportsResponse lostReport = lostReportsService.getLostReportByPetId(petId);
+        return ResponseEntity.ok(lostReport);
+    }
+
 }

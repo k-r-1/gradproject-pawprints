@@ -54,4 +54,33 @@ public class LostReportsService {
             return response;
         }).collect(Collectors.toList());
     }
+
+    public LostReportsResponse getLostReportByPetId(int petId) {
+        LostReports lostReport = lostReportsRepository.findByPetId(petId);
+
+        LostReportsResponse response = new LostReportsResponse();
+        response.setLostId(lostReport.getLostId());
+        response.setPetId(lostReport.getPetId());
+        response.setPetBreed(lostReport.getPet().getBreed());
+        response.setPetGender(lostReport.getPet().getGender());
+        response.setPetAge(lostReport.getPet().getAge());
+        response.setLostTitle(lostReport.getLostTitle());
+        response.setLostAreaLat(lostReport.getLostAreaLat());
+        response.setLostAreaLng(lostReport.getLostAreaLng());
+        response.setLostDate(lostReport.getLostDate());
+        response.setLostLocation(lostReport.getLostLocation());
+        response.setLostDescription(lostReport.getLostDescription());
+        response.setLostContact(lostReport.getLostContact());
+        response.setLostImages(
+                lostReport.getLostImages().stream()
+                        .map(image -> {
+                            LostReportsImageResponse imageResponse = new LostReportsImageResponse();
+                            imageResponse.setLostImageId(image.getLostImageId());
+                            imageResponse.setLostImagePath(image.getLostImagePath());
+                            return imageResponse;
+                        }).collect(Collectors.toList())
+        );
+
+        return response;
+    }
 }
