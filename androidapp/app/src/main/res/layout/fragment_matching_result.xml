@@ -1,14 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.matching.MatchingResultFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_matchresult_line1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="| " />
+
+        <TextView
+            android:id="@+id/tv_matchresult_lostpet_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이름" />
+
+        <TextView
+            android:id="@+id/tv_matchresult_line2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="의 매칭 목록 |" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/matchresult_matchReclyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        tools:listitem="@layout/item_matchresult_match_recycler" />
 
-</FrameLayout>
+</LinearLayout>
