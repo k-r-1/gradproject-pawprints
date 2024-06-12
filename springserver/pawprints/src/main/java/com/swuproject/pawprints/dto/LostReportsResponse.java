@@ -15,6 +15,7 @@ public class LostReportsResponse {
     private String petBreed;
     private String petGender;
     private int petAge;
+    private String petFeature;
     private String lostTitle;
     private Double lostAreaLat;
     private Double lostAreaLng;
@@ -80,6 +81,10 @@ public class LostReportsResponse {
     public void setPetAge(int petAge) {
         this.petAge = petAge;
     }
+
+    public String getPetFeature() { return petFeature; }
+
+    public void setPetFeature(String petFeature) { this.petFeature = petFeature; }
 
     public String getLostTitle() {
         return lostTitle;
