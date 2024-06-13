@@ -4,6 +4,9 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -181,7 +184,6 @@ class MatchingFragment : Fragment() {
         if (firstImage != null) {
             // gs:// URL을 https://storage.googleapis.com/로 변환
             val imageUrl = firstImage.replace("gs://", "https://storage.googleapis.com/")
-
             // Glide를 사용해 이미지 로드
             Glide.with(requireContext()).load(imageUrl).into(binding.petImage)
         } else {
@@ -193,11 +195,32 @@ class MatchingFragment : Fragment() {
         binding.lostReportGender.text = lostReportResponse.petGender
         binding.lostReportAge.text = lostReportResponse.petAge.toString()
         binding.lostReportArea.text = "${lostReportResponse.lostAreaLat.toString()}, ${lostReportResponse.lostAreaLng.toString()}"
-        binding.lostReportDate.text = lostReportResponse.lostDate
+
+        // 날짜 포맷 변경
+        binding.lostReportDate.text = formatDate(lostReportResponse.lostDate)
+
         binding.lostReportFeature.text = lostReportResponse.petFeature
         binding.lostReportLocation.text = lostReportResponse.lostLocation
         binding.lostReportDescription.text = lostReportResponse.lostDescription
         binding.lostReportContact.text = lostReportResponse.lostContact
+    }
+
+    // 날짜 포맷 변경 함수
+    private fun formatDate(dateString: String?): String {
+        if (dateString.isNullOrEmpty()) return ""
+
+        // 받은 날짜 형식
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
+        // 원하는 출력 형식
+        val outputFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
+
+        return try {
+            val date: Date = inputFormat.parse(dateString) ?: return dateString
+            outputFormat.format(date)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            dateString // 변환 실패 시 원본 문자열 반환
+        }
     }
 
     private fun findSimilarSightings(userId: String, petName: String) {
