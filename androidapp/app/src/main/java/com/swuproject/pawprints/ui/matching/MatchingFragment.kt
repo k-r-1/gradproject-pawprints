@@ -100,6 +100,8 @@ class MatchingFragment : Fragment() {
                             selectedPetName = null
                             setTextColor(Color.BLACK)
                             selectedTextView = null
+                            // 실종 신고 정보 초기화
+                            clearLostReportInfo()
                         } else {
                             selectedPetName = pet.name
                             setTextColor(resources.getColor(R.color.deep_pink))
@@ -115,6 +117,23 @@ class MatchingFragment : Fragment() {
             showError("실종된 반려동물 정보가 없습니다.")
         }
     }
+
+    // 실종 신고 정보 초기화 메서드 추가
+    private fun clearLostReportInfo() {
+        binding.petImage.setImageResource(R.drawable.dog_sample2) // 기본 이미지 설정
+        binding.lostReportSection.visibility = View.GONE // 실종 신고 섹션 숨기기
+        binding.lostReportTitle.text = ""
+        binding.lostReportBreed.text = ""
+        binding.lostReportGender.text = ""
+        binding.lostReportAge.text = ""
+        binding.lostReportArea.text = ""
+        binding.lostReportDate.text = ""
+        binding.lostReportFeature.text = ""
+        binding.lostReportLocation.text = ""
+        binding.lostReportDescription.text = ""
+        binding.lostReportContact.text = ""
+    }
+
 
     // 오류 메시지 표시
     private fun showError(message: String) {
