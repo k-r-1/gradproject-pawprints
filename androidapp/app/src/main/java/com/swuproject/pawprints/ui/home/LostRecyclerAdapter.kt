@@ -4,6 +4,9 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -61,13 +64,31 @@ class LostRecyclerAdapter(private val items: List<LostReportResponse>, private v
             breedTextView.text = item.petBreed
             genderageTextView.text = "${item.petGender} / ${item.petAge}"
             areaTextView.text = "${item.lostAreaLat}, ${item.lostAreaLng}"
-            dateTextView.text = item.lostDate
+            dateTextView.text = formatDate(item.lostDate)
             locationTextView.text = item.lostLocation
             featureTextView.text = item.petFeature
             descriptionTextView.text = item.lostDescription
             contactTextView.text = item.lostContact
 
             view.setOnClickListener(listener)
+        }
+
+        // 날짜 포맷 변경 함수
+        private fun formatDate(dateString: String?): String {
+            if (dateString.isNullOrEmpty()) return ""
+
+            // 받은 날짜 형식
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
+            // 원하는 출력 형식
+            val outputFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
+
+            return try {
+                val date: Date = inputFormat.parse(dateString) ?: return dateString
+                outputFormat.format(date)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                dateString // 변환 실패 시 원본 문자열 반환
+            }
         }
     }
 }

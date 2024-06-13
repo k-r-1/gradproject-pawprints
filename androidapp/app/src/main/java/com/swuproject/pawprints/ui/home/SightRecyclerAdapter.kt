@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.swuproject.pawprints.R
 import com.swuproject.pawprints.dto.SightReportResponse
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class SightRecyclerAdapter(private val items: List<SightReportResponse>, private val context: Context) : RecyclerView.Adapter<SightRecyclerAdapter.ViewHolder>() {
 
@@ -56,11 +59,29 @@ class SightRecyclerAdapter(private val items: List<SightReportResponse>, private
             titleTextView.text = item.sightTitle
             breedTextView.text = item.sightBreed
             areaTextView.text = "${item.sightAreaLat}, ${item.sightAreaLng}"
-            dateTextView.text = item.sightDate
+            dateTextView.text = formatDate(item.sightDate)
             locationTextView.text = item.sightLocation
             featureTextView.text = item.sightDescription
 
             view.setOnClickListener(listener)
+        }
+
+        // 날짜 포맷 변경 함수
+        private fun formatDate(dateString: String?): String {
+            if (dateString.isNullOrEmpty()) return ""
+
+            // 받은 날짜 형식
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
+            // 원하는 출력 형식
+            val outputFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
+
+            return try {
+                val date: Date = inputFormat.parse(dateString) ?: return dateString
+                outputFormat.format(date)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                dateString // 변환 실패 시 원본 문자열 반환
+            }
         }
     }
 }
