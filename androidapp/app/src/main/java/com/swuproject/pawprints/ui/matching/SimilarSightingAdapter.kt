@@ -9,6 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.swuproject.pawprints.R
 import com.swuproject.pawprints.network.SimilarSighting
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class SimilarSightingAdapter : RecyclerView.Adapter<SimilarSightingAdapter.ViewHolder>() {
 
@@ -46,8 +49,26 @@ class SimilarSightingAdapter : RecyclerView.Adapter<SimilarSightingAdapter.ViewH
             title.text = similarSighting.sight_title
             breed.text = similarSighting.sight_breed
             area.text = similarSighting.sight_location
-            date.text = similarSighting.sight_date
+            date.text = formatDate(similarSighting.sight_date)
             feature.text = similarSighting.sight_description
+        }
+
+        // 날짜 포맷 변경 함수
+        private fun formatDate(dateString: String?): String {
+            if (dateString.isNullOrEmpty()) return ""
+
+            // 받은 날짜 형식
+            val inputFormat = SimpleDateFormat("EEE, dd, MMM yyyy HH:mm:ss z", Locale.ENGLISH)
+            // 원하는 출력 형식
+            val outputFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
+
+            return try {
+                val date: Date = inputFormat.parse(dateString) ?: return dateString
+                outputFormat.format(date)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                dateString // 변환 실패 시 원본 문자열 반환
+            }
         }
     }
 }
