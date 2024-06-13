@@ -1,13 +1,16 @@
 package com.swuproject.pawprints.ui.matching
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.swuproject.pawprints.R
 import com.swuproject.pawprints.common.Utils
@@ -57,6 +60,7 @@ class MatchingFragment : Fragment() {
         // 매칭 버튼 클릭 이벤트 설정
         binding.matchingButton.setOnClickListener {
             if (userId != null && selectedPetName != null) {
+                binding.progressBar.visibility = View.VISIBLE // 로딩 시작
                 findSimilarSightings(userId, selectedPetName!!)
             }
         }
@@ -102,12 +106,14 @@ class MatchingFragment : Fragment() {
                             selectedTextView = null
                             // 실종 신고 정보 초기화
                             clearLostReportInfo()
+                            binding.matchingButton.visibility = View.GONE // 매칭 버튼 숨기기
                         } else {
                             selectedPetName = pet.name
                             setTextColor(resources.getColor(R.color.deep_pink))
                             selectedTextView?.setTextColor(Color.BLACK) // 이전 선택 해제
                             selectedTextView = this
                             fetchLostReport(pet.id)
+                            binding.matchingButton.visibility = View.VISIBLE // 매칭 버튼 보이기
                         }
                     }
                 }
@@ -194,37 +200,38 @@ class MatchingFragment : Fragment() {
         binding.lostReportContact.text = lostReportResponse.lostContact
     }
 
-    // 유사한 목격 사례 찾기 요청
     private fun findSimilarSightings(userId: String, petName: String) {
-        val requestBody = mapOf("userId" to userId, "pet_name" to petName)
-        RetrofitClient.getFlaskRetrofitService().findSimilarSightings(requestBody).enqueue(object : Callback<List<SimilarSighting>> {
+        val requestBody = mapOf(
+            "user_id" to userId,
+            "pet_name" to petName
+        )
+
+        Log.d("MatchingFragment", "Request Body: $requestBody")
+
+        val flaskRetrofitService = RetrofitClient.getFlaskRetrofitService()
+        flaskRetrofitService.findSimilarSightings(requestBody).enqueue(object : Callback<List<SimilarSighting>> {
             override fun onResponse(call: Call<List<SimilarSighting>>, response: Response<List<SimilarSighting>>) {
+                binding.progressBar.visibility = View.GONE
                 if (response.isSuccessful) {
                     response.body()?.let { similarSightings ->
-                        displaySimilarSightings(similarSightings)
+                        val intent = Intent(requireContext(), MatchingResultActivity::class.java)
+                        intent.putExtra("similarSightings", ArrayList(similarSightings))
+                        startActivity(intent)
                     }
                 } else {
-                    showError("유사한 목격 사례를 찾는 데 실패했습니다.")
+                    showErrorToast("유사한 목격 사례를 찾는 데 실패했습니다.")
+                    Log.e("MatchingFragment", "findSimilarSightings onResponse: ${response.errorBody()?.string()}")
                 }
             }
 
             override fun onFailure(call: Call<List<SimilarSighting>>, t: Throwable) {
-                showError("유사한 목격 사례를 찾는 데 실패했습니다.")
+                binding.progressBar.visibility = View.GONE
+                showErrorToast("유사한 목격 사례를 찾는 데 실패했습니다.")
+                Log.e("MatchingFragment", "findSimilarSightings onFailure: ${t.message}", t)
             }
         })
     }
 
-    // 유사한 목격 사례를 화면에 표시
-    private fun displaySimilarSightings(similarSightings: List<SimilarSighting>) {
-        binding.similarSightingsSection.removeAllViews()
-        for (sighting in similarSightings) {
-            val sightingView = TextView(requireContext()).apply {
-                text = sighting.description
-                textSize = 16f
-            }
-            binding.similarSightingsSection.addView(sightingView)
-        }
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

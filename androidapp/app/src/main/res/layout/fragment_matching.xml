@@ -72,6 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="20dp"
+                android:visibility="gone"
                 android:orientation="vertical">
 
                 <TextView
@@ -123,6 +124,12 @@
 
                 </androidx.cardview.widget.CardView>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="#EFEFEF" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -130,9 +137,10 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
+                        android:gravity="end"
                         android:text="제목"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -147,6 +155,8 @@
                         android:id="@+id/lostReportTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:background="@drawable/edit_background"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -159,9 +169,10 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
+                        android:gravity="end"
                         android:text="종"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -176,6 +187,8 @@
                         android:id="@+id/lostReportBreed"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:background="@drawable/edit_background"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -188,9 +201,10 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
+                        android:gravity="end"
                         android:text="성별"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -205,6 +219,8 @@
                         android:id="@+id/lostReportGender"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:background="@drawable/edit_background"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -217,9 +233,10 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
+                        android:gravity="end"
                         android:text="나이"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -234,6 +251,8 @@
                         android:id="@+id/lostReportAge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:background="@drawable/edit_background"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -246,9 +265,10 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
+                        android:gravity="end"
                         android:text="지역"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -263,6 +283,8 @@
                         android:id="@+id/lostReportArea"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:background="@drawable/edit_background"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -275,9 +297,10 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
+                        android:gravity="end"
                         android:text="실종날짜"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -292,6 +315,8 @@
                         android:id="@+id/lostReportDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:background="@drawable/edit_background"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -303,9 +328,10 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
+                        android:gravity="end"
                         android:text="실종장소"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -320,6 +346,8 @@
                         android:id="@+id/lostReportLocation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:background="@drawable/edit_background"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -332,9 +360,10 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
+                        android:gravity="end"
                         android:text="특징"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -349,6 +378,8 @@
                         android:id="@+id/lostReportFeature"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:background="@drawable/edit_background"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -362,9 +393,10 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
+                        android:gravity="end"
                         android:text="설명"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -379,6 +411,8 @@
                         android:id="@+id/lostReportDescription"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:background="@drawable/edit_background"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -389,9 +423,10 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
+                        android:gravity="end"
                         android:text="연락처"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -406,6 +441,8 @@
                         android:id="@+id/lostReportContact"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:background="@drawable/edit_background"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -413,6 +450,13 @@
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/matchingButton"
@@ -425,15 +469,14 @@
             android:stateListAnimator="@null"
             android:layout_marginTop="10dp"
             app:cornerRadius="30dp"
+            android:visibility="gone"
             android:layout_gravity="center"/>
 
-        <LinearLayout
-            android:id="@+id/similarSightingsSection"
+        <FrameLayout
+            android:id="@+id/fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="20dp">
-        </LinearLayout>
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
     </LinearLayout>
 </ScrollView>

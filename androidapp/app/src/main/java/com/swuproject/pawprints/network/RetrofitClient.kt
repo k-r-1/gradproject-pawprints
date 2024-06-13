@@ -4,6 +4,7 @@ import com.swuproject.pawprints.network.RetrofitService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
     private const val BASE_URL = "http://34.135.2.113:8080" // Spring Boot 서버 URL
@@ -23,12 +24,17 @@ object RetrofitClient {
     }
 
     fun getFlaskRetrofitService(): RetrofitService {
+        val flaskHttpClient = OkHttpClient.Builder()
+            .connectTimeout(10, TimeUnit.MINUTES)
+            .readTimeout(10, TimeUnit.MINUTES)
+            .writeTimeout(10, TimeUnit.MINUTES)
+            .build()
+
         val flaskRetrofit = Retrofit.Builder()
             .baseUrl(FLASK_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
-            .client(httpClient)
+            .client(flaskHttpClient)
             .build()
-
         return flaskRetrofit.create(RetrofitService::class.java)
     }
 }

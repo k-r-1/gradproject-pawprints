@@ -36,7 +36,10 @@ interface RetrofitService {
     @GET("/api/pets/{userId}/lost")
     fun getLostPetsByUserId(@Path("userId") userId: String): Call<List<Pet>>
 
-    @POST("/api/matching/find_similar_sightings")
+    //@POST("/api/matching/find_similar_sightings")
+    //fun findSimilarSightings(@Body requestBody: Map<String, String>): Call<List<SimilarSighting>>
+
+    @POST("/find_similar_sightings")
     fun findSimilarSightings(@Body requestBody: Map<String, String>): Call<List<SimilarSighting>>
 
     @GET("/api/lostReports")
