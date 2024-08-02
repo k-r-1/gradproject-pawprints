@@ -37,6 +37,10 @@
         <activity
             android:name=".ui.matching.MatchingResultActivity"
             android:exported="false" />
+
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="kclnkhia3r" />
     </application>
 
 </manifest>
