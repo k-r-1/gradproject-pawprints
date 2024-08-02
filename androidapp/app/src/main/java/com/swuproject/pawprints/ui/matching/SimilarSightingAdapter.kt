@@ -38,7 +38,7 @@ class SimilarSightingAdapter : RecyclerView.Adapter<SimilarSightingAdapter.ViewH
         private val photo: ImageView = itemView.findViewById(R.id.iv_matchresult_recycler_photo)
         private val title: TextView = itemView.findViewById(R.id.tv_matchresult_recycler_title)
         private val breed: TextView = itemView.findViewById(R.id.tv_matchresult_recycler_breed)
-        private val area: TextView = itemView.findViewById(R.id.tv_matchresult_recycler_area)
+        private val area: TextView = itemView.findViewById(R.id.tv_matchresult_recycler_area) // 지역
         private val date: TextView = itemView.findViewById(R.id.tv_matchresult_recycler_date)
         //private val location: TextView = itemView.findViewById(R.id.tv_matchresult_recycler_location)
         private val feature: TextView = itemView.findViewById(R.id.tv_matchresult_recycler_feature)

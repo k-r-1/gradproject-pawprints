@@ -40,9 +40,9 @@ class SightRecyclerAdapter(private val items: List<SightReportResponse>, private
         private var photoImageView: ImageView = v.findViewById(R.id.iv_hometab_sightrecycler_photo)
         private var titleTextView: TextView = v.findViewById(R.id.tv_hometab_sightrecycler_title)
         private var breedTextView: TextView = v.findViewById(R.id.tv_hometab_sightrecycler_breed)
-        private var areaTextView: TextView = v.findViewById(R.id.tv_hometab_sightrecycler_area)
+        private var areaTextView: TextView = v.findViewById(R.id.tv_hometab_sightrecycler_area) // 지역_위도경도
         private var dateTextView: TextView = v.findViewById(R.id.tv_hometab_sightrecycler_date)
-        private var locationTextView: TextView = v.findViewById(R.id.tv_hometab_sightrecycler_location)
+        private var locationTextView: TextView = v.findViewById(R.id.tv_hometab_sightrecycler_location) // 장소_ex.서울시 강남구
         private var featureTextView: TextView = v.findViewById(R.id.tv_hometab_sightrecycler_feature)
 
         fun bind(listener: View.OnClickListener, item: SightReportResponse) {
