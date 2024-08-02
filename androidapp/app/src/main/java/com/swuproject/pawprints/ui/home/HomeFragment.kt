@@ -90,14 +90,14 @@ class HomeFragment : Fragment() {
             fabHomeLostreport.setOnClickListener {
                 toggleFabMenu()
                 fabHomeLostreport.icon = ContextCompat.getDrawable(requireContext(), R.drawable.icon_pen)
-                // 실종신고 액티비티로 이동
+                // 실종 신고 액티비티로 이동
                 val intent = Intent(activity, LostReportActivity::class.java)
                 startActivity(intent)
             }
             fabHomeSightreport.setOnClickListener {
                 toggleFabMenu()
                 fabHomeSightreport.icon = ContextCompat.getDrawable(requireContext(), R.drawable.icon_pen)
-                // 목격신고 액티비티로 이동
+                // 목격 신고 액티비티로 이동
                 val intent = Intent(activity, SightReportActivity::class.java)
                 startActivity(intent)
             }
