@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.util.FusedLocationSource
+import com.naver.maps.map.LocationTrackingMode
 import com.swuproject.pawprints.R
 import com.swuproject.pawprints.databinding.FragmentMapBinding
 
@@ -16,6 +18,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private var _binding: FragmentMapBinding? = null
     private val binding get() = _binding!!
+    private lateinit var locationSource: FusedLocationSource
+    private lateinit var naverMap: NaverMap
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,15 +40,44 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         mapFragment.getMapAsync(this)
 
+        // Initialize FusedLocationSource
+        locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+
         return root
     }
 
     override fun onMapReady(naverMap: NaverMap) {
-        // NaverMap 객체가 준비되면 여기에서 설정
+        this.naverMap = naverMap
+        naverMap.locationSource = locationSource
+
+        // 현재 위치 버튼
+        naverMap.uiSettings.isLocationButtonEnabled = true
+
+        // Set location tracking mode
+        naverMap.locationTrackingMode = LocationTrackingMode.Face
+    }
+
+    // Handle permission result
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (locationSource.onRequestPermissionsResult(requestCode, permissions, grantResults)) {
+            if (!locationSource.isActivated) { // 권한 거부됨
+                naverMap.locationTrackingMode = LocationTrackingMode.None
+            }
+            return
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 1000
     }
 }
