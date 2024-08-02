@@ -65,5 +65,5 @@ dependencies {
     annotationProcessor("com.github.bumptech.glide:compiler:4.14.2")
 
     // Naver Map SDK
-    implementation("com.naver.map:map-sdk:3.19.0")
+    implementation("com.naver.maps:map-sdk:3.19.0")
 }
