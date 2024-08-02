@@ -13,6 +13,8 @@ import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.util.FusedLocationSource
 import com.naver.maps.map.LocationTrackingMode
+import com.naver.maps.map.overlay.Marker
+import com.naver.maps.geometry.LatLng
 import com.swuproject.pawprints.R
 import com.swuproject.pawprints.databinding.FragmentMapBinding
 import com.swuproject.pawprints.dto.SightReportResponse
@@ -45,6 +47,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         fetchSightReports { sightReports ->
             val adapter = SightRecyclerAdapter(sightReports, requireContext())
             recyclerView.adapter = adapter
+
+            // 지도에 마커 추가
+            addMarkers(sightReports)
         }
 
         // Initialize Naver Map
@@ -89,6 +94,21 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         // Set location tracking mode
         naverMap.locationTrackingMode = LocationTrackingMode.Face
+    }
+
+    private fun addMarkers(sightReports: List<SightReportResponse>) {
+        if (::naverMap.isInitialized) {
+            for (report in sightReports) {
+                val lat = report.sightAreaLat
+                val lng = report.sightAreaLng
+                if (lat != null && lng != null) {
+                    val marker = Marker()
+                    marker.position = LatLng(lat, lng)
+                    marker.captionText = report.sightBreed.toString()
+                    marker.map = naverMap
+                }
+            }
+        }
     }
 
     // Handle permission result
