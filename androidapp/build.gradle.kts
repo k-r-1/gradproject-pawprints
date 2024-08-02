@@ -3,11 +3,3 @@ plugins {
     alias(libs.plugins.androidApplication) apply false
     alias(libs.plugins.jetbrainsKotlinAndroid) apply false
 }
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        maven("https://repository.map.naver.com/archive/maven")
-    }
-}
