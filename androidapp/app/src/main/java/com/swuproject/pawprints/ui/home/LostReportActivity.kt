@@ -1,12 +1,18 @@
 package com.swuproject.pawprints.ui.home
 
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.swuproject.pawprints.R
+import com.swuproject.pawprints.common.FullScreenImageActivity
 import com.swuproject.pawprints.common.Utils
 import com.swuproject.pawprints.databinding.ActivityLostReportBinding
 import com.swuproject.pawprints.network.Pet
@@ -22,6 +28,18 @@ class LostReportActivity : AppCompatActivity() {
     private lateinit var retrofitService: RetrofitService
     private var selectedPetName: String? = null // 선택된 반려동물 이름 저장
     private var selectedTextView: TextView? = null // 선택된 텍스트뷰 저장
+    private var selectedImageUri: Uri? = null
+
+    private val getImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        uri?.let {
+            selectedImageUri = it
+            val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
+            binding.imageSection.findViewById<ImageView>(R.id.selected_image).apply {
+                setImageBitmap(bitmap)
+                visibility = View.VISIBLE // 이미지가 선택되면 보이도록 설정
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +71,24 @@ class LostReportActivity : AppCompatActivity() {
             }
             binding.petListSection.addView(loadingTextView)
             fetchPets(userId)
+        }
+
+        // 이미지 업로드 버튼 클릭 시
+        binding.imageUploadButton.setOnClickListener {
+            getImage.launch("image/*")
+        }
+
+        // 이미지 섹션 클릭 시 전체 화면으로 이미지 보기
+        binding.imageSection.setOnClickListener {
+            showFullImage()
+        }
+    }
+
+    private fun showFullImage() {
+        selectedImageUri?.let {
+            val intent = Intent(this, FullScreenImageActivity::class.java)
+            intent.putExtra("image_uri", it.toString())
+            startActivity(intent)
         }
     }
 

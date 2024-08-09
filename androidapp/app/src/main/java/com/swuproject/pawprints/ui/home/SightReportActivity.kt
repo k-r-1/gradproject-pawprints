@@ -1,17 +1,26 @@
 package com.swuproject.pawprints.ui.home
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.ImageView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.swuproject.pawprints.R
+import com.swuproject.pawprints.common.FullScreenImageActivity
 import com.swuproject.pawprints.common.Utils
 import com.swuproject.pawprints.databinding.ActivitySightReportBinding
 
 class SightReportActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySightReportBinding
+
+    private var selectedImageUri: Uri? = null
+
     private val dogBreeds = arrayOf(
         "비글", "비숑 프리제", "보더 콜리", "보스턴 테리어", "불독",
         "치와와", "코커 스패니얼", "닥스훈트", "잉글리쉬 쉽독",
@@ -28,6 +37,17 @@ class SightReportActivity : AppCompatActivity() {
         "노르웨이 숲 고양이", "페르시안", "래그돌", "러시안 블루",
         "스코티시 폴드", "샴", "시베리안", "스핑크스", "턱시도", "태비", "터키시 앙고라"
     ).sortedArray() + "기타"
+
+    private val getImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        uri?.let {
+            selectedImageUri = it
+            val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
+            binding.imageSection.findViewById<ImageView>(R.id.selected_image).apply {
+                setImageBitmap(bitmap)
+                visibility = View.VISIBLE // 이미지가 선택되면 보이도록 설정
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -138,14 +158,23 @@ class SightReportActivity : AppCompatActivity() {
             binding.resetBreedButton.visibility = View.GONE
             binding.petBreedSpinner.setSelection(0)
         }
+
+        // 이미지 업로드 버튼 클릭 시
+        binding.imageUploadButton.setOnClickListener {
+            getImage.launch("image/*")
+        }
+
+        // 이미지 섹션 클릭 시 전체 화면으로 이미지 보기
+        binding.imageSection.setOnClickListener {
+            showFullImage()
+        }
     }
 
-    private fun allFieldsFilled(): Boolean {
-        val isOtherBreedSelected = binding.petBreedSpinner.selectedItem.toString() == "기타"
-
-        return binding.petNameEditText.text.isNotEmpty() &&
-                binding.petTypeSpinner.selectedItemPosition != 0 &&
-                (!isOtherBreedSelected || binding.petBreedEditText.text.isNotEmpty()) &&
-                binding.petFeatureEditText.text.isNotEmpty()
+    private fun showFullImage() {
+        selectedImageUri?.let {
+            val intent = Intent(this, FullScreenImageActivity::class.java)
+            intent.putExtra("image_uri", it.toString())
+            startActivity(intent)
+        }
     }
 }
