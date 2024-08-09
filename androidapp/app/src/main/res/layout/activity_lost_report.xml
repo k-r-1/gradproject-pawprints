@@ -138,14 +138,6 @@
                         android:background="#A6A6A6"
                         android:layout_marginBottom="10dp"/>
 
-<!--                    <ImageView-->
-<!--                        android:id="@+id/pet_image"-->
-<!--                        android:layout_width="120dp"-->
-<!--                        android:layout_height="120dp"-->
-<!--                        android:layout_gravity="center"-->
-<!--                        android:layout_marginBottom="15dp"-->
-<!--                        android:contentDescription="Pet Image" />-->
-
                     <androidx.cardview.widget.CardView
                         android:layout_width="120dp"
                         android:layout_height="120dp"
@@ -211,19 +203,12 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="60dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:gravity="end"
-                            android:text="제목"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/textView3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="   " />
+                            android:text="• 제목"
+                            android:textColor="@color/black"
+                            android:textSize="17sp"
+                            android:layout_marginEnd="8dp"/> <!-- 여백 조정 -->
 
                         <EditText
                             android:id="@+id/lostReportTitle"
@@ -244,19 +229,12 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="60dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:gravity="end"
-                            android:text="종"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/textView4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="   " />
+                            android:text="• 품종"
+                            android:textColor="@color/black"
+                            android:textSize="17sp"
+                            android:layout_marginEnd="8dp"/> <!-- 여백 조정 -->
 
                         <TextView
                             android:id="@+id/lostReportBreed"
@@ -277,19 +255,12 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="60dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:gravity="end"
-                            android:text="성별"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/textView5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="   " />
+                            android:text="• 성별"
+                            android:textColor="@color/black"
+                            android:textSize="17sp"
+                            android:layout_marginEnd="8dp"/> <!-- 여백 조정 -->
 
                         <TextView
                             android:id="@+id/lostReportGender"
@@ -310,19 +281,12 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="60dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:gravity="end"
-                            android:text="나이"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/textView6"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="   " />
+                            android:text="• 나이"
+                            android:textColor="@color/black"
+                            android:textSize="17sp"
+                            android:layout_marginEnd="8dp"/> <!-- 여백 조정 -->
 
                         <TextView
                             android:id="@+id/lostReportAge"
@@ -339,34 +303,50 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:orientation="horizontal">
+                        android:orientation="vertical" >
 
-                        <TextView
-                            android:layout_width="60dp"
+                        <!-- 지역과 선택된 주소가 한 줄에 위치하는 부분 -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:gravity="end"
-                            android:text="지역"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
 
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="• 지역"
+                                android:textColor="@color/black"
+                                android:textSize="17sp"
+                                android:layout_marginEnd="8dp"/> <!-- 여백 조정 -->
+
+                            <TextView
+                                android:id="@+id/pet_area_text"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textSize="16sp"
+                                android:inputType="textMultiLine"
+                                android:hint="실종된 곳을 지도에서 선택해 주세요."
+                                android:background="@drawable/edit_background"
+                                android:padding="5dp"
+                                android:scrollHorizontally="false" /> <!-- 가로 스크롤 비활성화 -->
+
+                        </LinearLayout>
+
+                        <!-- 지역 선택하기 버튼이 아래에 위치하는 부분 -->
                         <TextView
-                            android:id="@+id/textView8"
+                            android:id="@+id/pet_area_select"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="   " />
-
-                        <EditText
-                            android:id="@+id/lostReportArea"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="5dp"
-                            android:background="@drawable/edit_background"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-
+                            android:text="지도에서 선택하기"
+                            android:textColor="@color/deep_pink"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:inputType="text"
+                            android:drawableRight="@drawable/ic_next"
+                            android:padding="8dp"
+                            android:layout_marginTop="4dp" /> <!-- 위쪽 여백 추가 -->
                     </LinearLayout>
 
                     <LinearLayout
@@ -376,25 +356,19 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="60dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:gravity="end"
-                            android:text="실종날짜"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/textView9"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="   " />
+                            android:text="• 날짜"
+                            android:textColor="@color/black"
+                            android:textSize="17sp"
+                            android:layout_marginEnd="8dp"/> <!-- 여백 조정 -->
 
                         <EditText
                             android:id="@+id/lostReportDate"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:hint="실종된 날짜를 입력해 주세요."
                             android:padding="5dp"
                             android:background="@drawable/edit_background"
                             android:textColor="@color/black"
@@ -408,25 +382,19 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="60dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:gravity="end"
-                            android:text="실종장소"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/textView7"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="   " />
+                            android:text="• 장소"
+                            android:textColor="@color/black"
+                            android:textSize="17sp"
+                            android:layout_marginEnd="8dp"/> <!-- 여백 조정 -->
 
                         <EditText
                             android:id="@+id/lostReportLocation"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:hint="실종된 상세 장소를 설명해 주세요.\n(ex. OO공원 분수대 근처)"
                             android:padding="5dp"
                             android:background="@drawable/edit_background"
                             android:textColor="@color/black"
@@ -441,19 +409,12 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="60dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:gravity="end"
-                            android:text="특징"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/textView11"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="   " />
+                            android:text="• 특징"
+                            android:textColor="@color/black"
+                            android:textSize="17sp"
+                            android:layout_marginEnd="8dp"/> <!-- 여백 조정 -->
 
                         <TextView
                             android:id="@+id/lostReportFeature"
@@ -474,19 +435,12 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="60dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:gravity="end"
-                            android:text="설명"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/textView12"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="   " />
+                            android:text="• 설명"
+                            android:textColor="@color/black"
+                            android:textSize="17sp"
+                            android:layout_marginEnd="8dp"/> <!-- 여백 조정 -->
 
                         <EditText
                             android:id="@+id/lostReportDescription"
@@ -507,19 +461,12 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="60dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:gravity="end"
-                            android:text="연락처"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/textView13"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="   " />
+                            android:text="• 연락처"
+                            android:textColor="@color/black"
+                            android:textSize="17sp"
+                            android:layout_marginEnd="8dp"/> <!-- 여백 조정 -->
 
                         <EditText
                             android:id="@+id/lostReportContact"

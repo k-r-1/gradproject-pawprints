@@ -1,17 +1,21 @@
 package com.swuproject.pawprints.ui.home
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.swuproject.pawprints.R
 import com.swuproject.pawprints.common.FullScreenImageActivity
+import com.swuproject.pawprints.common.MapActivity
 import com.swuproject.pawprints.common.Utils
 import com.swuproject.pawprints.databinding.ActivitySightReportBinding
 
@@ -48,6 +52,31 @@ class SightReportActivity : AppCompatActivity() {
             }
         }
     }
+
+    // 결과를 받아오는 ActivityResultLauncher 정의
+    private val mapActivityResultLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            result.data?.let { intent ->
+                // 반환된 주소 정보를 받아옴
+                val selectedAddress = intent.getStringExtra("selected_address")
+                val selectedLat = intent.getDoubleExtra("selected_lat", 0.0)
+                val selectedLng = intent.getDoubleExtra("selected_lng", 0.0)
+
+                selectedAddress?.let {
+                    binding.petAreaText.text = it
+
+                    // 위도, 경도를 로그와 토스트 메시지로 출력
+                    Log.d("SightReportActivity", "Selected Latitude: $selectedLat")
+                    Log.d("SightReportActivity", "Selected Longitude: $selectedLng")
+
+                    Toast.makeText(this, "위도: $selectedLat, 경도: $selectedLng", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -168,6 +197,13 @@ class SightReportActivity : AppCompatActivity() {
         binding.imageSection.setOnClickListener {
             showFullImage()
         }
+
+        // 지역 선택 버튼 클릭 시 MapActivity로 이동
+        binding.petAreaSelect.setOnClickListener {
+            val intent = Intent(this, MapActivity::class.java)
+            mapActivityResultLauncher.launch(intent)  // MapActivity 호출
+        }
+
     }
 
     private fun showFullImage() {

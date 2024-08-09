@@ -1,10 +1,12 @@
 package com.swuproject.pawprints.ui.home
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -13,6 +15,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.swuproject.pawprints.R
 import com.swuproject.pawprints.common.FullScreenImageActivity
+import com.swuproject.pawprints.common.MapActivity
 import com.swuproject.pawprints.common.Utils
 import com.swuproject.pawprints.databinding.ActivityLostReportBinding
 import com.swuproject.pawprints.network.Pet
@@ -37,6 +40,30 @@ class LostReportActivity : AppCompatActivity() {
             binding.imageSection.findViewById<ImageView>(R.id.selected_image).apply {
                 setImageBitmap(bitmap)
                 visibility = View.VISIBLE // 이미지가 선택되면 보이도록 설정
+            }
+        }
+    }
+
+    // 결과를 받아오는 ActivityResultLauncher 정의
+    private val mapActivityResultLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            result.data?.let { intent ->
+                // 반환된 주소 정보를 받아옴
+                val selectedAddress = intent.getStringExtra("selected_address")
+                val selectedLat = intent.getDoubleExtra("selected_lat", 0.0)
+                val selectedLng = intent.getDoubleExtra("selected_lng", 0.0)
+
+                selectedAddress?.let {
+                    binding.petAreaText.text = it
+
+                    // 위도, 경도를 로그와 토스트 메시지로 출력
+                    Log.d("SightReportActivity", "Selected Latitude: $selectedLat")
+                    Log.d("SightReportActivity", "Selected Longitude: $selectedLng")
+
+                    Toast.makeText(this, "위도: $selectedLat, 경도: $selectedLng", Toast.LENGTH_LONG).show()
+                }
             }
         }
     }
@@ -81,6 +108,12 @@ class LostReportActivity : AppCompatActivity() {
         // 이미지 섹션 클릭 시 전체 화면으로 이미지 보기
         binding.imageSection.setOnClickListener {
             showFullImage()
+        }
+
+        // 지역 선택 버튼 클릭 시 MapActivity로 이동
+        binding.petAreaSelect.setOnClickListener {
+            val intent = Intent(this, MapActivity::class.java)
+            mapActivityResultLauncher.launch(intent)  // MapActivity 호출
         }
     }
 
