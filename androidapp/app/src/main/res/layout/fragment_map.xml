@@ -22,10 +22,26 @@
         android:orientation="vertical"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
+        <!-- Handle을 포함한 FrameLayout -->
+        <FrameLayout
+            android:id="@+id/handle_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <!-- Handle 부분 (스와이프 영역) -->
+            <View
+                android:id="@+id/handle"
+                android:layout_width="40dp"
+                android:layout_height="6dp"
+                android:background="@drawable/rounded_bg"
+                android:layout_gravity="center"/>
+        </FrameLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/map_sightRecyclerview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

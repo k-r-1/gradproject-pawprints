@@ -1,16 +1,13 @@
 package com.swuproject.pawprints.ui.map
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import androidx.recyclerview.widget.RecyclerView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
@@ -58,15 +55,60 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         val bottomSheet = binding.bottomSheet
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
 
-        // 초기 상태 설정: 하단에서 5%만 보이도록 설정
+        // BottomSheet의 초기 상태 설정
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
         bottomSheetBehavior.peekHeight = (resources.displayMetrics.heightPixels * 0.05).toInt()
 
-        // 최대 확장 상태를 하단에서부터 2/3 높이로 설정
-        val screenHeight = resources.displayMetrics.heightPixels
-        val bottomSheetHeight = screenHeight - (screenHeight / 3)  // 하단에서부터 2/3 높이
-        bottomSheetBehavior.isFitToContents = false
-        bottomSheetBehavior.maxHeight = bottomSheetHeight
+        // BottomSheet의 최대 높이 설정
+        bottomSheet.post {
+            bottomSheetBehavior.isFitToContents = false
+            bottomSheetBehavior.halfExpandedRatio = 0.65f
+        }
+
+        // Handle 부분을 포함한 FrameLayout의 터치 리스너 설정
+        val handleContainer = binding.bottomSheet.findViewById<FrameLayout>(R.id.handle_container)
+        handleContainer.setOnTouchListener { _, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    // Handle 부분 터치 시 BottomSheet의 드래그를 허용하도록 설정
+                    bottomSheetBehavior.isDraggable = true
+                    true
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    // 터치가 움직일 때도 BottomSheet의 드래그를 허용
+                    bottomSheetBehavior.isDraggable = true
+                    true
+                }
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    // 터치가 끝나면 BottomSheet의 드래그를 허용하도록 설정
+                    bottomSheetBehavior.isDraggable = true
+                    false
+                }
+                else -> false
+            }
+        }
+
+        // RecyclerView의 터치 리스너 설정
+        recyclerView.setOnTouchListener { _, event ->
+            // RecyclerView가 터치되면 BottomSheet의 드래그를 비활성화
+            bottomSheetBehavior.isDraggable = false
+            // RecyclerView의 터치 이벤트를 소비하지 않고 계속 전파
+            false
+        }
+
+        // BottomSheetBehavior의 상태를 감지하여 상한 설정
+        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                    // BottomSheet가 FULLY_EXPANDED로 가지 않도록 방지
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                // 추가적인 스크롤 처리가 필요할 수 있음
+            }
+        })
 
         // 지도 Fragment 초기화
         val fm = childFragmentManager
@@ -133,12 +175,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
         if (locationSource.onRequestPermissionsResult(requestCode, permissions, grantResults)) {
-            if (!locationSource.isActivated) { // 권한 거부됨
+            if (!locationSource.isActivated) {
                 naverMap.locationTrackingMode = LocationTrackingMode.None
             }
             return
