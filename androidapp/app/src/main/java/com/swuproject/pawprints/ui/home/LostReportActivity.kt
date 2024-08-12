@@ -1,6 +1,7 @@
 package com.swuproject.pawprints.ui.home
 
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -24,6 +25,9 @@ import com.swuproject.pawprints.network.RetrofitService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class LostReportActivity : AppCompatActivity() {
 
@@ -114,6 +118,11 @@ class LostReportActivity : AppCompatActivity() {
         binding.petAreaSelect.setOnClickListener {
             val intent = Intent(this, MapActivity::class.java)
             mapActivityResultLauncher.launch(intent)  // MapActivity 호출
+        }
+
+        // 사용자가 날짜 입력 필드를 클릭할 때, 날짜 선택 다이얼로그를 표시함
+        binding.lostReportDate.setOnClickListener {
+            showDatePicker()
         }
     }
 
@@ -219,5 +228,31 @@ class LostReportActivity : AppCompatActivity() {
     // 토스트 메시지로 오류 표시
     private fun showErrorToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showDatePicker() {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            this,
+            { _, selectedYear, selectedMonth, selectedDay ->
+                // SimpleDateFormat을 사용하여 날짜를 원하는 형식으로 포맷
+                val selectedDate = Calendar.getInstance().apply {
+                    set(selectedYear, selectedMonth, selectedDay)
+                }
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                val formattedDate = dateFormat.format(selectedDate.time)
+
+                // 포맷된 날짜를 TextView에 표시
+                binding.lostReportDate.text = formattedDate
+            },
+            year,
+            month,
+            day
+        )
+        datePickerDialog.show()
     }
 }

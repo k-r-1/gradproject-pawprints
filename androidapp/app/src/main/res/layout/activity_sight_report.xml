@@ -336,8 +336,8 @@
                   android:textSize="17sp"
                   android:layout_marginEnd="8dp"/> <!-- 여백 조정 -->
 
-              <EditText
-                  android:id="@+id/pet_date_edit_text"
+              <TextView
+                  android:id="@+id/pet_date_text"
                   android:layout_width="0dp"
                   android:layout_height="wrap_content"
                   android:layout_weight="1"

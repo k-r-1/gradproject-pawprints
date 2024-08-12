@@ -1,6 +1,7 @@
 package com.swuproject.pawprints.ui.home
 
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -18,6 +19,9 @@ import com.swuproject.pawprints.common.FullScreenImageActivity
 import com.swuproject.pawprints.common.MapActivity
 import com.swuproject.pawprints.common.Utils
 import com.swuproject.pawprints.databinding.ActivitySightReportBinding
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class SightReportActivity : AppCompatActivity() {
 
@@ -204,6 +208,11 @@ class SightReportActivity : AppCompatActivity() {
             mapActivityResultLauncher.launch(intent)  // MapActivity 호출
         }
 
+        // 사용자가 날짜 입력 필드를 클릭할 때, 날짜 선택 다이얼로그를 표시함
+        binding.petDateText.setOnClickListener {
+            showDatePicker()
+        }
+
     }
 
     private fun showFullImage() {
@@ -213,4 +222,31 @@ class SightReportActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
+    private fun showDatePicker() {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            this,
+            { _, selectedYear, selectedMonth, selectedDay ->
+                // SimpleDateFormat을 사용하여 날짜를 원하는 형식으로 포맷
+                val selectedDate = Calendar.getInstance().apply {
+                    set(selectedYear, selectedMonth, selectedDay)
+                }
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                val formattedDate = dateFormat.format(selectedDate.time)
+
+                // 포맷된 날짜를 TextView에 표시
+                binding.petDateText.text = formattedDate
+            },
+            year,
+            month,
+            day
+        )
+        datePickerDialog.show()
+    }
+
 }
