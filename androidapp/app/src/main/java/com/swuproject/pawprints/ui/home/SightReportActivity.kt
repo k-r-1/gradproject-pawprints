@@ -19,6 +19,17 @@ import com.swuproject.pawprints.common.FullScreenImageActivity
 import com.swuproject.pawprints.common.MapActivity
 import com.swuproject.pawprints.common.Utils
 import com.swuproject.pawprints.databinding.ActivitySightReportBinding
+import com.swuproject.pawprints.dto.SightReportResponse
+import com.swuproject.pawprints.network.RetrofitService
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -57,6 +68,18 @@ class SightReportActivity : AppCompatActivity() {
         }
     }
 
+    private var selectedLat: Double? = null
+    private var selectedLng: Double? = null
+
+    private val retrofitService: RetrofitService by lazy {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://yourapi.com/") // 실제 API의 base URL로 교체하세요.
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        retrofit.create(RetrofitService::class.java)
+    }
+
     // 결과를 받아오는 ActivityResultLauncher 정의
     private val mapActivityResultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -65,8 +88,8 @@ class SightReportActivity : AppCompatActivity() {
             result.data?.let { intent ->
                 // 반환된 주소 정보를 받아옴
                 val selectedAddress = intent.getStringExtra("selected_address")
-                val selectedLat = intent.getDoubleExtra("selected_lat", 0.0)
-                val selectedLng = intent.getDoubleExtra("selected_lng", 0.0)
+                selectedLat = intent.getDoubleExtra("selected_lat", 0.0)
+                selectedLng = intent.getDoubleExtra("selected_lng", 0.0)
 
                 selectedAddress?.let {
                     binding.petAreaText.text = it
@@ -212,6 +235,62 @@ class SightReportActivity : AppCompatActivity() {
         binding.petDateText.setOnClickListener {
             showDatePicker()
         }
+
+        binding.saveButton.setOnClickListener {
+            selectedImageUri?.let { uri ->
+                val file = File(uri.path)
+                val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
+                val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+
+                // 스피너나 입력 필드에서 데이터를 가져와서 RequestBody로 변환
+                val sightType = binding.petTypeSpinner.selectedItem.toString()
+                val sightBreed = binding.petBreedSpinner.selectedItem.toString()
+                val sightAreaLat = selectedLat?.toString() ?: ""
+                val sightAreaLng = selectedLng?.toString() ?: ""
+                val sightDate = binding.petDateText.text.toString()
+                val sightLocation = binding.petLocationEditText.text.toString()
+                val sightDescription = binding.petFeatureEditText.text.toString()
+
+                // RequestBody 생성
+                val sightTypeRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), sightType)
+                val sightBreedRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), sightBreed)
+                val sightAreaLatRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), sightAreaLat)
+                val sightAreaLngRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), sightAreaLng)
+                val sightDateRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), sightDate)
+                val sightLocationRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), sightLocation)
+                val sightDescriptionRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), sightDescription)
+
+                // Retrofit 서비스 호출
+                val call = retrofitService.createSightReport(
+                    body,
+                    sightTypeRequest,
+                    sightBreedRequest,
+                    sightAreaLatRequest,
+                    sightAreaLngRequest,
+                    sightDateRequest,
+                    sightLocationRequest,
+                    sightDescriptionRequest
+                )
+
+                call.enqueue(object : Callback<SightReportResponse> {
+                    override fun onResponse(call: Call<SightReportResponse>, response: Response<SightReportResponse>) {
+                        if (response.isSuccessful) {
+                            Toast.makeText(this@SightReportActivity, "목격 신고가 성공적으로 등록되었습니다.", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Log.e("SightReportActivity", "Failed to submit sight report: ${response.errorBody()?.string()}")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<SightReportResponse>, t: Throwable) {
+                        Log.e("SightReportActivity", "Error: ${t.message}")
+                    }
+                })
+            } ?: run {
+                Toast.makeText(this, "이미지를 선택해 주세요.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
 
     }
 

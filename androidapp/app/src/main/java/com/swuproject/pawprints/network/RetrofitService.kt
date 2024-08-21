@@ -2,12 +2,16 @@ package com.swuproject.pawprints.network
 
 import com.swuproject.pawprints.dto.SightReportResponse
 import com.swuproject.pawprints.dto.LostReportResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -47,6 +51,19 @@ interface RetrofitService {
 
     @GET("/api/sightReports")
     fun getSightReports(): Call<List<SightReportResponse>>
+
+    @Multipart
+    @POST("/api/sightReports")
+    fun createSightReport(
+        @Part file: MultipartBody.Part,
+        @Part("sightType") sightType: RequestBody,
+        @Part("sightBreed") sightBreed: RequestBody,
+        @Part("sightAreaLat") sightAreaLat: RequestBody,
+        @Part("sightAreaLng") sightAreaLng: RequestBody,
+        @Part("sightDate") sightDate: RequestBody,
+        @Part("sightLocation") sightLocation: RequestBody,
+        @Part("sightDescription") sightDescription: RequestBody
+    ): Call<SightReportResponse>
 
     @POST("/api/pets/{petId}")
     fun updatePet(@Path("petId") petId: Int, @Body pet: Pet): Call<Void>
