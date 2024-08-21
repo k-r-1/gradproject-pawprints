@@ -7,6 +7,15 @@ public class SightReportsImageResponse {
     private int sightImageId;
     private String sightImagePath;
 
+    // 기존 기본 생성자
+    public SightReportsImageResponse() {}
+
+    // 새로 추가할 생성자
+    public SightReportsImageResponse(int sightImageId, String sightImagePath) {
+        this.sightImageId = sightImageId;
+        this.sightImagePath = sightImagePath;
+    }
+
     // Getters and Setters
 
     public int getSightImageId() {
