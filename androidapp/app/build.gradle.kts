@@ -63,4 +63,11 @@ dependencies {
     // Glide
     implementation("com.github.bumptech.glide:glide:4.14.2")
     annotationProcessor("com.github.bumptech.glide:compiler:4.14.2")
+
+    // Naver Map SDK
+    implementation("com.naver.maps:map-sdk:3.19.0")
+    implementation("com.google.android.gms:play-services-location:21.1.0")
+
+    // BottomSheetBehavior
+    implementation ("com.google.android.material:material:1.8.0")
 }
