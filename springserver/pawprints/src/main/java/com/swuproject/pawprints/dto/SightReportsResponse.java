@@ -14,6 +14,18 @@ public class SightReportsResponse {
     private String sightDescription;
     private List<SightReportsImageResponse> sightImages;
 
+    public SightReportsResponse(int sightId, String sightTitle, String sightBreed, Double sightAreaLat, Double sightAreaLng, Date sightDate, String sightLocation, String sightDescription, List<SightReportsImageResponse> sightImages) {
+        this.sightId = sightId;
+        this.sightTitle = sightTitle;
+        this.sightBreed = sightBreed;
+        this.sightAreaLat = sightAreaLat;
+        this.sightAreaLng = sightAreaLng;
+        this.sightDate = sightDate;
+        this.sightLocation = sightLocation;
+        this.sightDescription = sightDescription;
+        this.sightImages = sightImages;
+    }
+
     // Getters and Setters
 
     public int getSightId() {
