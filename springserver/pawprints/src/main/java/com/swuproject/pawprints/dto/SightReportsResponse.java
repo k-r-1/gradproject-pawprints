@@ -5,6 +5,7 @@ import java.util.List;
 
 public class SightReportsResponse {
     private int sightId;
+    private String userId;
     private String sightTitle;
     private String sightBreed;
     private Double sightAreaLat;
@@ -14,8 +15,13 @@ public class SightReportsResponse {
     private String sightDescription;
     private List<SightReportsImageResponse> sightImages;
 
-    public SightReportsResponse(int sightId, String sightTitle, String sightBreed, Double sightAreaLat, Double sightAreaLng, Date sightDate, String sightLocation, String sightDescription, List<SightReportsImageResponse> sightImages) {
+    public SightReportsResponse() {
+        // 기본 생성자
+    }
+
+    public SightReportsResponse(int sightId, String userId, String sightTitle, String sightBreed, Double sightAreaLat, Double sightAreaLng, Date sightDate, String sightLocation, String sightDescription, List<SightReportsImageResponse> sightImages) {
         this.sightId = sightId;
+        this.userId = userId;
         this.sightTitle = sightTitle;
         this.sightBreed = sightBreed;
         this.sightAreaLat = sightAreaLat;
@@ -36,6 +42,10 @@ public class SightReportsResponse {
         this.sightId = sightId;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+    public void setUserId(String userId) { this.userId = userId; }
     public String getSightTitle() {
         return sightTitle;
     }
