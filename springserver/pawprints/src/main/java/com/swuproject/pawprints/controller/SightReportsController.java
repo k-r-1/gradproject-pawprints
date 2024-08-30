@@ -38,6 +38,11 @@ public class SightReportsController {
     @Autowired
     private SightReportsImageRepository sightReportsImageRepository;
 
+    @GetMapping("/sightReports")
+    public List<SightReportsResponse> getSightReports() {
+        return sightReportsService.getAllSightReports();
+    }
+
     @PostMapping("/sightReportsPost")
     @Transactional  // 트랜잭션 관리 추가
     public ResponseEntity<SightReportsResponse> createSightReport(
