@@ -1,7 +1,6 @@
 package com.swuproject.pawprints.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.swuproject.pawprints.R
 import com.swuproject.pawprints.databinding.FragmentHomeTabLostBinding
-import com.swuproject.pawprints.databinding.FragmentHomeTabSightBinding
 import com.swuproject.pawprints.dto.LostReportResponse
-import com.swuproject.pawprints.dto.SightReportResponse
 import com.swuproject.pawprints.network.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -52,7 +49,9 @@ class HomeTabLostFragment : Fragment() {
                 response: Response<List<LostReportResponse>>
             ) {
                 if (response.isSuccessful) {
-                    callback(response.body() ?: emptyList())
+                    // 데이터를 역순으로 정렬
+                    val sortedList = response.body()?.reversed() ?: emptyList()
+                    callback(sortedList)
                 }
             }
 
@@ -61,4 +60,5 @@ class HomeTabLostFragment : Fragment() {
             }
         })
     }
+
 }

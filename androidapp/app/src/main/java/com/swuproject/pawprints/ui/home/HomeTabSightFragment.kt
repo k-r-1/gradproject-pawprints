@@ -1,10 +1,10 @@
 package com.swuproject.pawprints.ui.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.swuproject.pawprints.R
@@ -48,7 +48,9 @@ class HomeTabSightFragment : Fragment() {
                 response: Response<List<SightReportResponse>>
             ) {
                 if (response.isSuccessful) {
-                    callback(response.body() ?: emptyList())
+                    // 데이터를 역순으로 정렬
+                    val sortedList = response.body()?.reversed() ?: emptyList()
+                    callback(sortedList)
                 }
             }
 
@@ -57,4 +59,5 @@ class HomeTabSightFragment : Fragment() {
             }
         })
     }
+
 }
