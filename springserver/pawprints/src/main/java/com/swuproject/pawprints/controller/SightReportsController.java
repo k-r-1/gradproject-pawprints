@@ -14,11 +14,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 @RestController
+@RequestMapping("/api")
 public class SightReportsController {
 
     @Autowired
@@ -33,62 +38,73 @@ public class SightReportsController {
     @Autowired
     private SightReportsImageRepository sightReportsImageRepository;
 
-    @GetMapping("/api/sightReports")
+    @GetMapping("/sightReports")
     public List<SightReportsResponse> getSightReports() {
         return sightReportsService.getAllSightReports();
     }
 
-    @PostMapping("/api/sightReports")
+    @PostMapping("/sightReportsPost")
+    @Transactional  // 트랜잭션 관리 추가
     public ResponseEntity<SightReportsResponse> createSightReport(
-            @RequestParam("file") List<MultipartFile> files,  // 여러 파일을 받을 수 있도록 List로 수정
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("userId") String userId,
+            @RequestParam("sightTitle") String sightTitle,
             @RequestParam("sightType") String sightType,
             @RequestParam("sightBreed") String sightBreed,
             @RequestParam("sightAreaLat") Double sightAreaLat,
             @RequestParam("sightAreaLng") Double sightAreaLng,
-            @RequestParam("sightDate") Date sightDate,
+            @RequestParam("sightDate") String sightDate,
             @RequestParam("sightLocation") String sightLocation,
             @RequestParam("sightDescription") String sightDescription
-    ) throws IOException {
+    ) throws IOException, ParseException {
 
-        // DB에 SightReports 객체를 저장
+        // sightType을 "dog" 또는 "cat"으로 변환
+        String formattedSightType = sightType.equals("개") ? "dog" : (sightType.equals("고양이") ? "cat" : sightType);
+
+        // 날짜 문자열을 Date 객체로 변환
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date parsedDate = dateFormat.parse(sightDate);
+
+        // 단일 이미지 파일을 GCS에 업로드
+        String folderName = "sight_reports_image/" + formattedSightType;
+        String imageUrl;
+        try {
+            imageUrl = gcsUploaderService.uploadFile(file, folderName);
+        } catch (IOException e) {
+            throw new RuntimeException("이미지 업로드 실패: " + e.getMessage());
+        }
+
+        // SightReports 객체 생성 및 저장
         SightReports sightReport = new SightReports();
-        sightReport.setSightType(sightType);
+        sightReport.setUserId(userId);
+        sightReport.setSightTitle(sightTitle);
+        sightReport.setSightType(formattedSightType);
         sightReport.setSightBreed(sightBreed);
         sightReport.setSightAreaLat(sightAreaLat);
         sightReport.setSightAreaLng(sightAreaLng);
-        sightReport.setSightDate(sightDate);
+        sightReport.setSightDate(parsedDate);
         sightReport.setSightLocation(sightLocation);
         sightReport.setSightDescription(sightDescription);
         sightReportsRepository.save(sightReport);
 
-        // 이미지 URL 리스트 생성
-        List<SightReportsImageResponse> imageResponses = new ArrayList<>();
-        for (MultipartFile file : files) {
-            // 이미지 파일을 GCS에 업로드
-            String folderName = "sight_reports_image/" + (sightType.equals("개") ? "dog" : "cat");
-            String imageUrl = gcsUploaderService.uploadFile(file, folderName);
-
-            // 이미지 URL을 DB에 저장
-            SightReportsImage sightReportsImage = new SightReportsImage();
-            sightReportsImage.setSightReports(sightReport);
-            sightReportsImage.setSightImagePath(imageUrl);
-            sightReportsImageRepository.save(sightReportsImage);
-
-            // SightReportsImageResponse 객체 생성
-            imageResponses.add(new SightReportsImageResponse(sightReportsImage.getSightImageId(), imageUrl));
-        }
+        // 이미지 정보를 DB에 저장
+        SightReportsImage sightReportsImage = new SightReportsImage();
+        sightReportsImage.setSightReports(sightReport);
+        sightReportsImage.setSightImagePath(imageUrl);
+        sightReportsImageRepository.save(sightReportsImage);
 
         // SightReportsResponse 객체 생성
         SightReportsResponse response = new SightReportsResponse(
                 sightReport.getSightId(),
-                sightReport.getSightTitle(),  // sightTitle 필드는 추가할 수 있습니다.
+                sightReport.getUserId(),
+                sightReport.getSightTitle(),
                 sightReport.getSightBreed(),
                 sightReport.getSightAreaLat(),
                 sightReport.getSightAreaLng(),
                 sightReport.getSightDate(),
                 sightReport.getSightLocation(),
                 sightReport.getSightDescription(),
-                imageResponses // 이미지 리스트를 포함
+                List.of(new SightReportsImageResponse(sightReportsImage.getSightImageId(), imageUrl))
         );
 
         return ResponseEntity.ok(response);
