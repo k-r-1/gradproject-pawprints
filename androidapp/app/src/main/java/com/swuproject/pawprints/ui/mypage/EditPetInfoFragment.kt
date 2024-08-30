@@ -156,8 +156,8 @@ class EditPetInfoFragment : Fragment() {
 
         // 종류와 성별 텍스트 설정
         binding.petTypeTextView.text = when (pet.type) {
-            "Dog" -> "개"
-            "Cat" -> "고양이"
+            "dog" -> "개"
+            "cat" -> "고양이"
             else -> pet.type
         }
         binding.petGenderTextView.text = pet.gender
@@ -210,8 +210,8 @@ class EditPetInfoFragment : Fragment() {
 
     private fun getPetTypeIndex(petType: String): Int {
         return when (petType) {
-            "Dog" -> 1 // '개'는 인덱스 1
-            "Cat" -> 2 // '고양이'는 인덱스 2
+            "dog" -> 1 // '개'는 인덱스 1
+            "cat" -> 2 // '고양이'는 인덱스 2
             else -> 0 // 기본값
         }
     }
@@ -372,10 +372,10 @@ class EditPetInfoFragment : Fragment() {
                     }
                 )
 
-                if (selectedPet?.type == "Dog") {
+                if (selectedPet?.type == "dog") {
                     binding.petBreedSpinner.adapter =
                         ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, dogBreeds)
-                } else if (selectedPet?.type == "Cat") {
+                } else if (selectedPet?.type == "cat") {
                     binding.petBreedSpinner.adapter =
                         ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, catBreeds)
                 }
@@ -400,7 +400,7 @@ class EditPetInfoFragment : Fragment() {
                                 age = binding.petAgeEditText.text.toString().toInt(),
                                 color = binding.petColorEditText.text.toString(),
                                 feature = binding.petFeatureEditText.text.toString(),
-                                type = if (binding.petTypeSpinner.selectedItem.toString() == "개") "Dog" else "Cat",
+                                type = if (binding.petTypeSpinner.selectedItem.toString() == "개") "dog" else "cat",
                                 gender = binding.petGenderSpinner.selectedItem.toString(),
                                 breed = if (binding.petBreedEditText.visibility == View.VISIBLE)
                                     binding.petBreedEditText.text.toString()
@@ -492,7 +492,7 @@ class EditPetInfoFragment : Fragment() {
                             age = binding.petAgeEditText.text.toString().toInt(),
                             color = binding.petColorEditText.text.toString(),
                             feature = binding.petFeatureEditText.text.toString(),
-                            type = if (binding.petTypeSpinner.selectedItem.toString() == "개") "Dog" else "Cat",
+                            type = if (binding.petTypeSpinner.selectedItem.toString() == "개") "dog" else "cat",
                             gender = binding.petGenderSpinner.selectedItem.toString(),
                             breed = if (binding.petBreedEditText.visibility == View.VISIBLE)
                                 binding.petBreedEditText.text.toString()

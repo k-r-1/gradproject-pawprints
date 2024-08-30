@@ -1,20 +1,24 @@
 package com.swuproject.pawprints.ui.home
 
 import android.content.Context
+import android.location.Geocoder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.swuproject.pawprints.R
-import com.swuproject.pawprints.databinding.ItemHometabLostRecyclerBinding
 import com.swuproject.pawprints.dto.LostReportResponse
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class LostRecyclerAdapter(private val items: List<LostReportResponse>, private val context: Context) : RecyclerView.Adapter<LostRecyclerAdapter.ViewHolder>() {
 
@@ -63,7 +67,18 @@ class LostRecyclerAdapter(private val items: List<LostReportResponse>, private v
             titleTextView.text = item.lostTitle
             breedTextView.text = item.petBreed
             genderageTextView.text = "${item.petGender} / ${item.petAge}"
-            areaTextView.text = "${item.lostAreaLat}, ${item.lostAreaLng}"
+
+            // Nullable 타입을 처리하여 주소 변환
+            val latitude = item.lostAreaLat ?: 0.0
+            val longitude = item.lostAreaLng ?: 0.0
+
+            CoroutineScope(Dispatchers.Main).launch {
+                val address = withContext(Dispatchers.IO) {
+                    getAddressFromLatLng(latitude, longitude)
+                }
+                areaTextView.text = address ?: "$latitude, $longitude"
+            }
+
             dateTextView.text = formatDate(item.lostDate)
             locationTextView.text = item.lostLocation
             featureTextView.text = item.petFeature
@@ -88,6 +103,22 @@ class LostRecyclerAdapter(private val items: List<LostReportResponse>, private v
             } catch (e: Exception) {
                 e.printStackTrace()
                 dateString // 변환 실패 시 원본 문자열 반환
+            }
+        }
+
+        // 위도와 경도를 주소로 변환하는 함수
+        private fun getAddressFromLatLng(latitude: Double, longitude: Double): String? {
+            val geocoder = Geocoder(context, Locale.getDefault())
+            return try {
+                val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+                if (!addresses.isNullOrEmpty()) {
+                    addresses[0].getAddressLine(0) // 전체 주소 반환
+                } else {
+                    null // 주소를 찾지 못한 경우
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null // 예외 발생 시 null 반환
             }
         }
     }

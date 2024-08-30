@@ -204,72 +204,85 @@ class SightReportActivity : AppCompatActivity() {
 
         // saveButton 클릭 리스너
         binding.saveButton.setOnClickListener {
-            selectedImageUri?.let { uri ->
-                try {
-                    val inputStream = contentResolver.openInputStream(uri)
-                    inputStream?.let {
-                        val fileName = getFileName(uri)
+            // 모든 필드가 채워졌는지 확인하는 코드 추가 - 수정된 부분
+            if (binding.petNameEditText?.text.isNullOrEmpty() ||
+                binding.petTypeSpinner.selectedItem.toString() == "클릭하여 종류를 선택해 주세요" ||
+                binding.petBreedSpinner.selectedItem.toString().isEmpty() ||
+                binding.petAreaText.text.isNullOrEmpty() ||
+                binding.petDateText.text.isNullOrEmpty() ||
+                binding.petLocationEditText.text.isNullOrEmpty() ||
+                binding.petFeatureEditText.text.isNullOrEmpty() ||
+                selectedImageUri == null ||
+                selectedLat == null || selectedLng == null
+            ) {
+                Toast.makeText(this, "모든 필드를 채워주세요.", Toast.LENGTH_SHORT).show()
+            } else {
+                selectedImageUri?.let { uri ->
+                    try {
+                        val inputStream = contentResolver.openInputStream(uri)
+                        inputStream?.let {
+                            val fileName = getFileName(uri)
 
-                        val sightType = when (binding.petTypeSpinner.selectedItem.toString()) {
-                            "개" -> "dog"
-                            "고양이" -> "cat"
-                            else -> binding.petTypeSpinner.selectedItem.toString()
-                        }
+                            val sightType = when (binding.petTypeSpinner.selectedItem.toString()) {
+                                "개" -> "dog"
+                                "고양이" -> "cat"
+                                else -> binding.petTypeSpinner.selectedItem.toString()
+                            }
 
-                        val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), it.readBytes())
-                        val body = MultipartBody.Part.createFormData("file", fileName, requestFile)
+                            val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), it.readBytes())
+                            val body = MultipartBody.Part.createFormData("file", fileName, requestFile)
 
-                        val userIdRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), Utils.getUserId(this).toString())
-                        val sightTitleRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), binding.petNameEditText?.text.toString())
-                        val sightTypeRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), sightType)
-                        val sightBreedRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), binding.petBreedSpinner.selectedItem.toString())
-                        val sightAreaLatRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), selectedLat?.toString() ?: "")
-                        val sightAreaLngRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), selectedLng?.toString() ?: "")
-                        val sightDateRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), binding.petDateText.text.toString())
-                        val sightLocationRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), binding.petLocationEditText.text.toString())
-                        val sightDescriptionRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), binding.petFeatureEditText.text.toString())
+                            val userIdRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), Utils.getUserId(this).toString())
+                            val sightTitleRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), binding.petNameEditText?.text.toString())
+                            val sightTypeRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), sightType)
+                            val sightBreedRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), binding.petBreedSpinner.selectedItem.toString())
+                            val sightAreaLatRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), selectedLat?.toString() ?: "")
+                            val sightAreaLngRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), selectedLng?.toString() ?: "")
+                            val sightDateRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), binding.petDateText.text.toString())
+                            val sightLocationRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), binding.petLocationEditText.text.toString())
+                            val sightDescriptionRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), binding.petFeatureEditText.text.toString())
 
-                        val call = retrofitService.createSightReport(
-                            body,
-                            userIdRequest,
-                            sightTitleRequest,
-                            sightTypeRequest,
-                            sightBreedRequest,
-                            sightAreaLatRequest,
-                            sightAreaLngRequest,
-                            sightDateRequest,
-                            sightLocationRequest,
-                            sightDescriptionRequest
-                        )
+                            val call = retrofitService.createSightReport(
+                                body,
+                                userIdRequest,
+                                sightTitleRequest,
+                                sightTypeRequest,
+                                sightBreedRequest,
+                                sightAreaLatRequest,
+                                sightAreaLngRequest,
+                                sightDateRequest,
+                                sightLocationRequest,
+                                sightDescriptionRequest
+                            )
 
-                        call.enqueue(object : Callback<SightReportResponse> {
-                            override fun onResponse(call: Call<SightReportResponse>, response: Response<SightReportResponse>) {
-                                if (response.isSuccessful) {
-                                    Toast.makeText(this@SightReportActivity, "목격 신고가 성공적으로 등록되었습니다.", Toast.LENGTH_SHORT).show()
-                                } else {
-                                    val errorBody = response.errorBody()?.string()
-                                    Log.e("SightReportActivity", "Failed to submit sight report: $errorBody")
-                                    Toast.makeText(this@SightReportActivity, "신고 등록에 실패했습니다: $errorBody", Toast.LENGTH_SHORT).show()
+                            call.enqueue(object : Callback<SightReportResponse> {
+                                override fun onResponse(call: Call<SightReportResponse>, response: Response<SightReportResponse>) {
+                                    if (response.isSuccessful) {
+                                        Toast.makeText(this@SightReportActivity, "목격 신고가 성공적으로 등록되었습니다.", Toast.LENGTH_SHORT).show()
+                                        finish()  // 액티비티 종료 - 이전 화면으로 돌아가기
+                                    } else {
+                                        val errorBody = response.errorBody()?.string()
+                                        Log.e("SightReportActivity", "Failed to submit sight report: $errorBody")
+                                        Toast.makeText(this@SightReportActivity, "신고 등록에 실패했습니다: $errorBody", Toast.LENGTH_SHORT).show()
+                                    }
                                 }
-                            }
 
-                            override fun onFailure(call: Call<SightReportResponse>, t: Throwable) {
-                                Log.e("SightReportActivity", "Error: ${t.message}")
-                            }
-                        })
-                    } ?: run {
-                        Toast.makeText(this, "이미지를 선택해 주세요.", Toast.LENGTH_SHORT).show()
+                                override fun onFailure(call: Call<SightReportResponse>, t: Throwable) {
+                                    Log.e("SightReportActivity", "Error: ${t.message}")
+                                }
+                            })
+                        } ?: run {
+                            Toast.makeText(this, "이미지를 선택해 주세요.", Toast.LENGTH_SHORT).show()
+                        }
+                    } catch (e: Exception) {
+                        Log.e("SightReportActivity", "File open failed: ${e.message}")
+                        Toast.makeText(this, "파일을 여는 데 문제가 발생했습니다.", Toast.LENGTH_SHORT).show()
                     }
-                } catch (e: Exception) {
-                    Log.e("SightReportActivity", "File open failed: ${e.message}")
-                    Toast.makeText(this, "파일을 여는 데 문제가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                } ?: run {
+                    Toast.makeText(this, "이미지를 선택해 주세요.", Toast.LENGTH_SHORT).show()
                 }
-            } ?: run {
-                Toast.makeText(this, "이미지를 선택해 주세요.", Toast.LENGTH_SHORT).show()
             }
         }
-
-
     }
 
     // Google Cloud Storage 초기화 메서드

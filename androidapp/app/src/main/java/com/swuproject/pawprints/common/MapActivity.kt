@@ -80,7 +80,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         // 현재 위치 버튼 활성화
         naverMap.uiSettings.isLocationButtonEnabled = true
 
-        // 위치 권한 체크 및 현재 위치 설정
+        // 위치 권한 체크 및 초기 위치 설정
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
             ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             setInitialLocation()
@@ -98,11 +98,11 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             getAddressFromLatLng(latLng)
         }
 
-        // 위치 변경 리스너 설정
-        naverMap.addOnLocationChangeListener { location ->
-            val initialPosition = LatLng(location.latitude, location.longitude)
-            val cameraUpdate = CameraUpdate.scrollTo(initialPosition)
-            naverMap.moveCamera(cameraUpdate)
+        // 지도 이동 이벤트 리스너 추가
+        naverMap.addOnCameraChangeListener { reason, _ ->
+            if (reason == 2) { // 2는 사용자가 지도를 터치해서 이동시킨 경우를 의미합니다.
+                naverMap.locationTrackingMode = LocationTrackingMode.NoFollow
+            }
         }
     }
 
@@ -115,8 +115,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             val initialPosition = LatLng(location.latitude, location.longitude)
             val cameraUpdate = CameraUpdate.scrollTo(initialPosition)
             naverMap.moveCamera(cameraUpdate)
-        } else {
-            // 위치가 아직 설정되지 않았기 때문에 토스트를 띄우지 않고 기다립니다.
         }
     }
 

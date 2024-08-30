@@ -1,10 +1,10 @@
 package com.swuproject.pawprints.ui.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.swuproject.pawprints.R
@@ -18,10 +18,6 @@ import retrofit2.Response
 class HomeTabSightFragment : Fragment() {
     lateinit var binding: FragmentHomeTabSightBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,9 +25,20 @@ class HomeTabSightFragment : Fragment() {
         binding = FragmentHomeTabSightBinding.inflate(inflater, container, false)
         val rootView = binding.root
 
+        // RecyclerView 설정
         val recyclerView = rootView.findViewById<RecyclerView>(R.id.hometab_sightRecyclerview)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
+        // SwipeRefreshLayout 새로고침 리스너 설정
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            fetchSightReports { sightReports ->
+                val adapter = SightRecyclerAdapter(sightReports, requireContext())
+                recyclerView.adapter = adapter
+                binding.swipeRefreshLayout.isRefreshing = false // 새로고침 완료 후 로딩 인디케이터 숨기기
+            }
+        }
+
+        // 최초 데이터 로드
         fetchSightReports { sightReports ->
             val adapter = SightRecyclerAdapter(sightReports, requireContext())
             recyclerView.adapter = adapter
@@ -48,12 +55,14 @@ class HomeTabSightFragment : Fragment() {
                 response: Response<List<SightReportResponse>>
             ) {
                 if (response.isSuccessful) {
-                    callback(response.body() ?: emptyList())
+                    val sortedList = response.body()?.reversed() ?: emptyList()
+                    callback(sortedList)
                 }
             }
 
             override fun onFailure(call: Call<List<SightReportResponse>>, t: Throwable) {
                 // 실패 처리
+                binding.swipeRefreshLayout.isRefreshing = false // 실패 시에도 로딩 인디케이터 숨기기
             }
         })
     }
