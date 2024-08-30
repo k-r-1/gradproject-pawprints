@@ -17,21 +17,37 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    lint {
+        abortOnError = false
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
     buildFeatures {
         viewBinding = true
+    }
+
+    packagingOptions {
+        resources {
+            excludes += "META-INF/INDEX.LIST"
+            excludes += "META-INF/DEPENDENCIES"
+            excludes += "META-INF/NOTICE"
+            excludes += "META-INF/LICENSE"
+        }
     }
 }
 
@@ -69,5 +85,20 @@ dependencies {
     implementation("com.google.android.gms:play-services-location:21.1.0")
 
     // BottomSheetBehavior
-    implementation ("com.google.android.material:material:1.8.0")
+    implementation("com.google.android.material:material:1.8.0")
+
+    // Android auth
+    implementation("com.google.auth:google-auth-library-oauth2-http:1.21.0")
+
+    // Google Cloud
+    implementation("com.google.cloud:google-cloud-storage:2.25.0")
+
+    // 강제 guava 버전 지정
+    implementation("com.google.guava:guava:31.0.1-jre") // 최신 안정 버전 사용
+}
+
+configurations.all {
+    resolutionStrategy {
+        force("com.google.guava:guava:31.0.1-jre") // Guava 버전을 명시적으로 강제
+    }
 }

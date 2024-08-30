@@ -53,9 +53,11 @@ interface RetrofitService {
     fun getSightReports(): Call<List<SightReportResponse>>
 
     @Multipart
-    @POST("/api/sightReports")
+    @POST("/api/sightReportsPost")
     fun createSightReport(
-        @Part file: MultipartBody.Part,
+        @Part files: MultipartBody.Part,
+        @Part("userId") userId: RequestBody,
+        @Part("sightTitle") sightTitle: RequestBody,
         @Part("sightType") sightType: RequestBody,
         @Part("sightBreed") sightBreed: RequestBody,
         @Part("sightAreaLat") sightAreaLat: RequestBody,

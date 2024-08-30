@@ -14,12 +14,17 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.google.cloud.storage.Storage
+import com.google.cloud.storage.StorageOptions
+import com.google.auth.oauth2.GoogleCredentials
+import com.google.cloud.storage.BlobInfo
 import com.swuproject.pawprints.R
 import com.swuproject.pawprints.common.FullScreenImageActivity
 import com.swuproject.pawprints.common.MapActivity
 import com.swuproject.pawprints.common.Utils
 import com.swuproject.pawprints.databinding.ActivitySightReportBinding
 import com.swuproject.pawprints.dto.SightReportResponse
+import com.swuproject.pawprints.network.RetrofitClient
 import com.swuproject.pawprints.network.RetrofitService
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -27,9 +32,11 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.io.File
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -38,7 +45,10 @@ class SightReportActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySightReportBinding
 
-    private var selectedImageUri: Uri? = null
+    // Google Cloud Storage 변수 선언
+    private lateinit var storage: Storage
+
+    private var selectedImageUri: Uri? = null // 단일 이미지 URI
 
     private val dogBreeds = arrayOf(
         "비글", "비숑 프리제", "보더 콜리", "보스턴 테리어", "불독",
@@ -63,7 +73,7 @@ class SightReportActivity : AppCompatActivity() {
             val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
             binding.imageSection.findViewById<ImageView>(R.id.selected_image).apply {
                 setImageBitmap(bitmap)
-                visibility = View.VISIBLE // 이미지가 선택되면 보이도록 설정
+                visibility = View.VISIBLE // 이미지를 이미지뷰에 표시
             }
         }
     }
@@ -71,13 +81,9 @@ class SightReportActivity : AppCompatActivity() {
     private var selectedLat: Double? = null
     private var selectedLng: Double? = null
 
+    // RetrofitClient를 통해 RetrofitService 가져오기
     private val retrofitService: RetrofitService by lazy {
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://yourapi.com/") // 실제 API의 base URL로 교체하세요.
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        retrofit.create(RetrofitService::class.java)
+        RetrofitClient.getRetrofitService()
     }
 
     // 결과를 받아오는 ActivityResultLauncher 정의
@@ -104,11 +110,13 @@ class SightReportActivity : AppCompatActivity() {
         }
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySightReportBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Google Credentials 초기화
+        initializeGoogleCloudStorage()
 
         // 기본 액션바 숨기기
         Utils.hideActionBar(this)
@@ -128,12 +136,10 @@ class SightReportActivity : AppCompatActivity() {
         val petTypeAdapter =
             ArrayAdapter(this, android.R.layout.simple_spinner_item, petTypes)
         petTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        // Spinner에 Adapter를 설정합니다.
         binding.petTypeSpinner.adapter = petTypeAdapter
 
-        // Spinner의 기본 선택값을 설정합니다.
-        binding.petTypeSpinner.setSelection(0)
-
-        // petTypeSpinner의 아이템이 선택되었을 때의 동작을 정의합니다.
         binding.petTypeSpinner.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -142,190 +148,212 @@ class SightReportActivity : AppCompatActivity() {
                     position: Int,
                     id: Long
                 ) {
-                    // 선택된 아이템을 문자열로 가져옵니다.
-                    val selectedPetType = parent.getItemAtPosition(position).toString()
+                    val selectedType = parent.getItemAtPosition(position) as String
 
-                    // 선택된 종류에 따라 품종 배열을 설정합니다.
-                    val breedAdapter = when (selectedPetType) {
-                        // '개'가 선택된 경우 dogBreeds 배열을 어댑터로 설정합니다.
+                    val breedAdapter = when (selectedType) {
                         "개" -> ArrayAdapter(
                             this@SightReportActivity,
                             android.R.layout.simple_spinner_item,
                             dogBreeds
                         )
-                        // '고양이'가 선택된 경우 catBreeds 배열을 어댑터로 설정합니다.
                         "고양이" -> ArrayAdapter(
                             this@SightReportActivity,
                             android.R.layout.simple_spinner_item,
                             catBreeds
                         )
-                        // 그 외의 경우 기본 안내 메시지를 어댑터로 설정합니다.
                         else -> ArrayAdapter(
                             this@SightReportActivity,
                             android.R.layout.simple_spinner_item,
-                            arrayOf("먼저 종류를 선택해 주세요")
+                            emptyArray<String>()
                         )
                     }
 
-                    // 드롭다운 뷰 리소스를 설정합니다.
                     breedAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                    // petBreedSpinner에 어댑터를 설정합니다.
                     binding.petBreedSpinner.adapter = breedAdapter
-                    // petBreedSpinner의 기본 선택값을 설정합니다.
-                    binding.petBreedSpinner.setSelection(0)
-                    // "기타" 옵션이 선택되지 않은 경우 EditText를 숨기고 내용을 지웁니다.
-                    binding.petBreedEditText.visibility = View.GONE
-                    binding.resetBreedButton.visibility = View.GONE
-                    binding.petBreedSpinner.visibility = View.VISIBLE
-                    binding.petBreedEditText.text.clear()
                 }
 
-                override fun onNothingSelected(parent: AdapterView<*>) {}
-            }
-
-        // petBreedSpinner의 아이템이 선택되었을 때의 동작을 정의합니다.
-        binding.petBreedSpinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    // "기타" 옵션이 선택된 경우 EditText를 표시하고 Spinner를 숨깁니다.
-                    if (parent.getItemAtPosition(position) == "기타") {
-                        binding.petBreedEditText.visibility = View.VISIBLE
-                        binding.resetBreedButton.visibility = View.VISIBLE
-                        binding.petBreedSpinner.visibility = View.GONE
-                    } else {
-                        // "기타" 옵션이 아닌 경우 EditText를 숨깁니다.
-                        binding.petBreedEditText.visibility = View.GONE
-                        binding.resetBreedButton.visibility = View.GONE
-                    }
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                    // 선택되지 않은 경우 처리할 내용을 여기에 추가할 수 있습니다.
                 }
-
-                override fun onNothingSelected(parent: AdapterView<*>) {}
             }
 
-        // 재설정 버튼 클릭 시 Spinner를 다시 표시하고 EditText를 숨깁니다.
-        binding.resetBreedButton.setOnClickListener {
-            binding.petBreedSpinner.visibility = View.VISIBLE
-            binding.petBreedEditText.visibility = View.GONE
-            binding.resetBreedButton.visibility = View.GONE
-            binding.petBreedSpinner.setSelection(0)
-        }
-
-        // 이미지 업로드 버튼 클릭 시
+        // 이미지 업로드 버튼 클릭 리스너 설정
         binding.imageUploadButton.setOnClickListener {
             getImage.launch("image/*")
         }
 
-        // 이미지 섹션 클릭 시 전체 화면으로 이미지 보기
-        binding.imageSection.setOnClickListener {
-            showFullImage()
+        // 선택된 이미지를 전체 화면으로 보기
+        binding.imageSection.findViewById<ImageView>(R.id.selected_image).setOnClickListener {
+            selectedImageUri?.let { uri ->
+                val intent = Intent(this@SightReportActivity, FullScreenImageActivity::class.java)
+                intent.putExtra("image_uri", uri.toString()) // 선택된 이미지 URI를 전달
+                startActivity(intent)
+            }
         }
 
-        // 지역 선택 버튼 클릭 시 MapActivity로 이동
+        // 날짜 선택 부분 클릭 시 DatePickerDialog 띄우기
+        binding.petDateText.setOnClickListener {
+            showDatePickerDialog()
+        }
+
+        // 위치 설정 버튼 클릭 리스너
         binding.petAreaSelect.setOnClickListener {
             val intent = Intent(this, MapActivity::class.java)
-            mapActivityResultLauncher.launch(intent)  // MapActivity 호출
+            mapActivityResultLauncher.launch(intent)
         }
 
-        // 사용자가 날짜 입력 필드를 클릭할 때, 날짜 선택 다이얼로그를 표시함
-        binding.petDateText.setOnClickListener {
-            showDatePicker()
-        }
-
+        // saveButton 클릭 리스너
         binding.saveButton.setOnClickListener {
             selectedImageUri?.let { uri ->
-                val file = File(uri.path)
-                val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
-                val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+                try {
+                    val inputStream = contentResolver.openInputStream(uri)
+                    inputStream?.let {
+                        val fileName = getFileName(uri)
 
-                // 스피너나 입력 필드에서 데이터를 가져와서 RequestBody로 변환
-                val sightType = binding.petTypeSpinner.selectedItem.toString()
-                val sightBreed = binding.petBreedSpinner.selectedItem.toString()
-                val sightAreaLat = selectedLat?.toString() ?: ""
-                val sightAreaLng = selectedLng?.toString() ?: ""
-                val sightDate = binding.petDateText.text.toString()
-                val sightLocation = binding.petLocationEditText.text.toString()
-                val sightDescription = binding.petFeatureEditText.text.toString()
-
-                // RequestBody 생성
-                val sightTypeRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), sightType)
-                val sightBreedRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), sightBreed)
-                val sightAreaLatRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), sightAreaLat)
-                val sightAreaLngRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), sightAreaLng)
-                val sightDateRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), sightDate)
-                val sightLocationRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), sightLocation)
-                val sightDescriptionRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), sightDescription)
-
-                // Retrofit 서비스 호출
-                val call = retrofitService.createSightReport(
-                    body,
-                    sightTypeRequest,
-                    sightBreedRequest,
-                    sightAreaLatRequest,
-                    sightAreaLngRequest,
-                    sightDateRequest,
-                    sightLocationRequest,
-                    sightDescriptionRequest
-                )
-
-                call.enqueue(object : Callback<SightReportResponse> {
-                    override fun onResponse(call: Call<SightReportResponse>, response: Response<SightReportResponse>) {
-                        if (response.isSuccessful) {
-                            Toast.makeText(this@SightReportActivity, "목격 신고가 성공적으로 등록되었습니다.", Toast.LENGTH_SHORT).show()
-                        } else {
-                            Log.e("SightReportActivity", "Failed to submit sight report: ${response.errorBody()?.string()}")
+                        val sightType = when (binding.petTypeSpinner.selectedItem.toString()) {
+                            "개" -> "dog"
+                            "고양이" -> "cat"
+                            else -> binding.petTypeSpinner.selectedItem.toString()
                         }
-                    }
 
-                    override fun onFailure(call: Call<SightReportResponse>, t: Throwable) {
-                        Log.e("SightReportActivity", "Error: ${t.message}")
+                        val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), it.readBytes())
+                        val body = MultipartBody.Part.createFormData("file", fileName, requestFile)
+
+                        val userIdRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), Utils.getUserId(this).toString())
+                        val sightTitleRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), binding.petNameEditText?.text.toString())
+                        val sightTypeRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), sightType)
+                        val sightBreedRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), binding.petBreedSpinner.selectedItem.toString())
+                        val sightAreaLatRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), selectedLat?.toString() ?: "")
+                        val sightAreaLngRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), selectedLng?.toString() ?: "")
+                        val sightDateRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), binding.petDateText.text.toString())
+                        val sightLocationRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), binding.petLocationEditText.text.toString())
+                        val sightDescriptionRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), binding.petFeatureEditText.text.toString())
+
+                        val call = retrofitService.createSightReport(
+                            body,
+                            userIdRequest,
+                            sightTitleRequest,
+                            sightTypeRequest,
+                            sightBreedRequest,
+                            sightAreaLatRequest,
+                            sightAreaLngRequest,
+                            sightDateRequest,
+                            sightLocationRequest,
+                            sightDescriptionRequest
+                        )
+
+                        call.enqueue(object : Callback<SightReportResponse> {
+                            override fun onResponse(call: Call<SightReportResponse>, response: Response<SightReportResponse>) {
+                                if (response.isSuccessful) {
+                                    Toast.makeText(this@SightReportActivity, "목격 신고가 성공적으로 등록되었습니다.", Toast.LENGTH_SHORT).show()
+                                } else {
+                                    val errorBody = response.errorBody()?.string()
+                                    Log.e("SightReportActivity", "Failed to submit sight report: $errorBody")
+                                    Toast.makeText(this@SightReportActivity, "신고 등록에 실패했습니다: $errorBody", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+
+                            override fun onFailure(call: Call<SightReportResponse>, t: Throwable) {
+                                Log.e("SightReportActivity", "Error: ${t.message}")
+                            }
+                        })
+                    } ?: run {
+                        Toast.makeText(this, "이미지를 선택해 주세요.", Toast.LENGTH_SHORT).show()
                     }
-                })
+                } catch (e: Exception) {
+                    Log.e("SightReportActivity", "File open failed: ${e.message}")
+                    Toast.makeText(this, "파일을 여는 데 문제가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                }
             } ?: run {
                 Toast.makeText(this, "이미지를 선택해 주세요.", Toast.LENGTH_SHORT).show()
             }
         }
 
 
-
     }
 
-    private fun showFullImage() {
-        selectedImageUri?.let {
-            val intent = Intent(this, FullScreenImageActivity::class.java)
-            intent.putExtra("image_uri", it.toString())
-            startActivity(intent)
+    // Google Cloud Storage 초기화 메서드
+    private fun initializeGoogleCloudStorage() {
+        try {
+            val credentialsStream: InputStream = resources.openRawResource(R.raw.service_account_key) // res/raw에 service_account_key.json 파일이 있어야 합니다.
+            val credentials = GoogleCredentials.fromStream(credentialsStream)
+            storage = StorageOptions.newBuilder().setCredentials(credentials).build().service
+            Log.d("SightReportActivity", "Google Cloud Storage initialized successfully.")
+        } catch (e: Exception) {
+            Log.e("SightReportActivity", "Failed to initialize Google Cloud Storage: ${e.message}")
+            Toast.makeText(this, "Google Cloud Storage 초기화에 실패했습니다.", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun showDatePicker() {
+    // 파일 이름 가져오는 함수
+    private fun getFileName(uri: Uri): String {
+        var result: String? = null
+        if (uri.scheme == "content") {
+            val cursor = contentResolver.query(uri, null, null, null, null)
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndexOrThrow("_display_name"))
+                }
+            } finally {
+                cursor?.close()
+            }
+        }
+        if (result == null) {
+            result = uri.path
+            val cut = result?.lastIndexOf('/')
+            if (cut != -1) {
+                result = result?.substring(cut!! + 1)
+            }
+        }
+        return result ?: "unknown_file"
+    }
+
+    // 파일 업로드하는 함수
+    private fun uploadFileToGcs(inputStream: InputStream, fileName: String) {
+        val bucketName = "pawprints_image_data" // 업로드할 버킷 이름
+        val blobInfo = BlobInfo.newBuilder(bucketName, fileName)
+            .setContentType("image/jpeg") // MIME 타입 설정
+            .build()
+
+        // 백그라운드 스레드에서 네트워크 작업을 수행
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                // BlobInfo 객체와 InputStream을 사용하여 파일 업로드
+                storage.create(blobInfo, inputStream.readBytes())
+                withContext(Dispatchers.Main) {
+                    Log.d("SightReportActivity", "Image uploaded to GCS: $fileName")
+                    Toast.makeText(this@SightReportActivity, "이미지 업로드에 성공했습니다.", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Log.e("SightReportActivity", "Failed to upload image: ${e.message}")
+                    Toast.makeText(this@SightReportActivity, "이미지 업로드에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun showDatePickerDialog() {
         val calendar = Calendar.getInstance()
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
 
         val datePickerDialog = DatePickerDialog(
             this,
-            { _, selectedYear, selectedMonth, selectedDay ->
-                // SimpleDateFormat을 사용하여 날짜를 원하는 형식으로 포맷
+            { _, year, month, dayOfMonth ->
                 val selectedDate = Calendar.getInstance().apply {
-                    set(selectedYear, selectedMonth, selectedDay)
+                    set(Calendar.YEAR, year)
+                    set(Calendar.MONTH, month)
+                    set(Calendar.DAY_OF_MONTH, dayOfMonth)
                 }
+
                 val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                 val formattedDate = dateFormat.format(selectedDate.time)
-
-                // 포맷된 날짜를 TextView에 표시
                 binding.petDateText.text = formattedDate
             },
-            year,
-            month,
-            day
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
         )
+
         datePickerDialog.show()
     }
-
 }
