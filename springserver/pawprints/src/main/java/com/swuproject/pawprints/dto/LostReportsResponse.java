@@ -26,6 +26,25 @@ public class LostReportsResponse {
     private List<LostReportsImageResponse> lostImages;
 
 
+    public LostReportsResponse() {
+        // 기본 생성자
+    }
+
+    public LostReportsResponse(int lostId, int petId, String lostTitle, String petBreed, Double lostAreaLat, Double lostAreaLng, Date lostDate, String lostLocation, String lostDescription, String lostContact, List<LostReportsImageResponse> lostImages) {
+        this.lostId = lostId;
+        this.petId = petId;
+        this.lostTitle = lostTitle;
+        this.petBreed = petBreed;
+        this.lostAreaLat = lostAreaLat;
+        this.lostAreaLng = lostAreaLng;
+        this.lostDate = lostDate;
+        this.lostLocation = lostLocation;
+        this.lostDescription = lostDescription;
+        this.lostContact = lostContact;
+        this.lostImages = lostImages;
+    }
+
+
     public int getLostId() {
         return lostId;
     }
