@@ -2,10 +2,12 @@ package com.swuproject.pawprints.controller;
 
 import com.swuproject.pawprints.domain.LostReports;
 import com.swuproject.pawprints.domain.LostReportsImage;
+import com.swuproject.pawprints.domain.Pet;
 import com.swuproject.pawprints.dto.LostReportsResponse;
 import com.swuproject.pawprints.dto.LostReportsImageResponse;
 import com.swuproject.pawprints.repository.LostReportsImageRepository;
 import com.swuproject.pawprints.repository.LostReportsRepository;
+import com.swuproject.pawprints.repository.PetRepository;
 import com.swuproject.pawprints.service.GCSUploaderService;
 import com.swuproject.pawprints.service.LostReportsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,9 @@ public class LostReportsController {
     @Autowired
     private LostReportsImageRepository lostReportsImageRepository;
 
+    @Autowired
+    private PetRepository petRepository;  // PetRepository 주입
+
     @GetMapping("/lostReports")
     public List<LostReportsResponse> getLostReports() {
         return lostReportsService.getAllLostReports();
@@ -51,7 +56,7 @@ public class LostReportsController {
     @Transactional  // 트랜잭션 관리 추가
     public ResponseEntity<LostReportsResponse> createLostReport(
             @RequestParam("file") MultipartFile file,
-            @RequestParam("petId") int petId,
+            @RequestParam("petId") String petIdstr,
             @RequestParam("lostTitle") String lostTitle,
             @RequestParam("petType") String petType,
             @RequestParam("lostAreaLat") Double lostAreaLat,
@@ -61,6 +66,8 @@ public class LostReportsController {
             @RequestParam("lostDescription") String lostDescription,
             @RequestParam("lostContact") String lostContact
     ) throws IOException, ParseException {
+
+        int petId = Integer.parseInt(petIdstr);
 
         // 날짜 문자열을 Date 객체로 변환
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -75,9 +82,13 @@ public class LostReportsController {
             throw new RuntimeException("이미지 업로드 실패: " + e.getMessage());
         }
 
+        // Pet 객체 조회
+        Pet pet = petRepository.findPetsByPetId(petId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid Pet ID"));
+
         // LostReports 객체 생성 및 저장
         LostReports lostReport = new LostReports();
-        lostReport.setPetId(petId);
+        lostReport.setPet(pet); // petId 대신 Pet 객체 설정
         lostReport.setLostTitle(lostTitle);
         lostReport.setLostAreaLat(lostAreaLat);
         lostReport.setLostAreaLng(lostAreaLng);
@@ -96,9 +107,8 @@ public class LostReportsController {
         // LostReportsResponse 객체 생성
         LostReportsResponse response = new LostReportsResponse(
                 lostReport.getLostId(),
-                lostReport.getPetId(),
+                petId,
                 lostReport.getLostTitle(),
-                lostReport.getPetBreed(),
                 lostReport.getLostAreaLat(),
                 lostReport.getLostAreaLng(),
                 lostReport.getLostDate(),

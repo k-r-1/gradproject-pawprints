@@ -30,11 +30,10 @@ public class LostReportsResponse {
         // 기본 생성자
     }
 
-    public LostReportsResponse(int lostId, int petId, String lostTitle, String petBreed, Double lostAreaLat, Double lostAreaLng, Date lostDate, String lostLocation, String lostDescription, String lostContact, List<LostReportsImageResponse> lostImages) {
+    public LostReportsResponse(int lostId, int petId, String lostTitle, Double lostAreaLat, Double lostAreaLng, Date lostDate, String lostLocation, String lostDescription, String lostContact, List<LostReportsImageResponse> lostImages) {
         this.lostId = lostId;
         this.petId = petId;
         this.lostTitle = lostTitle;
-        this.petBreed = petBreed;
         this.lostAreaLat = lostAreaLat;
         this.lostAreaLng = lostAreaLng;
         this.lostDate = lostDate;
