@@ -73,17 +73,14 @@ interface RetrofitService {
         @Part files: MultipartBody.Part,
         @Part("petId") petId: RequestBody,
         @Part("lostTitle") lostTitle: RequestBody,
-        @Part("lostAge") lostAge: RequestBody,
-        @Part("lostType") lostType: RequestBody,
-        @Part("lostBreed") lostBreed: RequestBody,
+        @Part("petType") petType: RequestBody,
         @Part("lostAreaLat") lostAreaLat: RequestBody,
         @Part("lostAreaLng") lostAreaLng: RequestBody,
         @Part("lostDate") lostDate: RequestBody,
         @Part("lostLocation") lostLocation: RequestBody,
-        @Part("lostFeature") lostFeature: RequestBody,
         @Part("lostDescription") lostDescription: RequestBody,
         @Part("lostContact") lostContact: RequestBody
-    ): Call<SightReportResponse>
+    ): Call<LostReportResponse>
 
     @POST("/api/pets/{petId}")
     fun updatePet(@Path("petId") petId: Int, @Body pet: Pet): Call<Void>
