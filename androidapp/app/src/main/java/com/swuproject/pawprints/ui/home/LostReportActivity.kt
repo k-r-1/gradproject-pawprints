@@ -160,23 +160,23 @@ class LostReportActivity : AppCompatActivity() {
                     try {
                         val inputStream = contentResolver.openInputStream(uri)
                         inputStream?.let {
-                            val fileName = getFileName(uri)
-
-                            val requestFile =
-                                RequestBody.create("image/*".toMediaTypeOrNull(), it.readBytes())
-                            val body =
-                                MultipartBody.Part.createFormData("file", fileName, requestFile)
 
                             selectedPet?.let { pet ->
                                 val petId = pet.id
                                 val petType = pet.type
 
+                                val fileName = getFileName(uri)
+
+                                val requestFile =
+                                    RequestBody.create("image/*".toMediaTypeOrNull(), it.readBytes())
+                                val body =
+                                    MultipartBody.Part.createFormData("file", fileName, requestFile)
+
                                 val petIdRequest = RequestBody.create(
                                     "text/plain".toMediaTypeOrNull(), petId.toString()
                                 )
                                 val lostTitleRequest = RequestBody.create(
-                                    "text/plain".toMediaTypeOrNull(),
-                                    binding.lostReportTitle?.text.toString()
+                                    "text/plain".toMediaTypeOrNull(), binding.lostReportTitle?.text.toString()
                                 )
                                 val petTypeRequest = RequestBody.create(
                                     "text/plain".toMediaTypeOrNull(), petType.toString()
@@ -188,21 +188,19 @@ class LostReportActivity : AppCompatActivity() {
                                     "text/plain".toMediaTypeOrNull(), selectedLng?.toString() ?: ""
                                 )
                                 val lostDateRequest = RequestBody.create(
-                                    "text/plain".toMediaTypeOrNull(),
-                                    binding.lostReportDate.text.toString()
+                                    "text/plain".toMediaTypeOrNull(), binding.lostReportDate.text.toString()
                                 )
                                 val lostLocationRequest = RequestBody.create(
-                                    "text/plain".toMediaTypeOrNull(),
-                                    binding.lostReportLocation.text.toString()
+                                    "text/plain".toMediaTypeOrNull(), binding.lostReportLocation.text.toString()
                                 )
                                 val lostDescriptionRequest = RequestBody.create(
-                                    "text/plain".toMediaTypeOrNull(),
-                                    binding.lostReportDescription.text.toString()
+                                    "text/plain".toMediaTypeOrNull(), binding.lostReportDescription.text.toString()
                                 )
                                 val lostContactRequest = RequestBody.create(
-                                    "text/plain".toMediaTypeOrNull(),
-                                    binding.lostReportContact.text.toString()
+                                    "text/plain".toMediaTypeOrNull(), binding.lostReportContact.text.toString()
                                 )
+
+
 
 
                                 val call = retrofitService.createLostReport(
@@ -226,7 +224,7 @@ class LostReportActivity : AppCompatActivity() {
                                         if (response.isSuccessful) {
                                             Toast.makeText(
                                                 this@LostReportActivity,
-                                                "목격 신고가 성공적으로 등록되었습니다.",
+                                                "실종 신고가 성공적으로 등록되었습니다.",
                                                 Toast.LENGTH_SHORT
                                             ).show()
                                             finish()  // 액티비티 종료 - 이전 화면으로 돌아가기
@@ -317,6 +315,8 @@ class LostReportActivity : AppCompatActivity() {
                             this.setTextColor(resources.getColor(R.color.deep_pink))
                             selectedTextView = this
                             selectedPet = pet // 선택된 Pet 객체를 저장
+
+                            Log.d("LostReportActivity", "Selected Pet: ${selectedPet?.id}, Name: ${selectedPet?.name}, Type: ${selectedPet?.type}")
                             displayPetDetails(pet)
                             showReportSection()
                         }
