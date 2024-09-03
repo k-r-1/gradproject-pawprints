@@ -53,8 +53,7 @@ public class LostReportsController {
             @RequestParam("file") MultipartFile file,
             @RequestParam("petId") int petId,
             @RequestParam("lostTitle") String lostTitle,
-            @RequestParam("lostType") String lostType,
-            @RequestParam("lostBreed") String lostBreed,
+            @RequestParam("petType") String petType,
             @RequestParam("lostAreaLat") Double lostAreaLat,
             @RequestParam("lostAreaLng") Double lostAreaLng,
             @RequestParam("lostDate") String lostDate,
@@ -68,7 +67,7 @@ public class LostReportsController {
         Date parsedDate = dateFormat.parse(lostDate);
 
         // 단일 이미지 파일을 GCS에 업로드
-        String folderName = "sight_reports_image/" + lostType;
+        String folderName = "lost_reports_image/" + petType;
         String imageUrl;
         try {
             imageUrl = gcsUploaderService.uploadFile(file, folderName);
@@ -80,7 +79,6 @@ public class LostReportsController {
         LostReports lostReport = new LostReports();
         lostReport.setPetId(petId);
         lostReport.setLostTitle(lostTitle);
-        lostReport.setPetBreed(lostBreed);
         lostReport.setLostAreaLat(lostAreaLat);
         lostReport.setLostAreaLng(lostAreaLng);
         lostReport.setLostDate(parsedDate);
