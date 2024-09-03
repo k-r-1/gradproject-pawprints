@@ -15,7 +15,6 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.cloud.storage.Storage
-import com.google.cloud.storage.BlobInfo
 import com.swuproject.pawprints.R
 import com.swuproject.pawprints.common.FullScreenImageActivity
 import com.swuproject.pawprints.common.MapActivity
@@ -30,11 +29,6 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -301,31 +295,6 @@ class SightReportActivity : AppCompatActivity() {
             }
         }
         return result ?: "unknown_file"
-    }
-
-    // 파일 업로드하는 함수
-    private fun uploadFileToGcs(inputStream: InputStream, fileName: String) {
-        val bucketName = "pawprints_image_data" // 업로드할 버킷 이름
-        val blobInfo = BlobInfo.newBuilder(bucketName, fileName)
-            .setContentType("image/jpeg") // MIME 타입 설정
-            .build()
-
-        // 백그라운드 스레드에서 네트워크 작업을 수행
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                // BlobInfo 객체와 InputStream을 사용하여 파일 업로드
-                storage.create(blobInfo, inputStream.readBytes())
-                withContext(Dispatchers.Main) {
-                    Log.d("SightReportActivity", "Image uploaded to GCS: $fileName")
-                    Toast.makeText(this@SightReportActivity, "이미지 업로드에 성공했습니다.", Toast.LENGTH_SHORT).show()
-                }
-            } catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    Log.e("SightReportActivity", "Failed to upload image: ${e.message}")
-                    Toast.makeText(this@SightReportActivity, "이미지 업로드에 실패했습니다.", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
     }
 
     private fun showDatePickerDialog() {
