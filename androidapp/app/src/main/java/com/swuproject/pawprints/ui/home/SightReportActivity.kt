@@ -15,8 +15,6 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.cloud.storage.Storage
-import com.google.cloud.storage.StorageOptions
-import com.google.auth.oauth2.GoogleCredentials
 import com.google.cloud.storage.BlobInfo
 import com.swuproject.pawprints.R
 import com.swuproject.pawprints.common.FullScreenImageActivity
@@ -115,9 +113,6 @@ class SightReportActivity : AppCompatActivity() {
         binding = ActivitySightReportBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Google Credentials 초기화
-        initializeGoogleCloudStorage()
-
         // 기본 액션바 숨기기
         Utils.hideActionBar(this)
 
@@ -204,7 +199,6 @@ class SightReportActivity : AppCompatActivity() {
 
         // saveButton 클릭 리스너
         binding.saveButton.setOnClickListener {
-            // 모든 필드가 채워졌는지 확인하는 코드 추가 - 수정된 부분
             if (binding.petNameEditText?.text.isNullOrEmpty() ||
                 binding.petTypeSpinner.selectedItem.toString() == "클릭하여 종류를 선택해 주세요" ||
                 binding.petBreedSpinner.selectedItem.toString().isEmpty() ||
@@ -283,19 +277,7 @@ class SightReportActivity : AppCompatActivity() {
                 }
             }
         }
-    }
 
-    // Google Cloud Storage 초기화 메서드
-    private fun initializeGoogleCloudStorage() {
-        try {
-            val credentialsStream: InputStream = resources.openRawResource(R.raw.service_account_key) // res/raw에 service_account_key.json 파일이 있어야 합니다.
-            val credentials = GoogleCredentials.fromStream(credentialsStream)
-            storage = StorageOptions.newBuilder().setCredentials(credentials).build().service
-            Log.d("SightReportActivity", "Google Cloud Storage initialized successfully.")
-        } catch (e: Exception) {
-            Log.e("SightReportActivity", "Failed to initialize Google Cloud Storage: ${e.message}")
-            Toast.makeText(this, "Google Cloud Storage 초기화에 실패했습니다.", Toast.LENGTH_SHORT).show()
-        }
     }
 
     // 파일 이름 가져오는 함수
