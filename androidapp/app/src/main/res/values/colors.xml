@@ -19,4 +19,9 @@
     <color name="bottom_nav_not_selected">#FF888888</color> <!-- 네비 아이콘 미선택 -->
 
     <color name="hint_color">#80444444</color>
+
+    <!-- 기본 텍스트 색상 정의 -->
+    <color name="primaryTextColor">#333333</color>
+    <color name="gray">#A6A6A6</color>
+
 </resources>
