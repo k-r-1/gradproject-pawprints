@@ -13,5 +13,7 @@ data class SimilarSighting(
     val sight_location: String,
     val sight_title: String,
     val sight_id: Int,
-    val user_id: String
+    val user_id: String,
+    val latitude: Double?, // 추가
+    val longitude: Double? // 추가
 ) : Serializable

@@ -58,7 +58,7 @@ class SimilarSightingAdapter : RecyclerView.Adapter<SimilarSightingAdapter.ViewH
             if (dateString.isNullOrEmpty()) return ""
 
             // 받은 날짜 형식
-            val inputFormat = SimpleDateFormat("EEE, dd, MMM yyyy HH:mm:ss z", Locale.ENGLISH)
+            val inputFormat = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.ENGLISH)
             // 원하는 출력 형식
             val outputFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
 

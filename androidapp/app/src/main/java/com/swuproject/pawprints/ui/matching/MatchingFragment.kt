@@ -2,6 +2,7 @@ package com.swuproject.pawprints.ui.matching
 
 import android.content.Intent
 import android.graphics.Color
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import java.text.SimpleDateFormat
@@ -24,6 +25,10 @@ import com.swuproject.pawprints.network.RetrofitClient
 import com.swuproject.pawprints.network.RetrofitService
 import com.swuproject.pawprints.network.Pet
 import com.swuproject.pawprints.network.SimilarSighting
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -194,7 +199,17 @@ class MatchingFragment : Fragment() {
         binding.lostReportBreed.text = lostReportResponse.petBreed
         binding.lostReportGender.text = lostReportResponse.petGender
         binding.lostReportAge.text = lostReportResponse.petAge.toString()
-        binding.lostReportArea.text = "${lostReportResponse.lostAreaLat.toString()}, ${lostReportResponse.lostAreaLng.toString()}"
+
+        // Nullable 타입을 처리하여 주소 변환
+        val latitude = lostReportResponse.lostAreaLat ?: 0.0
+        val longitude = lostReportResponse.lostAreaLng ?: 0.0
+
+        CoroutineScope(Dispatchers.Main).launch {
+            val address = withContext(Dispatchers.IO) {
+                getAddressFromLatLng(latitude, longitude)
+            }
+            binding.lostReportArea.text = address ?: "$latitude, $longitude"
+        }
 
         // 날짜 포맷 변경
         binding.lostReportDate.text = formatDate(lostReportResponse.lostDate)
@@ -253,6 +268,21 @@ class MatchingFragment : Fragment() {
                 Log.e("MatchingFragment", "findSimilarSightings onFailure: ${t.message}", t)
             }
         })
+    }
+
+    private fun getAddressFromLatLng(latitude: Double, longitude: Double): String? {
+        val geocoder = Geocoder(requireContext(), Locale.getDefault())
+        return try {
+            val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+            if (!addresses.isNullOrEmpty()) {
+                addresses[0].getAddressLine(0) // 전체 주소 반환
+            } else {
+                null // 주소를 찾지 못한 경우
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null // 예외 발생 시 null 반환
+        }
     }
 
 
