@@ -31,7 +31,7 @@ class MatchingResultActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.matchresult_matchReclyclerview)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = SimilarSightingAdapter()
+        adapter = SimilarSightingAdapter(this)
         recyclerView.adapter = adapter
 
         val similarSightings = intent.getSerializableExtra("similarSightings") as? List<SimilarSighting>

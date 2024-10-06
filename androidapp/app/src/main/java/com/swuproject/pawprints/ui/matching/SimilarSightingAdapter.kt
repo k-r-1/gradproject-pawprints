@@ -1,5 +1,7 @@
 package com.swuproject.pawprints.ui.matching
 
+import android.content.Context
+import android.location.Geocoder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,11 +11,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.swuproject.pawprints.R
 import com.swuproject.pawprints.network.SimilarSighting
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class SimilarSightingAdapter : RecyclerView.Adapter<SimilarSightingAdapter.ViewHolder>() {
+class SimilarSightingAdapter(private val context: Context) : RecyclerView.Adapter<SimilarSightingAdapter.ViewHolder>() {
 
     private val items = mutableListOf<SimilarSighting>()
 
@@ -25,7 +31,7 @@ class SimilarSightingAdapter : RecyclerView.Adapter<SimilarSightingAdapter.ViewH
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_matchresult_match_recycler, parent, false)
-        return ViewHolder(view)
+        return ViewHolder(view, context)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -34,13 +40,13 @@ class SimilarSightingAdapter : RecyclerView.Adapter<SimilarSightingAdapter.ViewH
 
     override fun getItemCount(): Int = items.size
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View, private val context: Context) : RecyclerView.ViewHolder(itemView) {
         private val photo: ImageView = itemView.findViewById(R.id.iv_matchresult_recycler_photo)
         private val title: TextView = itemView.findViewById(R.id.tv_matchresult_recycler_title)
         private val breed: TextView = itemView.findViewById(R.id.tv_matchresult_recycler_breed)
-        private val area: TextView = itemView.findViewById(R.id.tv_matchresult_recycler_area) // 지역
+        private val area: TextView = itemView.findViewById(R.id.tv_matchresult_recycler_area) // 지역_위도경도
         private val date: TextView = itemView.findViewById(R.id.tv_matchresult_recycler_date)
-        //private val location: TextView = itemView.findViewById(R.id.tv_matchresult_recycler_location)
+        private val location: TextView = itemView.findViewById(R.id.tv_matchresult_recycler_location) // 장소_주소
         private val feature: TextView = itemView.findViewById(R.id.tv_matchresult_recycler_feature)
 
         fun bind(similarSighting: SimilarSighting) {
@@ -48,8 +54,21 @@ class SimilarSightingAdapter : RecyclerView.Adapter<SimilarSightingAdapter.ViewH
             Glide.with(itemView.context).load(imageUrl).into(photo)
             title.text = similarSighting.sight_title
             breed.text = similarSighting.sight_breed
-            area.text = similarSighting.sight_location
+
+            // Nullable 타입을 처리하여 주소 변환
+            val latitude = similarSighting.latitude ?: 0.0
+            val longitude = similarSighting.longitude ?: 0.0
+
+            // 위도, 경도를 이용해 주소로 변환
+            CoroutineScope(Dispatchers.Main).launch {
+                val address = withContext(Dispatchers.IO) {
+                    getAddressFromLatLng(latitude, longitude)
+                }
+                area.text = address ?: "$latitude, $longitude" // 주소를 못 찾으면 위도, 경도 그대로 출력
+            }
+
             date.text = formatDate(similarSighting.sight_date)
+            location.text = similarSighting.sight_location
             feature.text = similarSighting.sight_description
         }
 
@@ -68,6 +87,22 @@ class SimilarSightingAdapter : RecyclerView.Adapter<SimilarSightingAdapter.ViewH
             } catch (e: Exception) {
                 e.printStackTrace()
                 dateString // 변환 실패 시 원본 문자열 반환
+            }
+        }
+
+        // 위도와 경도를 주소로 변환하는 함수
+        private fun getAddressFromLatLng(latitude: Double, longitude: Double): String? {
+            val geocoder = Geocoder(context, Locale.getDefault())
+            return try {
+                val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+                if (!addresses.isNullOrEmpty()) {
+                    addresses[0].getAddressLine(0) // 전체 주소 반환
+                } else {
+                    null // 주소를 찾지 못한 경우
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null // 예외 발생 시 null 반환
             }
         }
     }
