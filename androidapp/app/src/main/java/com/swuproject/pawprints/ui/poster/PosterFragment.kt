@@ -1,4 +1,4 @@
-package com.swuproject.pawprints.ui.predictedlocation
+package com.swuproject.pawprints.ui.poster
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.swuproject.pawprints.databinding.FragmentPredictedlocationBinding
+import com.swuproject.pawprints.databinding.FragmentPosterBinding
 
 
-class PredictedlocationFragment : Fragment() {
+class PosterFragment : Fragment() {
 
-    private var _binding: FragmentPredictedlocationBinding? = null
+    private var _binding: FragmentPosterBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -24,9 +24,9 @@ class PredictedlocationFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View {
         val dashboardViewModel =
-                ViewModelProvider(this).get(PredictedlocationViewModel::class.java)
+                ViewModelProvider(this).get(PosterViewModel::class.java)
 
-        _binding = FragmentPredictedlocationBinding.inflate(inflater, container, false)
+        _binding = FragmentPosterBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textDashboard

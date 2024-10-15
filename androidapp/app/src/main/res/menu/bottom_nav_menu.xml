@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_predictedlocation"
-        android:icon="@drawable/icon_predictedlocation"
-        android:title="@string/title_predictedlocation" />
+        android:id="@+id/navigation_poster"
+        android:icon="@drawable/icon_poster"
+        android:title="@string/title_poster" />
 
     <item
         android:id="@+id/navigation_matching"

@@ -6,10 +6,10 @@
     app:startDestination="@+id/navigation_home">
 
     <fragment
-        android:id="@+id/navigation_predictedlocation"
-        android:name="com.swuproject.pawprints.ui.predictedlocation.PredictedlocationFragment"
-        android:label="@string/title_predictedlocation"
-        tools:layout="@layout/fragment_predictedlocation" />
+        android:id="@+id/navigation_poster"
+        android:name="com.swuproject.pawprints.ui.poster.PosterFragment"
+        android:label="@string/title_poster"
+        tools:layout="@layout/fragment_poster" />
 
     <fragment
         android:id="@+id/navigation_matching"

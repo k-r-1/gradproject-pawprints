@@ -3,10 +3,10 @@ package com.swuproject.pawprints
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.swuproject.pawprints.common.Utils
 import com.swuproject.pawprints.databinding.ActivityMainBinding
 import com.swuproject.pawprints.ui.LoginActivity
@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         // 프래그먼트 전환 시 툴바 제목 변경
         navController.addOnDestinationChangedListener { _, destination, _ ->
             toolbarTitle.text = when (destination.id) {
-                R.id.navigation_predictedlocation -> "예상위치"
+                R.id.navigation_poster -> "포스터 생성"
                 R.id.navigation_matching -> "매칭"
                 R.id.navigation_home -> "홈"
                 R.id.navigation_map -> "지도"
