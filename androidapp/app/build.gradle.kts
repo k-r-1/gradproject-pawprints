@@ -15,6 +15,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     lint {
@@ -39,6 +42,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        compose = true
     }
 
     packagingOptions {
@@ -48,6 +52,9 @@ android {
             excludes += "META-INF/NOTICE"
             excludes += "META-INF/LICENSE"
         }
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1"
     }
 }
 
@@ -61,6 +68,13 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material3)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -78,6 +92,8 @@ dependencies {
 
     // Glide
     implementation("com.github.bumptech.glide:glide:4.14.2")
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.ui.test.junit4)
     annotationProcessor("com.github.bumptech.glide:compiler:4.14.2")
 
     // Naver Map SDK
@@ -94,7 +110,9 @@ dependencies {
     implementation("com.google.cloud:google-cloud-storage:2.25.0")
 
     // 강제 guava 버전 지정
-    implementation("com.google.guava:guava:31.0.1-jre") // 최신 안정 버전 사용
+    implementation("com.google.guava:guava:31.0.1-jre")
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest) // 최신 안정 버전 사용
 }
 
 configurations.all {

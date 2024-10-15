@@ -1,22 +1,407 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.poster.PosterFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background_color"
+    tools:context="ui.poster.PosterFragment">
 
-    <TextView
-        android:id="@+id/text_dashboard"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" >
+
+            <!-- 아이콘 (크기 조정 가능) -->
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/icon_logo2" />
+
+            <!-- 텍스트 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="나의 반려동물"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:id="@+id/petListSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="10dp">
+                <TextView
+                    android:id="@+id/loadingTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="반려동물 정보를 가져오는 중입니다..."
+                    android:textColor="@color/gray"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="* 실종 반려동물을 선택해 주세요."
+            android:textColor="@android:color/holo_red_dark"
+            android:layout_gravity="center"
+            android:layout_marginTop="3dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@android:color/transparent"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp"
+            android:padding="15dp"
+            >
+
+            <LinearLayout
+                android:id="@+id/posterSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+
+                    <!-- 상단 빨간색 배경 및 제목 -->
+                    <EditText
+                        android:id="@+id/lostReportTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="제목"
+                        android:background="#FF0000"
+                        android:textColorHint="#FFFFFF"
+                        android:textColor="#FFFFFF"
+                        android:textSize="25sp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:padding="20dp"/>
+
+                    <!-- 반려동물 이미지 -->
+                    <ImageView
+                        android:id="@+id/pet_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="10dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/dog_sample2" /> <!-- 이미지 경로 설정 -->
+
+                    <!-- 종 / 성별 / 나이 수평 배치하여 슬래시로 구분 -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp">
+
+                        <!-- 종 -->
+                        <EditText
+                            android:id="@+id/lostReportBreed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:hint="종"
+                            android:textColorHint="@color/primaryTextColor"
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/primaryTextColor" />
+
+                        <!-- 슬래시 구분자 -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" / "
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/primaryTextColor" />
+
+                        <!-- 성별 -->
+                        <EditText
+                            android:id="@+id/lostReportGender"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:hint="성별"
+                            android:textColorHint="@color/primaryTextColor"
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/primaryTextColor" />
+
+                        <!-- 슬래시 구분자 -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" / "
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/primaryTextColor" />
+
+                        <!-- 나이 -->
+                        <EditText
+                            android:id="@+id/lostReportAge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:hint="나이"
+                            android:textColorHint="@color/primaryTextColor"
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/primaryTextColor" />
+                    </LinearLayout>
+
+
+                    <!-- 상세 정보 (이름, 실종장소, 실종일시 등) -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:layout_marginTop="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="5dp">
+
+                            <TextView
+                                android:layout_width="60dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="left"
+                                android:text="• 지역"
+                                android:textColor="@color/primaryTextColor"
+                                android:textSize="16sp" />
+
+                            <EditText
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="6dp"
+                                android:background="@null"
+                                android:hint="지역 "
+                                android:textColorHint="@color/primaryTextColor"
+                                android:textColor="@color/primaryTextColor"
+                                android:textStyle="bold"
+                                android:textSize="16sp"
+                                android:layout_marginStart="8dp"
+                                android:id="@+id/lostReportArea" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="5dp">
+
+                            <TextView
+                                android:layout_width="60dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="left"
+                                android:text="• 실종일"
+                                android:textColor="@color/primaryTextColor"
+                                android:textSize="16sp" />
+
+                            <EditText
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="6dp"
+                                android:background="@null"
+                                android:hint="실종일 "
+                                android:textColorHint="#FF0000"
+                                android:textColor="#FF0000"
+                                android:textStyle="bold"
+                                android:textSize="16sp"
+                                android:layout_marginStart="8dp"
+                                android:id="@+id/lostReportDate" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="5dp">
+
+                            <TextView
+                                android:layout_width="60dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="left"
+                                android:text="• 실종지"
+                                android:textColor="@color/primaryTextColor"
+                                android:textSize="16sp" />
+
+                            <EditText
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="6dp"
+                                android:background="@null"
+                                android:hint="실종지 "
+                                android:textColorHint="#FF0000"
+                                android:textColor="#FF0000"
+                                android:textStyle="bold"
+                                android:textSize="16sp"
+                                android:layout_marginStart="8dp"
+                                android:id="@+id/lostReportLocation" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="5dp">
+
+                            <TextView
+                                android:layout_width="60dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="left"
+                                android:text="• 특징"
+                                android:textColor="@color/primaryTextColor"
+                                android:textSize="16sp" />
+
+                            <EditText
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="6dp"
+                                android:background="@null"
+                                android:hint="특징 "
+                                android:textColorHint="#FF0000"
+                                android:textColor="#FF0000"
+                                android:textStyle="bold"
+                                android:textSize="16sp"
+                                android:layout_marginStart="8dp"
+                                android:id="@+id/lostReportFeature" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:layout_width="60dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="left"
+                                android:text="• 설명"
+                                android:textColor="@color/primaryTextColor"
+                                android:textSize="16sp" />
+                            <EditText
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="6dp"
+                                android:background="@null"
+                                android:hint="설명 "
+                                android:textColorHint="@color/primaryTextColor"
+                                android:textColor="@color/primaryTextColor"
+                                android:textStyle="bold"
+                                android:textSize="16sp"
+                                android:layout_marginStart="8dp"
+                                android:id="@+id/lostReportDescription" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <!-- 하단 연락처 및 강조 문구 -->
+                    <EditText
+                        android:id="@+id/info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="주요 정보 or 사례금 등 추가 정보 기입란"
+                        android:hint="주요 정보 or 사례금 등 추가 정보 기입란"
+                        android:textSize="18sp"
+                        android:textColor="#0004FF"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"/>
+
+                    <EditText
+                        android:id="@+id/lostReportContact"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_call"
+                        android:hint="연락처 기입란"
+                        android:textColorHint="#F7FF00"
+                        android:textSize="25sp"
+                        android:textColor="#F7FF00"
+                        android:background="#000000"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:indeterminateTint="@color/deep_pink" />
+
+        <Button
+            android:id="@+id/createPosterButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="포스터 생성"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:backgroundTint="@color/deep_pink"
+            android:stateListAnimator="@null"
+            android:layout_marginTop="10dp"
+            app:cornerRadius="30dp"
+            android:visibility="gone"
+            android:layout_gravity="center"/>
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+</ScrollView>
