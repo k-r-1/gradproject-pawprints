@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools">
     <!-- 인터넷 권한 추가 -->
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- 사용자 위치정보 사용 권환 추가 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 사용자 위치정보 사용 권환 추가 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 알림 권한 추가 -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- 외부 저장소에 쓰기 권한 추가 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -17,12 +21,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Pawprints"
-        tools:targetApi="31" >
-        <activity
-            android:name=".ui.poster.PosterPreviewActivity"
-            android:exported="false"
-            android:label="@string/title_activity_poster_preview"
-            android:theme="@style/Theme.Pawprints" />
+        tools:targetApi="31">
         <activity
             android:name=".common.MapActivity"
             android:exported="false" />
@@ -37,7 +36,7 @@
             android:exported="false" />
         <activity
             android:name=".SplashActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,9 +57,22 @@
             android:name=".ui.matching.MatchingResultActivity"
             android:exported="false" />
 
+        <!-- FileProvider 설정 추가 -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <!-- Naver Maps API 메타데이터 -->
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="kclnkhia3r" />
+
     </application>
 
 </manifest>
