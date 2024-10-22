@@ -88,6 +88,12 @@ class PosterFragment : Fragment() {
             }
         }
 
+        // 여기서 poster_manual_button 클릭 시 PosterManualActivity로 이동하는 코드 추가
+        binding.posterManualButton.setOnClickListener {
+            val intent = Intent(requireContext(), PosterManualActivity::class.java)
+            startActivity(intent)
+        }
+
         return root
     }
 

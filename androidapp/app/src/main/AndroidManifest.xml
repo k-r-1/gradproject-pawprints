@@ -2,13 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <!-- 인터넷 권한 추가 -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- 사용자 위치정보 사용 권환 추가 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 사용자 위치정보 사용 권환 추가 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!-- 알림 권한 추가 -->
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <!-- 외부 저장소에 쓰기 권한 추가 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 알림 권한 추가 -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" /> <!-- 외부 저장소에 쓰기 권한 추가 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -22,6 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pawprints"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.poster.PosterManualActivity"
+            android:exported="false" />
         <activity
             android:name=".common.MapActivity"
             android:exported="false" />
@@ -55,9 +55,7 @@
             android:label="@string/app_name" />
         <activity
             android:name=".ui.matching.MatchingResultActivity"
-            android:exported="false" />
-
-        <!-- FileProvider 설정 추가 -->
+            android:exported="false" /> <!-- FileProvider 설정 추가 -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -66,13 +64,10 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-        </provider>
-
-        <!-- Naver Maps API 메타데이터 -->
+        </provider> <!-- Naver Maps API 메타데이터 -->
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="kclnkhia3r" />
-
     </application>
 
 </manifest>
