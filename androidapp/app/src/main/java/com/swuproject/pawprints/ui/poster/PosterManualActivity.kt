@@ -1,20 +1,23 @@
 package com.swuproject.pawprints.ui.poster
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.pdf.PdfDocument
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.provider.MediaStore
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
-import com.bumptech.glide.Glide
 import com.swuproject.pawprints.R
 import com.swuproject.pawprints.common.Utils
 import java.io.File
@@ -25,6 +28,10 @@ class PosterManualActivity : AppCompatActivity() {
 
     private lateinit var posterSection: View // 포스터 섹션의 View를 참조
     private lateinit var petImage: ImageView
+    private lateinit var imageDescription: TextView
+
+    private val PICK_IMAGE = 100 // 이미지를 선택할 때 사용할 요청 코드
+    private var imageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,9 +45,7 @@ class PosterManualActivity : AppCompatActivity() {
 
         posterSection = findViewById(R.id.posterSection) // XML에서 posterSection을 찾아 설정
         petImage = findViewById(R.id.pet_image)
-
-        // 예시로 이미지 로딩
-        Glide.with(this).load(R.drawable.dog_sample2).into(petImage)
+        imageDescription = findViewById(R.id.imageDescription)
 
         // 포스터 생성 버튼
         findViewById<Button>(R.id.createPosterButton).setOnClickListener {
@@ -51,6 +56,23 @@ class PosterManualActivity : AppCompatActivity() {
         findViewById<ImageView>(R.id.icon_back).setOnClickListener {
             onBackPressed()
         }
+
+        // pet_image 클릭 시 사진 선택 기능 실행
+        petImage.setOnClickListener {
+            val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+            startActivityForResult(gallery, PICK_IMAGE)
+        }
+    }
+
+    // 갤러리에서 선택한 이미지 결과 처리
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == PICK_IMAGE) {
+            imageUri = data?.data
+            petImage.setImageURI(imageUri) // 선택한 이미지를 이미지뷰에 설정
+        }
+        // 이미지를 설정했으므로 설명 텍스트를 숨김
+        imageDescription.visibility = View.GONE
     }
 
     private fun showPreviewPopup() {

@@ -61,7 +61,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="* 실종 신고를 접수한 반려동물을 선택해 주세요."
+                android:text="* 아래 템플릿에서 내용을 직접 작성해 주세요."
                 android:textColor="@android:color/holo_red_dark"
                 android:layout_gravity="center"
                 android:layout_marginTop="3dp" />
@@ -106,14 +106,31 @@
                         android:textStyle="bold"
                         android:padding="20dp" />
 
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
                     <!-- 반려동물 이미지 -->
                     <ImageView
                         android:id="@+id/pet_image"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:layout_marginTop="10dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/dog_sample2" />
+                        android:background="@color/gray"
+                        android:scaleType="centerCrop" />
+
+                        <!-- ImageView 위에 텍스트를 표시하는 TextView -->
+                        <TextView
+                            android:id="@+id/imageDescription"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="반려동물 이미지 영역"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp"
+                            android:gravity="center"
+                            android:layout_gravity="center"/>
+
+                    </FrameLayout>
 
                     <!-- 종 / 성별 / 나이 수평 배치 -->
                     <LinearLayout
