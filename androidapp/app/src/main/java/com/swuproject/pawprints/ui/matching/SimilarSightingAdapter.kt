@@ -48,6 +48,7 @@ class SimilarSightingAdapter(private val context: Context) : RecyclerView.Adapte
         private val date: TextView = itemView.findViewById(R.id.tv_matchresult_recycler_date)
         private val location: TextView = itemView.findViewById(R.id.tv_matchresult_recycler_location) // 장소_주소
         private val feature: TextView = itemView.findViewById(R.id.tv_matchresult_recycler_feature)
+        private val contact: TextView = itemView.findViewById(R.id.tv_matchresult_recycler_contact)
 
         fun bind(similarSighting: SimilarSighting) {
             val imageUrl = similarSighting.sight_image_path.replace("gs://", "https://storage.googleapis.com/")
@@ -70,6 +71,11 @@ class SimilarSightingAdapter(private val context: Context) : RecyclerView.Adapte
             date.text = formatDate(similarSighting.sight_date)
             location.text = similarSighting.sight_location
             feature.text = similarSighting.sight_description
+            contact.text = if (!similarSighting.sight_contact.isNullOrEmpty()) {
+                similarSighting.sight_contact
+            } else {
+                "연락처가 없습니다"
+            }
         }
 
         // 날짜 포맷 변경 함수

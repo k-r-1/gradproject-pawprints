@@ -229,6 +229,7 @@ class SightReportActivity : AppCompatActivity() {
                             val sightDateRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), binding.petDateText.text.toString())
                             val sightLocationRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), binding.petLocationEditText.text.toString())
                             val sightDescriptionRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), binding.petFeatureEditText.text.toString())
+                            val sightContactRequest = RequestBody.create("text/plain".toMediaTypeOrNull(), binding.petContactEditText.text.toString())
 
                             val call = retrofitService.createSightReport(
                                 body,
@@ -240,7 +241,8 @@ class SightReportActivity : AppCompatActivity() {
                                 sightAreaLngRequest,
                                 sightDateRequest,
                                 sightLocationRequest,
-                                sightDescriptionRequest
+                                sightDescriptionRequest,
+                                sightContactRequest
                             )
 
                             call.enqueue(object : Callback<SightReportResponse> {

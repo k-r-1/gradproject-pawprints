@@ -64,7 +64,8 @@ interface RetrofitService {
         @Part("sightAreaLng") sightAreaLng: RequestBody,
         @Part("sightDate") sightDate: RequestBody,
         @Part("sightLocation") sightLocation: RequestBody,
-        @Part("sightDescription") sightDescription: RequestBody
+        @Part("sightDescription") sightDescription: RequestBody,
+        @Part("sightContact") sightContact: RequestBody
     ): Call<SightReportResponse>
 
     @Multipart

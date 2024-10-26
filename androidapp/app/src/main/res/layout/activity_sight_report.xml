@@ -406,6 +406,33 @@
                   android:inputType="textMultiLine" />
 
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginEnd="8dp"
+                  android:text="• 연락처"
+                  android:textColor="@color/black"
+                  android:textSize="17sp" />
+
+              <EditText
+                  android:id="@+id/pet_contact_edit_text"
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:background="@drawable/edit_background"
+                  android:hint="010-0000-0000"
+                  android:inputType="text"
+                  android:padding="8dp"
+                  android:textSize="16sp" />
+            </LinearLayout>
           </LinearLayout>
         </androidx.cardview.widget.CardView>
 

@@ -215,16 +215,17 @@
                 android:textSize="16sp"
                 android:layout_marginEnd="8dp"
                 android:textColor="@color/gray" />
+
             <TextView
                 android:id="@+id/tv_matchresult_recycler_contact"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:padding="8dp"
-                android:text="010-1234-5678"
-                android:textSize="16sp"
                 android:background="@drawable/edit_background"
-                android:textColor="@color/primaryTextColor" />
+                android:padding="8dp"
+                android:text="연락처가 없습니다."
+                android:textColor="@color/primaryTextColor"
+                android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
