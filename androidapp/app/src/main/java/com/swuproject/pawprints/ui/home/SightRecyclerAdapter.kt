@@ -49,6 +49,7 @@ class SightRecyclerAdapter(private val items: List<SightReportResponse>, private
         private var dateTextView: TextView = v.findViewById(R.id.tv_hometab_sightrecycler_date)
         private var locationTextView: TextView = v.findViewById(R.id.tv_hometab_sightrecycler_location) // 장소_ex.서울시 강남구
         private var featureTextView: TextView = v.findViewById(R.id.tv_hometab_sightrecycler_feature)
+        private var contactTextView: TextView = v.findViewById(R.id.tv_hometab_lostrecycler_contact)
 
         fun bind(listener: View.OnClickListener, item: SightReportResponse) {
             val firstImage = item.sightImages.firstOrNull()?.sightImagePath
@@ -78,6 +79,7 @@ class SightRecyclerAdapter(private val items: List<SightReportResponse>, private
             dateTextView.text = formatDate(item.sightDate)
             locationTextView.text = item.sightLocation
             featureTextView.text = item.sightDescription
+            contactTextView.text = if (item.sightContact.isNullOrEmpty()) "연락처 정보 없음" else item.sightContact
 
             view.setOnClickListener(listener)
         }

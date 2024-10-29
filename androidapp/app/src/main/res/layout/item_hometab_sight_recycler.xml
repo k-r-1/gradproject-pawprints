@@ -198,5 +198,34 @@
                 android:background="@drawable/edit_background"
                 android:textColor="@color/primaryTextColor" />
         </LinearLayout>
+
+        <!-- 연락처 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+            <TextView
+                android:id="@+id/tv_hometab_lostrecycler_contact_fix"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:text="• 연락처"
+                android:textSize="16sp"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/gray" />
+
+            <TextView
+                android:id="@+id/tv_hometab_lostrecycler_contact"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:background="@drawable/edit_background"
+                android:padding="8dp"
+                android:text="연락처가 없습니다."
+                android:textColor="@color/primaryTextColor"
+                android:textSize="16sp" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
