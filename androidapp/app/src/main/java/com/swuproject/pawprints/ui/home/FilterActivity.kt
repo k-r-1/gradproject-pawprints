@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import com.swuproject.pawprints.R
 import com.swuproject.pawprints.common.Utils
@@ -31,6 +30,7 @@ class FilterActivity : AppCompatActivity() {
     ).sortedArray() + "기타"
 
     private var selectedBreed: String? = null
+    private var lastCheckedId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,34 +48,39 @@ class FilterActivity : AppCompatActivity() {
             finish() // Activity 종료
         }
 
-        // 라디오 버튼 선택 및 선택 해제 처리
-        binding.rgPetType.setOnCheckedChangeListener { group, checkedId ->
-            // 현재 선택된 라디오 버튼이 이미 선택된 상태인 경우 선택 해제
-            if (checkedId != -1 && group.findViewById<RadioButton>(checkedId).isChecked) {
-                val radioButton = group.findViewById<RadioButton>(checkedId)
-                radioButton.setOnClickListener {
-                    // 선택된 상태라면 선택 해제
-                    if (radioButton.isChecked) {
-                        group.clearCheck()
-                        binding.spinnerBreed.visibility = View.GONE
-                    }
-                }
-            }
-
-            // 선택된 라디오 버튼에 따라 스피너 설정
-            when (checkedId) {
-                R.id.rb_dog -> {
-                    setBreedSpinner(dogBreeds)
-                    binding.spinnerBreed.visibility = View.VISIBLE
-                }
-                R.id.rb_cat -> {
-                    setBreedSpinner(catBreeds)
-                    binding.spinnerBreed.visibility = View.VISIBLE
-                }
-                else -> binding.spinnerBreed.visibility = View.GONE
-            }
+        binding.btnResetFilter.setOnClickListener {
+            // 필터 초기화
+            binding.rgPetType.clearCheck() // RadioButton 선택 해제
+            binding.spinnerBreed.visibility = View.GONE // Spinner 숨기기
+            binding.spinnerBreed.adapter = null // Spinner 초기화
+            binding.etAreaSearch.text.clear() // 지역 검색 입력 필드 초기화
+            selectedBreed = null // 선택된 품종 초기화
+            binding.tvSelectedBreed.text = "선택된 품종: 없음"
         }
 
+        // 라디오 버튼 선택 및 선택 해제 처리
+        binding.rgPetType.setOnCheckedChangeListener { group, checkedId ->
+            // 선택 해제하려면 기존 선택된 버튼과 동일한 ID인지 확인
+            if (lastCheckedId == checkedId) {
+                group.clearCheck()
+                binding.spinnerBreed.visibility = View.GONE
+                lastCheckedId = null // 선택 해제 후 ID 초기화
+            } else {
+                // 새로운 버튼 선택 시 스피너 설정
+                when (checkedId) {
+                    R.id.rb_dog -> {
+                        setBreedSpinner(dogBreeds)
+                        binding.spinnerBreed.visibility = View.VISIBLE
+                    }
+                    R.id.rb_cat -> {
+                        setBreedSpinner(catBreeds)
+                        binding.spinnerBreed.visibility = View.VISIBLE
+                    }
+                    else -> binding.spinnerBreed.visibility = View.GONE
+                }
+                lastCheckedId = checkedId // 선택된 ID 업데이트
+            }
+        }
 
         // 스피너에서 선택된 품종 텍스트뷰에 표시
         binding.spinnerBreed.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -89,35 +94,6 @@ class FilterActivity : AppCompatActivity() {
                 binding.tvSelectedBreed.text = "선택된 품종: 없음"
             }
         }
-
-        // 라디오 버튼 선택 및 선택 해제 처리
-        binding.rgPetType.setOnCheckedChangeListener { group, checkedId ->
-            // 현재 선택된 라디오 버튼이 이미 선택된 상태인 경우 선택 해제
-            if (checkedId != -1 && group.findViewById<RadioButton>(checkedId).isChecked) {
-                val radioButton = group.findViewById<RadioButton>(checkedId)
-                radioButton.setOnClickListener {
-                    // 선택된 상태라면 선택 해제
-                    if (radioButton.isChecked) {
-                        group.clearCheck()
-                        binding.spinnerBreed.visibility = View.GONE
-                    }
-                }
-            }
-
-            // 선택된 라디오 버튼에 따라 스피너 설정
-            when (checkedId) {
-                R.id.rb_dog -> {
-                    setBreedSpinner(dogBreeds)
-                    binding.spinnerBreed.visibility = View.VISIBLE
-                }
-                R.id.rb_cat -> {
-                    setBreedSpinner(catBreeds)
-                    binding.spinnerBreed.visibility = View.VISIBLE
-                }
-                else -> binding.spinnerBreed.visibility = View.GONE
-            }
-        }
-
 
         // 필터 적용 버튼 클릭 시
         binding.btnApplyFilter.setOnClickListener {

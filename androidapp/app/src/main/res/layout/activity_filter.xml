@@ -139,6 +139,20 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
+    <Button
+        android:id="@+id/btnResetFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="초기화"
+        app:cornerRadius="30dp"
+        android:stateListAnimator="@null"
+        android:backgroundTint="@color/very_light_pink"
+        android:textColor="@android:color/white"/>
+
+
     <!-- 필터 적용 버튼 -->
     <Button
         android:id="@+id/btn_apply_filter"
@@ -148,6 +162,7 @@
         android:text="필터 적용"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:stateListAnimator="@null"
         android:backgroundTint="@color/deep_pink"
         android:textColor="@android:color/white"/>
 </LinearLayout>
