@@ -124,7 +124,7 @@
                             android:id="@+id/imageDescription"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="반려동물 이미지 영역"
+                            android:text="반려동물 이미지"
                             android:textColor="@android:color/black"
                             android:textSize="16sp"
                             android:gravity="center"

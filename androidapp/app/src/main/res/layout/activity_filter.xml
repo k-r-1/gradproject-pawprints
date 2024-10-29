@@ -1,0 +1,153 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="0dp"
+    android:background="@color/background_color">
+
+    <!-- 상단 뒤로 가기 아이콘과 타이틀 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/title_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="필터 설정"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/primaryTextColor"/>
+
+        <!-- 뒤로 가기 아이콘 -->
+        <ImageView
+            android:id="@+id/ic_back"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="10dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/icon_back"
+            android:contentDescription="뒤로 가기"/>
+    </RelativeLayout>
+
+    <!-- 품종 선택 카드뷰 -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="8dp"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="품종 선택"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/primaryTextColor"/>
+
+            <!-- RadioGroup으로 개/고양이 선택을 묶어서 하나만 선택 가능하게 설정 -->
+            <RadioGroup
+                android:id="@+id/rg_pet_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <RadioButton
+                    android:id="@+id/rb_dog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="개"
+                    android:textSize="16sp"/>
+
+                <RadioButton
+                    android:id="@+id/rb_cat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="고양이"
+                    android:textSize="16sp"/>
+            </RadioGroup>
+
+            <!-- 품종 선택 스피너, 처음에는 안 보이도록 설정 -->
+            <Spinner
+                android:id="@+id/spinner_breed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"/>
+
+            <!-- 선택된 품종 표시 -->
+            <TextView
+                android:id="@+id/tv_selected_breed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="선택된 품종: 없음"
+                android:textSize="16sp"
+                android:textColor="@color/primaryTextColor"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- 지역 검색 필드 카드뷰 -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="8dp"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="지역 검색"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/primaryTextColor"/>
+
+            <EditText
+                android:id="@+id/et_area_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="예: 00시 or 00구"
+                android:backgroundTint="@color/primaryTextColor"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- 필터 적용 버튼 -->
+    <Button
+        android:id="@+id/btn_apply_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="필터 적용"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:backgroundTint="@color/deep_pink"
+        android:textColor="@android:color/white"/>
+</LinearLayout>

@@ -104,7 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -127,14 +127,20 @@
                         android:textStyle="bold"
                         android:padding="20dp"/>
 
-                    <!-- 반려동물 이미지 -->
-                    <ImageView
-                        android:id="@+id/pet_image"
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:layout_marginTop="10dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/dog_sample2" /> <!-- 이미지 경로 설정 -->
+                        android:layout_height="match_parent">
+
+                        <!-- 반려동물 이미지 -->
+                        <ImageView
+                            android:id="@+id/pet_image"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@color/gray"
+                            android:scaleType="centerCrop" />
+
+                    </FrameLayout>
 
                     <!-- 종 / 성별 / 나이 수평 배치하여 슬래시로 구분 -->
                     <LinearLayout

@@ -1,5 +1,7 @@
 package com.swuproject.pawprints.ui.home
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +20,7 @@ import retrofit2.Response
 class HomeTabLostFragment : Fragment() {
 
     lateinit var binding: FragmentHomeTabLostBinding
+    private val FILTER_REQUEST_CODE = 1001
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +32,12 @@ class HomeTabLostFragment : Fragment() {
         // RecyclerView 설정
         val recyclerView = rootView.findViewById<RecyclerView>(R.id.hometab_lostRecyclerview)
         recyclerView.layoutManager = LinearLayoutManager(context)
+
+        // 필터 아이콘 클릭 시 필터링 화면으로 이동
+        binding.icFilter.setOnClickListener {
+            val intent = Intent(requireContext(), FilterActivity::class.java)
+            startActivityForResult(intent, FILTER_REQUEST_CODE)
+        }
 
         // SwipeRefreshLayout 새로고침 리스너 설정
         binding.swipeRefreshLayout.setOnRefreshListener {
@@ -66,5 +75,22 @@ class HomeTabLostFragment : Fragment() {
                 binding.swipeRefreshLayout.isRefreshing = false // 실패 시에도 로딩 인디케이터 숨기기
             }
         })
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == FILTER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            val breedType = data?.getStringExtra("breedType")
+            val searchArea = data?.getStringExtra("searchArea")
+
+            fetchLostReports { lostReports ->
+                val filteredReports = lostReports.filter { report ->
+                    (breedType == null || report.petBreed == breedType) &&
+                            (searchArea == null || report.lostLocation?.contains(searchArea, ignoreCase = true) == true)
+                }
+
+                val adapter = LostRecyclerAdapter(filteredReports, requireContext())
+                binding.hometabLostRecyclerview.adapter = adapter
+            }
+        }
     }
 }
