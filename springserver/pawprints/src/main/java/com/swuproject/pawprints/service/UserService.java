@@ -59,4 +59,15 @@ public class UserService {
             throw new Exception("사용자를 찾을 수 없습니다.");
         }
     }
+
+    public boolean deleteUser(String userId) {
+        Optional<User> userOptional = userRepository.findByUserId(userId);
+        if (userOptional.isPresent()) {
+            userRepository.delete(userOptional.get());
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

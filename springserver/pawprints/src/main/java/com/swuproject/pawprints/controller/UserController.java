@@ -87,4 +87,33 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("사용자 정보 업데이트 중 오류가 발생했습니다.");
         }
     }
+
+    @PostMapping("/confirm-password")
+    public ResponseEntity<String> confirmPassword(@RequestBody Map<String, String> passwordRequest) {
+        String userId = passwordRequest.get("userId");
+        String password = passwordRequest.get("userPw");
+
+        User user = userService.loginUser(userId, password);
+        if (user != null) {
+            return ResponseEntity.ok("비밀번호 확인 성공");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("비밀번호가 일치하지 않습니다.");
+        }
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<String> deleteUser(@PathVariable String userId) {
+        try {
+            boolean deleted = userService.deleteUser(userId); // UserService에서 deleteUser 메서드를 호출
+            if (deleted) {
+                return ResponseEntity.ok("회원탈퇴가 완료되었습니다.");
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("사용자를 찾을 수 없습니다.");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원탈퇴 중 오류가 발생했습니다.");
+        }
+    }
+
+
 }
