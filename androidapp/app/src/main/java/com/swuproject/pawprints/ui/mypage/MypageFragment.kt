@@ -72,6 +72,19 @@ class MypageFragment : Fragment() {
             showDeleteAccountDialog()
         }
 
+        binding.btnContactUs.setOnClickListener {
+            val emailIntent = Intent(Intent.ACTION_SEND).apply {
+                type = "message/rfc822" // 이메일 앱 필터링을 위한 MIME 타입
+                putExtra(Intent.EXTRA_EMAIL, arrayOf("juwon_0715@swu.ac.kr")) // 수신인 이메일 주소
+                putExtra(Intent.EXTRA_SUBJECT, "[발도장] 문의사항") // 기본 제목 설정
+                putExtra(Intent.EXTRA_TEXT, "문의 내용을 작성해주세요.") // 기본 메시지 내용 설정
+            }
+            try {
+                startActivity(Intent.createChooser(emailIntent, "이메일 앱을 선택하세요")) // 이메일 앱 선택 창 표시
+            } catch (e: Exception) {
+                Toast.makeText(requireContext(), "이메일 앱을 찾을 수 없습니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         // 로그아웃 버튼 클릭 이벤트 리스너 설정
         binding.btnLogout.setOnClickListener {
