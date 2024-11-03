@@ -3,20 +3,30 @@ package com.swuproject.pawprints.ui.mypage
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.swuproject.pawprints.R
 import com.swuproject.pawprints.common.Utils
 import com.swuproject.pawprints.databinding.FragmentMypageBinding
+import com.swuproject.pawprints.network.RetrofitClient
+import com.swuproject.pawprints.network.RetrofitService
 import com.swuproject.pawprints.ui.LoginActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MypageFragment : Fragment() {
 
     private var _binding: FragmentMypageBinding? = null
     private val binding get() = _binding!!
+    private lateinit var retrofitService: RetrofitService
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,6 +35,8 @@ class MypageFragment : Fragment() {
     ): View {
         _binding = FragmentMypageBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        retrofitService = RetrofitClient.getRetrofitService()
 
         // Utils를 사용하여 SharedPreferences에서 사용자 이름 가져오기
         val userName = Utils.getUserName(requireContext())
@@ -56,6 +68,11 @@ class MypageFragment : Fragment() {
             findNavController().navigate(R.id.action_mypageFragment_to_contactUsFragment)
         }
 
+        binding.btnDeleteAccount.setOnClickListener {
+            showDeleteAccountDialog()
+        }
+
+
         // 로그아웃 버튼 클릭 이벤트 리스너 설정
         binding.btnLogout.setOnClickListener {
             val sharedPreferences = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
@@ -72,6 +89,84 @@ class MypageFragment : Fragment() {
         }
 
         return root
+    }
+    private fun showDeleteAccountDialog() {
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_delete_account, null)
+        val editTextPassword = dialogView.findViewById<EditText>(R.id.editTextPassword)
+
+        AlertDialog.Builder(requireContext())
+            .setTitle("회원탈퇴")
+            .setView(dialogView)
+            .setPositiveButton("확인") { _, _ ->
+                val password = editTextPassword.text.toString()
+                if (password.isNotEmpty()) {
+                    confirmPassword(password)
+                } else {
+                    Toast.makeText(requireContext(), "비밀번호를 입력하세요.", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton("취소", null)
+            .show()
+    }
+
+    private fun confirmPassword(password: String) {
+        val userId = Utils.getUserId(requireContext()) ?: ""
+        val requestBody = mapOf("userId" to userId, "userPw" to password)
+
+        retrofitService.confirmPassword(requestBody).enqueue(object : Callback<Void> {
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    if (response.isSuccessful) {
+                        // 비밀번호 확인 성공 시 탈퇴 여부 확인
+                        AlertDialog.Builder(requireContext())
+                            .setMessage("정말로 탈퇴하시겠습니까?")
+                            .setPositiveButton("예") { _, _ ->
+                                deleteUserAccount()
+                            }
+                            .setNegativeButton("아니오", null)
+                            .show()
+                    } else {
+                        Toast.makeText(requireContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    Toast.makeText(requireContext(), "네트워크 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                }
+            })
+    }
+    private fun deleteUserAccount() {
+        val userId = Utils.getUserId(requireContext()) ?: return
+
+        retrofitService.deleteUser(userId).enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    Toast.makeText(requireContext(), "회원탈퇴가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+
+                    // 로그아웃 처리를 위한 SharedPreferences 초기화
+                    val sharedPreferences = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+                    sharedPreferences.edit().clear().apply()
+
+                    // 로그인 화면으로 이동
+                    val intent = Intent(requireContext(), LoginActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().finish()
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "회원탈퇴에 실패했습니다. 상태 코드: ${response.code()} 메시지: ${response.message()}",
+                        Toast.LENGTH_LONG).show()
+                    Log.e(
+                        "회원탈퇴", // 로그의 태그
+                        "회원탈퇴에 실패했습니다. 상태 코드: ${response.code()} 메시지: ${response.message()}"
+                    )
+
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Toast.makeText(requireContext(), "네트워크 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     override fun onDestroyView() {

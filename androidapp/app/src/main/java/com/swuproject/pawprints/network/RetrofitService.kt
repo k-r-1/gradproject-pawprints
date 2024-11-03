@@ -1,7 +1,7 @@
 package com.swuproject.pawprints.network
 
-import com.swuproject.pawprints.dto.SightReportResponse
 import com.swuproject.pawprints.dto.LostReportResponse
+import com.swuproject.pawprints.dto.SightReportResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -91,5 +91,12 @@ interface RetrofitService {
 
     @POST("/api/pets")
     fun addPet(@Body pet: Pet): Call<Void>
+
+    @POST("/api/users/confirm-password")
+    fun confirmPassword(@Body requestBody: Map<String, String>): Call<Void>
+
+    @DELETE("/api/users/{userId}")
+    fun deleteUser(@Path("userId") userId: String): Call<Void>
+
 
 }
