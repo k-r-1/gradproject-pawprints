@@ -173,7 +173,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         val popupView = LayoutInflater.from(requireContext()).inflate(R.layout.popup_sight_report, null)
 
         // 팝업 창의 내용을 설정
-        val sightTitleTextView = popupView.findViewById<TextView>(R.id.tv_hometab_sightrecycler_title)
+        val sightTitleTextView = popupView.findViewById<TextView>(R.id.etv_editSightReport_title)
         val sightBreedTextView = popupView.findViewById<TextView>(R.id.tv_hometab_sightrecycler_breed)
         val sightAreaTextView = popupView.findViewById<TextView>(R.id.tv_hometab_sightrecycler_area)
         val sightDateTextView = popupView.findViewById<TextView>(R.id.tv_hometab_sightrecycler_date)

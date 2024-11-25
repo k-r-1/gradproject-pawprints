@@ -3,6 +3,7 @@ package com.swuproject.pawprints.dto
 data class LostReportResponse(
     val lostId: Int,
     val petId: Int,
+    val userId: String?,
     val lostTitle: String?,
     val lostAreaLat: Double?,
     val lostAreaLng: Double?,

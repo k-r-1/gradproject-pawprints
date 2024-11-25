@@ -39,7 +39,7 @@
     </FrameLayout>
 
     <TextView
-        android:id="@+id/tv_hometab_sightrecycler_title"
+        android:id="@+id/etv_editSightReport_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="8dp"

@@ -43,7 +43,7 @@ class SightRecyclerAdapter(private val items: List<SightReportResponse>, private
     class ViewHolder(v: View, private val context: Context) : RecyclerView.ViewHolder(v) {
         private var view: View = v
         private var photoImageView: ImageView = v.findViewById(R.id.iv_hometab_sightrecycler_photo)
-        private var titleTextView: TextView = v.findViewById(R.id.tv_hometab_sightrecycler_title)
+        private var titleTextView: TextView = v.findViewById(R.id.etv_editSightReport_title)
         private var breedTextView: TextView = v.findViewById(R.id.tv_hometab_sightrecycler_breed)
         private var areaTextView: TextView = v.findViewById(R.id.tv_hometab_sightrecycler_area) // 지역_위도경도
         private var dateTextView: TextView = v.findViewById(R.id.tv_hometab_sightrecycler_date)

@@ -1,6 +1,7 @@
 package com.swuproject.pawprints.dto
 
 data class SightReportResponse(
+    val userId: String?,
     val sightId: Int,
     val sightTitle: String?,
     val sightBreed: String?,
