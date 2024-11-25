@@ -22,11 +22,11 @@
             android:id="@+id/action_mypageFragment_to_faqFragment"
             app:destination="@id/faqFragment"/>
         <action
-            android:id="@+id/action_mypageFragment_to_MyMissingReportFragment"
-            app:destination="@id/myMissingReportFragment"/>
+            android:id="@+id/action_mypageFragment_to_MyLostReportFragment"
+            app:destination="@id/myLostReportFragment"/>
         <action
-            android:id="@+id/action_mypageFragment_to_MySightingReportFragment"
-            app:destination="@id/mySightingReportFragment"/>
+            android:id="@+id/action_mypageFragment_to_MySightReportFragment"
+            app:destination="@id/mySightReportFragment"/>
     </fragment>
 
     <fragment
@@ -50,13 +50,28 @@
         android:label="fragment_faq"
         tools:layout="@layout/fragment_faq"/>
     <fragment
-        android:id="@+id/myMissingReportFragment"
-        android:name="com.swuproject.pawprints.ui.mypage.MyMissingReportFragment"
-        android:label="fragment_my_missing_report"
-        tools:layout="@layout/fragment_my_missing_report"/>
+        android:id="@+id/myLostReportFragment"
+        android:name="com.swuproject.pawprints.ui.mypage.MyLostReportFragment"
+        android:label="fragment_my_lost_report"
+        tools:layout="@layout/fragment_my_lost_report">
+        <action
+            android:id="@+id/action_myLostReportFragment_to_editLostReportFragment"
+            app:destination="@id/editLostReportFragment" />
+    </fragment>
     <fragment
-        android:id="@+id/mySightingReportFragment"
-        android:name="com.swuproject.pawprints.ui.mypage.MySightingReportFragment"
-        android:label="fragment_my_sighting_report"
-        tools:layout="@layout/fragment_my_sighting_report"/>
+        android:id="@+id/mySightReportFragment"
+        android:name="com.swuproject.pawprints.ui.mypage.MySightReportFragment"
+        android:label="fragment_my_sight_report"
+        tools:layout="@layout/fragment_my_sight_report">
+
+        <action
+            android:id="@+id/action_mySightReportFragment_to_editSightReportFragment"
+            app:destination="@id/editSightReportFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/editSightReportFragment"
+        android:name="com.swuproject.pawprints.ui.mypage.EditSightReportFragment"
+        android:label="fragment_edit_sight_report"
+        tools:layout="@layout/fragment_edit_sight_report"/>
 </navigation>

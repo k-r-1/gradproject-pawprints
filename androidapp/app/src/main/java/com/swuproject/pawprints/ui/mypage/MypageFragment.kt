@@ -56,10 +56,10 @@ class MypageFragment : Fragment() {
             findNavController().navigate(R.id.action_mypageFragment_to_editPetInfoFragment)
         }
         binding.btnMyMissingReport.setOnClickListener {
-            findNavController().navigate(R.id.action_mypageFragment_to_MyMissingReportFragment)
+            findNavController().navigate(R.id.action_mypageFragment_to_MyLostReportFragment)
         }
         binding.btnMySightingReport.setOnClickListener {
-            findNavController().navigate(R.id.action_mypageFragment_to_MySightingReportFragment)
+            findNavController().navigate(R.id.action_mypageFragment_to_MySightReportFragment)
         }
         binding.btnFaq.setOnClickListener {
             findNavController().navigate(R.id.action_mypageFragment_to_faqFragment)

@@ -59,8 +59,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.editPetInfoFragment -> "반려동물 관리"
                 R.id.editProfileFragment -> "개인정보 관리"
                 R.id.faqFragment -> "자주하는 질문"
-                R.id.myMissingReportFragment -> "나의 실종 신고"
-                R.id.mySightingReportFragment -> "나의 목격 신고"
+                R.id.myLostReportFragment -> "나의 실종 신고"
+                R.id.mySightReportFragment -> "나의 목격 신고"
                 else -> ""
             }
         }

@@ -44,6 +44,30 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="editReportFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="12" />
+                            <option name="y" value="12" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="editSightReportFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="12" />
+                            <option name="y" value="12" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="faqFragment">
                     <value>
                       <LayoutPositions>
@@ -56,19 +80,28 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="myMissingReportFragment">
+                  <entry key="myLostReportFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="1232" />
-                            <option name="y" value="724" />
+                            <option name="x" value="12" />
+                            <option name="y" value="12" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_myLostReportFragment_to_editLostReportFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="mySightingReportFragment">
+                  <entry key="mySightReportFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
@@ -76,6 +109,15 @@
                             <option name="x" value="1232" />
                             <option name="y" value="1080" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_mySightReportFragment_to_editSightReportFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -127,12 +169,12 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_mypageFragment_to_MyMissingReportFragment">
+                            <entry key="action_mypageFragment_to_MyLostReportFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_mypageFragment_to_MySightingReportFragment">
+                            <entry key="action_mypageFragment_to_MySightReportFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -162,7 +204,7 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="navigation_predictedlocation">
+                  <entry key="navigation_poster">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
@@ -220,6 +262,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="editSightReportFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="12" />
+                            <option name="y" value="12" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="faqFragment">
                     <value>
                       <LayoutPositions>
@@ -232,7 +286,7 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="matchingFragment">
+                  <entry key="myLostReportFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
@@ -241,49 +295,16 @@
                             <option name="y" value="12" />
                           </Point>
                         </option>
-                        <option name="myPositions">
-                          <map>
-                            <entry key="action_matchingFragment_to_matchingResultFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                          </map>
-                        </option>
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="matchingResultFragment">
+                  <entry key="mySightReportFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="256" />
+                            <option name="x" value="12" />
                             <option name="y" value="12" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="myMissingReportFragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="256" />
-                            <option name="y" value="724" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="mySightingReportFragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="256" />
-                            <option name="y" value="1080" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -300,12 +321,17 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_mypageFragment_to_MyMissingReportFragment">
+                            <entry key="action_mySightReportFragment_to_editSightReportFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_mypageFragment_to_MySightingReportFragment">
+                            <entry key="action_mypageFragment_to_MyLostReportFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_mypageFragment_to_MySightReportFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
