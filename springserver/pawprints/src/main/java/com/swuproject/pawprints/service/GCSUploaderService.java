@@ -1,9 +1,7 @@
 package com.swuproject.pawprints.service;
 
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.storage.BlobInfo;
-import com.google.cloud.storage.Storage;
-import com.google.cloud.storage.StorageOptions;
+import com.google.cloud.storage.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -49,5 +47,14 @@ public class GCSUploaderService {
 
         // 업로드된 파일의 GCS URL을 반환
         return "gs://" + bucketName + "/" + fileName;
+    }
+
+    // 파일 삭제 메소드
+    public void deleteFile(String filePath) throws IOException {
+        // GCS에서 파일을 삭제하는 코드
+        Blob blob = storage.get(BlobId.of(bucketName, filePath));
+        if (blob != null && blob.exists()) {
+            blob.delete();
+        }
     }
 }

@@ -12,6 +12,7 @@ public class LostReportsResponse {
     @ManyToOne
     @JoinColumn(name = "pet_id")
     private int petId;
+    private String userId;
     private String petBreed;
     private String petGender;
     private int petAge;
@@ -75,6 +76,10 @@ public class LostReportsResponse {
     public void setPetResponse(PetResponse pet2) {
         this.pet2 = pet2;
     }
+
+    public String getUserId() { return userId; }
+
+    public void setUserId(String userId) { this.userId = userId; }
 
     public String getPetBreed() {
         return petBreed;

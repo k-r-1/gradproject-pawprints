@@ -2,6 +2,7 @@ package com.swuproject.pawprints.controller;
 
 import com.swuproject.pawprints.domain.SightReports;
 import com.swuproject.pawprints.domain.SightReportsImage;
+import com.swuproject.pawprints.dto.SightReportsEditResponse;
 import com.swuproject.pawprints.dto.SightReportsImageResponse;
 import com.swuproject.pawprints.dto.SightReportsResponse;
 import com.swuproject.pawprints.repository.SightReportsRepository;
@@ -9,6 +10,7 @@ import com.swuproject.pawprints.repository.SightReportsImageRepository;
 import com.swuproject.pawprints.service.GCSUploaderService;
 import com.swuproject.pawprints.service.SightReportsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,6 +45,31 @@ public class SightReportsController {
         return sightReportsService.getAllSightReports();
     }
 
+    @GetMapping("/sightReports/{sightId}")
+    public List<SightReportsResponse> getSightReports(@PathVariable int sightId) {
+        return sightReportsService.getSightReportBySightId(sightId);
+    }
+
+    @DeleteMapping("/sightReports/{sightId}")
+    public ResponseEntity<Void> deleteSightReport(@PathVariable int sightId) {
+        try {
+            sightReportsService.deleteSightById(sightId);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @PutMapping("/sightReports/edit/{sightId}")
+    public ResponseEntity<Void> updateSightReport(@PathVariable int sightId, @RequestBody SightReportsEditResponse sightReportsEditResponse) {
+        boolean updated = sightReportsService.updateSightReport(sightId, sightReportsEditResponse);
+        if (updated) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
     @PostMapping("/sightReportsPost")
     @Transactional  // 트랜잭션 관리 추가
     public ResponseEntity<SightReportsResponse> createSightReport(
@@ -55,7 +82,8 @@ public class SightReportsController {
             @RequestParam("sightAreaLng") Double sightAreaLng,
             @RequestParam("sightDate") String sightDate,
             @RequestParam("sightLocation") String sightLocation,
-            @RequestParam("sightDescription") String sightDescription
+            @RequestParam("sightDescription") String sightDescription,
+            @RequestParam("sightContact") String sightContact
     ) throws IOException, ParseException {
 
         // sightType을 "dog" 또는 "cat"으로 변환
@@ -85,6 +113,7 @@ public class SightReportsController {
         sightReport.setSightDate(parsedDate);
         sightReport.setSightLocation(sightLocation);
         sightReport.setSightDescription(sightDescription);
+        sightReport.setSightContact(sightContact);
         sightReportsRepository.save(sightReport);
 
         // 이미지 정보를 DB에 저장
@@ -104,6 +133,7 @@ public class SightReportsController {
                 sightReport.getSightDate(),
                 sightReport.getSightLocation(),
                 sightReport.getSightDescription(),
+                sightReport.getSightContact(),
                 List.of(new SightReportsImageResponse(sightReportsImage.getSightImageId(), imageUrl))
         );
 

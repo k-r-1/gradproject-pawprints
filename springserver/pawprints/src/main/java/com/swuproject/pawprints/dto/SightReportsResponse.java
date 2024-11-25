@@ -13,13 +13,14 @@ public class SightReportsResponse {
     private Date sightDate;
     private String sightLocation;
     private String sightDescription;
+    private String sightContact;
     private List<SightReportsImageResponse> sightImages;
 
     public SightReportsResponse() {
         // 기본 생성자
     }
 
-    public SightReportsResponse(int sightId, String userId, String sightTitle, String sightBreed, Double sightAreaLat, Double sightAreaLng, Date sightDate, String sightLocation, String sightDescription, List<SightReportsImageResponse> sightImages) {
+    public SightReportsResponse(int sightId, String userId, String sightTitle, String sightBreed, Double sightAreaLat, Double sightAreaLng, Date sightDate, String sightLocation, String sightDescription, String sightContact,List<SightReportsImageResponse> sightImages) {
         this.sightId = sightId;
         this.userId = userId;
         this.sightTitle = sightTitle;
@@ -29,6 +30,7 @@ public class SightReportsResponse {
         this.sightDate = sightDate;
         this.sightLocation = sightLocation;
         this.sightDescription = sightDescription;
+        this.sightContact = sightContact;
         this.sightImages = sightImages;
     }
 
@@ -100,6 +102,14 @@ public class SightReportsResponse {
 
     public void setSightDescription(String sightDescription) {
         this.sightDescription = sightDescription;
+    }
+
+    public String getSightContact() {
+        return sightContact;
+    }
+
+    public void setSightContact(String sightContact) {
+        this.sightContact = sightContact;
     }
 
     public List<SightReportsImageResponse> getSightImages() {

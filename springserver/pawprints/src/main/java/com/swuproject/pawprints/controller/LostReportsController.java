@@ -3,14 +3,14 @@ package com.swuproject.pawprints.controller;
 import com.swuproject.pawprints.domain.LostReports;
 import com.swuproject.pawprints.domain.LostReportsImage;
 import com.swuproject.pawprints.domain.Pet;
-import com.swuproject.pawprints.dto.LostReportsResponse;
-import com.swuproject.pawprints.dto.LostReportsImageResponse;
+import com.swuproject.pawprints.dto.*;
 import com.swuproject.pawprints.repository.LostReportsImageRepository;
 import com.swuproject.pawprints.repository.LostReportsRepository;
 import com.swuproject.pawprints.repository.PetRepository;
 import com.swuproject.pawprints.service.GCSUploaderService;
 import com.swuproject.pawprints.service.LostReportsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -50,6 +50,30 @@ public class LostReportsController {
     public ResponseEntity<LostReportsResponse> getLostReportByPetId(@PathVariable int petId) {
         LostReportsResponse lostReport = lostReportsService.getLostReportByPetId(petId);
         return ResponseEntity.ok(lostReport);
+    }
+
+    @GetMapping("/lostReports/{lostId}")
+    public List<LostReportsResponse> getLostReports(@PathVariable int lostId) {
+        return lostReportsService.getLostReportByLostId(lostId);
+    }
+
+    @DeleteMapping("/lostReports/{lostId}")
+    public ResponseEntity<Void> deleteLostReport(@PathVariable int lostId) {
+        try {
+            lostReportsService.deleteLostById(lostId);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    @PutMapping("/lostReports/edit/{lostId}")
+    public ResponseEntity<Void> updateLostReport(@PathVariable int lostId, @RequestBody LostReportsEditResponse lostReportsEditResponse) {
+        boolean updated = lostReportsService.updateLostReport(lostId, lostReportsEditResponse);
+        if (updated) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @PostMapping("/lostReportsPost")
