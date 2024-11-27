@@ -142,4 +142,42 @@ public class SightReportsService {
             System.out.println("삭제 중 오류 발생: " + e.getMessage());
         }
     }
+
+    private static final double EARTH_RADIUS = 6371; // 지구 반경 (단위: km)
+
+    public List<SightReportsResponse> getNearbySightReports(double userLat, double userLng, double maxDistance) {
+        List<SightReports> sightReportsList = sightReportsRepository.findAll();
+
+        return sightReportsList.stream()
+                .filter(sightReport -> calculateDistance(userLat, userLng, sightReport.getSightAreaLat(), sightReport.getSightAreaLng()) <= maxDistance)
+                .map(sightReport -> {
+                    SightReportsResponse response = new SightReportsResponse();
+                    response.setSightId(sightReport.getSightId());
+                    response.setSightTitle(sightReport.getSightTitle());
+                    response.setSightBreed(sightReport.getSightBreed());
+                    response.setSightAreaLat(sightReport.getSightAreaLat());
+                    response.setSightAreaLng(sightReport.getSightAreaLng());
+                    response.setSightDate(sightReport.getSightDate());
+                    response.setSightLocation(sightReport.getSightLocation());
+                    response.setSightDescription(sightReport.getSightDescription());
+                    response.setSightImages(sightReport.getSightImages().stream().map(image -> {
+                        SightReportsImageResponse imageResponse = new SightReportsImageResponse();
+                        imageResponse.setSightImageId(image.getSightImageId());
+                        imageResponse.setSightImagePath(image.getSightImagePath());
+                        return imageResponse;
+                    }).collect(Collectors.toList()));
+                    return response;
+                })
+                .collect(Collectors.toList());
+    }
+
+    private double calculateDistance(double lat1, double lng1, double lat2, double lng2) {
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLng = Math.toRadians(lng2 - lng1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+                        Math.sin(dLng / 2) * Math.sin(dLng / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return EARTH_RADIUS * c;
+    }
 }

@@ -139,4 +139,12 @@ public class SightReportsController {
 
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/sightReports/nearby")
+    public List<SightReportsResponse> getNearbySightReports(
+            @RequestParam("userLat") double userLat,
+            @RequestParam("userLng") double userLng,
+            @RequestParam("maxDistance") double maxDistance) {
+        return sightReportsService.getNearbySightReports(userLat, userLng, maxDistance);
+    }
 }

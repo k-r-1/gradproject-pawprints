@@ -125,5 +125,13 @@ interface RetrofitService {
     @DELETE("/api/users/{userId}")
     fun deleteUser(@Path("userId") userId: String): Call<Void>
 
+    @GET("/api/sightReports/nearby")
+    fun getNearbySightReports(
+        @Query("userLat") userLat: Double,
+        @Query("userLng") userLng: Double,
+        @Query("maxDistance") maxDistance: Double
+    ): Call<List<SightReportResponse>>
+
+
 
 }

@@ -16,7 +16,7 @@
         android:src="@drawable/icon_menu" />
 
     <ImageView
-        android:id="@+id/icon_alerm"
+        android:id="@+id/icon_alarm"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_gravity="end"
