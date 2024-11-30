@@ -42,12 +42,13 @@
 
   <ScrollView
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      android:layout_height="wrap_content"
       android:id="@+id/main">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:orientation="vertical"
         android:layout_gravity="center"
         android:padding="15dp">
@@ -71,7 +72,7 @@
               android:layout_height="wrap_content"
               android:orientation="vertical"
               android:layout_marginTop="10dp"
-              android:layout_marginBottom="10dp"
+              android:layout_marginBottom="15dp"
               android:padding="20dp" >
 
             <TextView
@@ -155,8 +156,9 @@
                 android:layout_marginTop="8dp"> <!-- 여백 추가 -->
 
               <TextView
-                  android:layout_width="wrap_content"
+                  android:layout_width="0dp"
                   android:layout_height="wrap_content"
+                  android:layout_weight="1"
                   android:layout_marginEnd="8dp"
                   android:text="• 제목"
                   android:textColor="@color/black"
@@ -167,7 +169,7 @@
                   android:id="@+id/pet_name_edit_text"
                   android:layout_width="0dp"
                   android:layout_height="wrap_content"
-                  android:layout_weight="1"
+                  android:layout_weight="4"
                   android:textSize="16sp"
                   android:inputType="text"
                   android:background="@drawable/edit_background"
@@ -184,8 +186,9 @@
                 android:layout_marginTop="15dp"> <!-- 여백 추가 -->
 
               <TextView
-                  android:layout_width="wrap_content"
+                  android:layout_width="0dp"
                   android:layout_height="wrap_content"
+                  android:layout_weight="1"
                   android:text="• 종류"
                   android:textColor="@color/black"
                   android:textSize="17sp"
@@ -204,7 +207,7 @@
                   android:id="@+id/pet_type_spinner"
                   android:layout_width="0dp"
                   android:layout_height="wrap_content"
-                  android:layout_weight="1"
+                  android:layout_weight="4"
                   android:background="@drawable/edit_background"
                   android:padding="8dp"
                   /> <!-- 스피너 배경 추가 및 여백 조정 -->
@@ -219,8 +222,9 @@
                 android:layout_marginTop="15dp"> <!-- 여백 추가 -->
 
               <TextView
-                  android:layout_width="wrap_content"
+                  android:layout_width="0dp"
                   android:layout_height="wrap_content"
+                  android:layout_weight="1"
                   android:text="• 품종"
                   android:textColor="@color/black"
                   android:textSize="17sp"
@@ -239,7 +243,7 @@
                   android:id="@+id/pet_breed_spinner"
                   android:layout_width="0dp"
                   android:layout_height="wrap_content"
-                  android:layout_weight="1"
+                  android:layout_weight="4"
                   android:background="@drawable/edit_background"
                   android:padding="8dp"
                   /> <!-- 스피너 배경 추가 및 여백 조정 -->
@@ -284,8 +288,9 @@
                       android:orientation="horizontal">
 
                       <TextView
-                          android:layout_width="wrap_content"
+                          android:layout_width="0dp"
                           android:layout_height="wrap_content"
+                          android:layout_weight="1"
                           android:text="• 지역"
                           android:textColor="@color/black"
                           android:textSize="17sp"
@@ -295,7 +300,7 @@
                           android:id="@+id/pet_area_text"
                           android:layout_width="0dp"
                           android:layout_height="wrap_content"
-                          android:layout_weight="1"
+                          android:layout_weight="4"
                           android:textSize="16sp"
                           android:inputType="textMultiLine"
                           android:hint="목격한 곳을 지도에서 선택해 주세요."
@@ -329,9 +334,10 @@
                 android:layout_marginTop="15dp"> <!-- 여백 추가 -->
 
               <TextView
-                  android:layout_width="wrap_content"
+                  android:layout_width="0dp"
                   android:layout_height="wrap_content"
-                  android:text="• 날짜"
+                  android:layout_weight="1"
+                  android:text="• 발견일"
                   android:textColor="@color/black"
                   android:textSize="17sp"
                   android:layout_marginEnd="8dp"/> <!-- 여백 조정 -->
@@ -340,7 +346,7 @@
                   android:id="@+id/pet_date_text"
                   android:layout_width="0dp"
                   android:layout_height="wrap_content"
-                  android:layout_weight="1"
+                  android:layout_weight="4"
                   android:textSize="16sp"
                   android:hint="목격한 날짜를 입력해 주세요."
                   android:inputType="text"
@@ -358,9 +364,10 @@
                 android:layout_marginTop="15dp"> <!-- 여백 추가 -->
 
               <TextView
-                  android:layout_width="wrap_content"
+                  android:layout_width="0dp"
                   android:layout_height="wrap_content"
-                  android:text="• 장소"
+                  android:layout_weight="1"
+                  android:text="• 발견지"
                   android:textColor="@color/black"
                   android:textSize="17sp"
                   android:layout_marginEnd="8dp"/> <!-- 여백 조정 -->
@@ -369,7 +376,7 @@
                   android:id="@+id/pet_location_edit_text"
                   android:layout_width="0dp"
                   android:layout_height="wrap_content"
-                  android:layout_weight="1"
+                  android:layout_weight="4"
                   android:textSize="16sp"
                   android:inputType="text"
                   android:hint="목격한 상세 장소를 설명해 주세요.\n(ex. OO공원 분수대 근처)"
@@ -387,9 +394,10 @@
                 android:layout_marginTop="15dp"> <!-- 여백 추가 -->
 
               <TextView
-                  android:layout_width="wrap_content"
+                  android:layout_width="0dp"
                   android:layout_height="wrap_content"
-                  android:text="• 설명"
+                  android:layout_weight="1"
+                  android:text="• 특징"
                   android:textColor="@color/black"
                   android:textSize="17sp"
                   android:layout_marginEnd="8dp"/> <!-- 여백 조정 -->
@@ -398,7 +406,7 @@
                   android:id="@+id/pet_feature_edit_text"
                   android:layout_width="0dp"
                   android:layout_height="wrap_content"
-                  android:layout_weight="1"
+                  android:layout_weight="4"
                   android:textSize="16sp"
                   android:background="@drawable/edit_background"
                   android:padding="8dp"
@@ -415,8 +423,9 @@
                 android:orientation="horizontal">
 
               <TextView
-                  android:layout_width="wrap_content"
+                  android:layout_width="0dp"
                   android:layout_height="wrap_content"
+                  android:layout_weight="1"
                   android:layout_marginEnd="8dp"
                   android:text="• 연락처"
                   android:textColor="@color/black"
@@ -426,7 +435,7 @@
                   android:id="@+id/pet_contact_edit_text"
                   android:layout_width="0dp"
                   android:layout_height="wrap_content"
-                  android:layout_weight="1"
+                  android:layout_weight="4"
                   android:background="@drawable/edit_background"
                   android:hint="010-0000-0000"
                   android:inputType="text"

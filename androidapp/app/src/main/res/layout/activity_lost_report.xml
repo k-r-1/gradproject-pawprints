@@ -193,18 +193,19 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="15dp"
                         android:background="#EFEFEF" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="15dp"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:text="• 제목"
                             android:textColor="@color/black"
                             android:textSize="17sp"
@@ -214,7 +215,7 @@
                             android:id="@+id/lostReportTitle"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="4"
                             android:padding="5dp"
                             android:background="@drawable/edit_background"
                             android:textColor="@color/black"
@@ -225,12 +226,13 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="15dp"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:text="• 품종"
                             android:textColor="@color/black"
                             android:textSize="17sp"
@@ -240,7 +242,7 @@
                             android:id="@+id/lostReportBreed"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="4"
                             android:padding="5dp"
                             android:background="@drawable/edit_background"
                             android:textColor="#787878"
@@ -251,12 +253,13 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="15dp"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:text="• 성별"
                             android:textColor="@color/black"
                             android:textSize="17sp"
@@ -266,7 +269,7 @@
                             android:id="@+id/lostReportGender"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="4"
                             android:padding="5dp"
                             android:background="@drawable/edit_background"
                             android:textColor="#787878"
@@ -277,12 +280,13 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="15dp"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:text="• 나이"
                             android:textColor="@color/black"
                             android:textSize="17sp"
@@ -293,7 +297,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:padding="5dp"
-                            android:layout_weight="1"
+                            android:layout_weight="4"
                             android:background="@drawable/edit_background"
                             android:textColor="#787878"
                             android:textSize="16sp" />
@@ -313,8 +317,9 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:text="• 지역"
                                 android:textColor="@color/black"
                                 android:textSize="17sp"
@@ -324,7 +329,7 @@
                                 android:id="@+id/pet_area_text"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="4"
                                 android:textSize="16sp"
                                 android:inputType="textMultiLine"
                                 android:hint="실종된 곳을 지도에서 선택해 주세요."
@@ -352,13 +357,15 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="15dp"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="• 날짜"
+                            android:layout_weight="1"
+                            android:text="• 실종일"
                             android:textColor="@color/black"
                             android:textSize="17sp"
                             android:layout_marginEnd="8dp"/> <!-- 여백 조정 -->
@@ -367,7 +374,7 @@
                             android:id="@+id/lostReportDate"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="4"
                             android:hint="실종된 날짜를 입력해 주세요."
                             android:padding="5dp"
                             android:background="@drawable/edit_background"
@@ -378,13 +385,14 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="15dp"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="• 장소"
+                            android:layout_weight="1"
+                            android:text="• 실종지"
                             android:textColor="@color/black"
                             android:textSize="17sp"
                             android:layout_marginEnd="8dp"/> <!-- 여백 조정 -->
@@ -393,7 +401,7 @@
                             android:id="@+id/lostReportLocation"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="4"
                             android:hint="실종된 상세 장소를 설명해 주세요.\n(ex. OO공원 분수대 근처)"
                             android:padding="5dp"
                             android:background="@drawable/edit_background"
@@ -405,12 +413,13 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="15dp"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:text="• 특징"
                             android:textColor="@color/black"
                             android:textSize="17sp"
@@ -420,7 +429,7 @@
                             android:id="@+id/lostReportFeature"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="4"
                             android:padding="5dp"
                             android:background="@drawable/edit_background"
                             android:textColor="#787878"
@@ -431,12 +440,13 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="15dp"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:text="• 설명"
                             android:textColor="@color/black"
                             android:textSize="17sp"
@@ -446,7 +456,7 @@
                             android:id="@+id/lostReportDescription"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="4"
                             android:padding="5dp"
                             android:background="@drawable/edit_background"
                             android:textColor="@color/black"
@@ -461,8 +471,9 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:text="• 연락처"
                             android:textColor="@color/black"
                             android:textSize="17sp"
@@ -472,7 +483,7 @@
                             android:id="@+id/lostReportContact"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="4"
                             android:padding="5dp"
                             android:background="@drawable/edit_background"
                             android:textColor="@color/black"
