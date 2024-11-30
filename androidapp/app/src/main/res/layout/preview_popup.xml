@@ -36,7 +36,7 @@
             android:id="@+id/saveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/deep_pink"
+            android:backgroundTint="@color/light_pink"
             android:text="저장" />
 
         <!-- 공유 버튼 -->
@@ -44,7 +44,7 @@
             android:id="@+id/shareButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/deep_pink"
+            android:backgroundTint="@color/light_pink"
             android:text="공유"
             android:layout_marginStart="16dp" />
     </LinearLayout>
