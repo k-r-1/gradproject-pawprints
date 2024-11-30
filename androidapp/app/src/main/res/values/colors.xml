@@ -9,14 +9,14 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="background_color">#FFFCF8</color> <!-- 배경 -->
-    <color name="primary_pink">#FFEAEE</color> <!-- 상단바/하단바 -->
-    <color name="deep_pink">#EF6C6C</color> <!-- 진한 버튼 -->
-    <color name="light_pink">#FF8A80</color> <!-- 연한 버튼 -->
-    <color name="very_light_pink">#FFB3B3</color> <!-- 매우 연한 핑크색 -->
+    <color name="primary_pink">#D5E4CF</color> <!-- 상단바/하단바 -->
+    <color name="deep_pink">#2D5128</color> <!-- 진한 버튼 -->
+    <color name="light_pink">#537B2F</color> <!-- 연한 버튼 -->
+    <color name="very_light_pink">#E4EB9C</color> <!-- 매우 연한 핑크색 -->
     <color name="background_gray">#E3E2E2</color> <!-- 밑색용 회색 -->
 
-    <color name="bottom_nav_selected">#FA7676</color> <!-- 네비 아이콘 선택 -->
-    <color name="bottom_nav_not_selected">#FF888888</color> <!-- 네비 아이콘 미선택 -->
+    <color name="bottom_nav_selected">#2D5128</color> <!-- 네비 아이콘 선택 -->
+    <color name="bottom_nav_not_selected">#A5A5A5</color> <!-- 네비 아이콘 미선택 -->
 
     <color name="hint_color">#80444444</color>
 

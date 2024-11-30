@@ -95,7 +95,7 @@
                     android:id="@+id/btn_check_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#D86359"
+                    android:backgroundTint="@color/light_pink"
                     android:text="중복확인"
                     android:stateListAnimator="@null"
                     android:textSize="13sp"
