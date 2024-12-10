@@ -19,9 +19,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/background_color"
-            app:tabIndicatorColor="#ED5C4F"
+            app:tabIndicatorColor="#E4EB9C"
             app:tabIndicatorHeight="2dp"
-            app:tabSelectedTextColor="#ED5C4F"
+            app:tabSelectedTextColor="#2D5128"
             app:tabTextColor="#4E4E4E">
 
             <com.google.android.material.tabs.TabItem

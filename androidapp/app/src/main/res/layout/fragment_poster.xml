@@ -80,7 +80,7 @@
             android:textStyle="bold"
             android:drawableLeft="@drawable/ic_add"
             android:stateListAnimator="@null"
-            android:backgroundTint="#F68562"
+            android:backgroundTint="@color/light_pink"
             android:layout_marginTop="15dp"
             app:cornerRadius="30dp"
             android:layout_gravity="center"/>

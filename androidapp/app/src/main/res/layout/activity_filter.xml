@@ -20,7 +20,6 @@
             android:layout_centerHorizontal="true"
             android:text="필터 설정"
             android:textSize="20sp"
-            android:textStyle="bold"
             android:textColor="@color/primaryTextColor"/>
 
         <!-- 뒤로 가기 아이콘 -->
@@ -149,7 +148,7 @@
         android:text="초기화"
         app:cornerRadius="30dp"
         android:stateListAnimator="@null"
-        android:backgroundTint="@color/very_light_pink"
+        android:backgroundTint="@color/light_pink"
         android:textColor="@android:color/white"/>
 
 

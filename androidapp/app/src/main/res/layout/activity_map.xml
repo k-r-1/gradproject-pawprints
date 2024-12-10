@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:text="검색"
             android:padding="8dp"
-            android:backgroundTint="@color/light_pink" />
+            android:backgroundTint="@color/very_light_pink" />
     </LinearLayout>
 
     <FrameLayout

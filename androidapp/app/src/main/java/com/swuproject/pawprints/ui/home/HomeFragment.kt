@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.TextView
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
@@ -75,7 +74,7 @@ class HomeFragment : Fragment() {
             val tabView = binding.homeTabLayout.getTabAt(i)?.customView
             val textView = tabView?.findViewById<TextView>(R.id.tv_custom_home_tab)
             val isSelected = i == selectedPosition
-            val textColorRes = if (isSelected) "#ED5C4F" else "#4E4E4E"
+            val textColorRes = if (isSelected) "#2D5128" else "#4E4E4E"
             if (textView != null) {
                 textView.setTextColor(Color.parseColor(textColorRes))
             }
