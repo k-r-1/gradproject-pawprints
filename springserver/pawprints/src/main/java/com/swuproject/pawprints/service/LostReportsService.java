@@ -100,15 +100,16 @@ public class LostReportsService {
                 .map(lostReport -> {
                     LostReportsResponse response = new LostReportsResponse();
                     response.setLostId(lostReport.getLostId());
+                    response.setPetId(lostReport.getPetId());
                     response.setLostTitle(lostReport.getLostTitle());
-                    response.setPetBreed(lostReport.getPetBreed());
-                    response.setPetGender(lostReport.getPetGender());
-                    response.setPetAge(lostReport.getPetAge());
+                    response.setPetBreed(lostReport.getPet().getBreed());
+                    response.setPetGender(lostReport.getPet().getGender());
+                    response.setPetAge(lostReport.getPet().getAge());
+                    response.setPetFeature(lostReport.getPet().getFeature());
                     response.setLostAreaLat(lostReport.getLostAreaLat());
                     response.setLostAreaLng(lostReport.getLostAreaLng());
                     response.setLostDate(lostReport.getLostDate());
                     response.setLostLocation(lostReport.getLostLocation());
-                    response.setPetFeature(lostReport.getPetFeature());
                     response.setLostDescription(lostReport.getLostDescription());
                     response.setLostContact(lostReport.getLostContact());
                     response.setLostImages(
