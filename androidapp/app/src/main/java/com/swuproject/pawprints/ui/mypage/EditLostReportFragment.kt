@@ -40,6 +40,7 @@ class EditLostReportFragment : Fragment(R.layout.fragment_edit_lost_report) {
 
     private lateinit var binding: FragmentEditLostReportBinding
     private var lostId: Int = 0 // 전달받은 lostId
+    private var petId: Int = 0 // 전달받은 petId
     private lateinit var etTitle: EditText
     private lateinit var etBreed: TextView
     private lateinit var etGender: TextView
@@ -98,10 +99,12 @@ class EditLostReportFragment : Fragment(R.layout.fragment_edit_lost_report) {
 
         // Fragment로 전달받은 lostId를 전달받기
         lostId = arguments?.getInt("lostId") ?: 0
+        petId = arguments?.getInt("petId") ?: 0
         Log.d("EditLostReportFragment", "Received lostId: $lostId")
 
         // 서버에서 데이터를 가져옴
         loadLostReport(lostId)
+        loadLostReport(petId)
 
         etTitle = binding.etvEditLostrecyclerTitle
         etBreed = binding.tvEditLostrecyclerBreed
@@ -248,7 +251,7 @@ class EditLostReportFragment : Fragment(R.layout.fragment_edit_lost_report) {
         binding.etvEditLostrecyclerTitle.setText(lostReport.lostTitle)
         binding.tvEditLostrecyclerBreed.setText(lostReport.petBreed)
         binding.tvEditLostrecyclerGender.setText(lostReport.petGender)
-        binding.tvEditLostrecyclerAge.setText(lostReport.petAge)
+        binding.tvEditLostrecyclerAge.setText(lostReport.petAge.toString())
 
         // 위치 정보 설정
         val latitude = lostReport.lostAreaLat ?: 0.0

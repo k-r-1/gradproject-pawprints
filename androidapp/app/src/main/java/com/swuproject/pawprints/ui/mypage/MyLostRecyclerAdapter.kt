@@ -70,6 +70,7 @@ class MyLostRecyclerAdapter(
                 val bundle = Bundle()
                 // 데이터 추가 ("lostId"는 키, item.lostId는 값)
                 bundle.putInt("lostId", item.lostId)
+                bundle.putInt("petId", item.petId)
                 val navController = Navigation.findNavController(itemView)
                 Log.d("NavigationDebug", "Current destination: ${navController.currentDestination?.id}")
                 navController.navigate(R.id.action_myLostReportFragment_to_editLostReportFragment, bundle)
