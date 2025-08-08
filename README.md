@@ -14,6 +14,8 @@
 <br>
 
 ## 프로젝트 기능 
+- 사용자가 모바일 애플리케이션을 통해 실종된 반려동물의 사진과 정보를 업로드하면, Spring Boot 서버가 이를 처리하고 Google Cloud Storage (GCS)에 이미지를 저장한다. Flask API 서버는 GCS에 저장된 이미지를 불러와 TensorFlow 기반 품종 분류 모델을 사용해 유사도 계산을 수행하고, 가장 유사한 상위 5개의 목격 이미지를 반환한다.
+<br>
 
 ![Image](https://github.com/user-attachments/assets/fd8602a8-b0ef-4f1f-8550-ebd0b2575e72)
 ![Image](https://github.com/user-attachments/assets/bb47946e-7a71-4043-8fe1-7f6fc75b0dda)
